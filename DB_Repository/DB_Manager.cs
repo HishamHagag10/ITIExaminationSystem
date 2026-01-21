@@ -35,6 +35,13 @@ namespace DB_Project.DB_Repository
 
             return p.Get<int>("ReturnValue");
         }
+        public int GetCount(string tableName)
+        {
+            using var con = new SqlConnection(Helper.conStr);
+
+            var sql = $"SELECT COUNT(*) FROM {tableName}";
+            return con.ExecuteScalar<int>(sql);
+        }
         public Result<List<T>> SelectMany<T>(
                 string spName,
                 object? parameters = null) where T : DTO, new()

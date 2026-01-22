@@ -1,14 +1,22 @@
-﻿using System;
+﻿using DB_Project.DB_Repository;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
 using System.Text;
+using System.Windows.Forms;
 
-namespace ITIExaminationSystem
+namespace ITIExaminationSystem.Forms
 {
-    public partial class AppForm
+    public partial class InstructorForm : Form
     {
-        private void ShowInstructorDashboard()
+        private DB_Manager _dbManager;
+
+        public InstructorForm(DB_Manager dB_Manager)
         {
-            message_lbl.Text = "Hello I am a Instructor";
+            _dbManager = dB_Manager;
+            InitializeComponent();
         }
     }
 }

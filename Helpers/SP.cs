@@ -6,6 +6,9 @@ namespace ITIExaminationSystem.Helpers
 {
     public static class SP
     {
-        public const string Login_SP = "login_Sp";
+        public const string Login = "login_Sp";
+        public const string AddStudent = "insertStudent";
+        public const string DeleteStudent = "deleteStudent";
+
     }
 }

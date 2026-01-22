@@ -11,7 +11,7 @@ using System.Text;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 namespace DB_Project.DB_Repository
 {
-    internal class DB_Manager
+    public class DB_Manager
     {
         public int ExecuteSPWithReturn(
                     string spName,

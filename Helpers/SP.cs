@@ -9,8 +9,8 @@ namespace ITIExaminationSystem.Helpers
         public const string Login = "login_Sp";
         public const string AddStudent = "insertStudent";
         public const string DeleteStudent = "deleteStudent";
-        public const string UpdateStudent = "updateStudent";
+        public const string UpdateStudent = "sp_UpdateStudent";
         public const string SelectStudents = "sp_SelectStudents";
-
+        public const string SelectStudent = "selectStudent";
     }
 }

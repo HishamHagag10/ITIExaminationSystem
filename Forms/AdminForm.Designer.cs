@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             userToolStripMenuItem = new ToolStripMenuItem();
             showUserToolStripMenuItem = new ToolStripMenuItem();
             addUserToolStripMenuItem = new ToolStripMenuItem();
@@ -67,6 +68,7 @@
             instructor_lbl = new Label();
             students_lbl = new Label();
             addStud_pnl = new Panel();
+            stud_head_lbl = new Label();
             addStud_btn = new Button();
             genderStud_box = new GroupBox();
             male_rdo = new RadioButton();
@@ -94,6 +96,37 @@
             usernameStud_lbl = new Label();
             passStud_lbl = new Label();
             message_lbl = new Label();
+            updateStud_pnl = new Panel();
+            label1 = new Label();
+            updateStu_btn = new Button();
+            genderUpd_txt = new GroupBox();
+            radioButton1 = new RadioButton();
+            radioButton2 = new RadioButton();
+            trackidUpd_txt = new NumericUpDown();
+            ageUpd_txt = new NumericUpDown();
+            zipUpd_txt = new TextBox();
+            streetUpd_txt = new TextBox();
+            fnameUpd_txt = new TextBox();
+            cityUpd_txt = new TextBox();
+            emailUpd_txt = new TextBox();
+            phoneUpd_txt = new TextBox();
+            lnameUpd_txt = new TextBox();
+            studidUpdate_txt = new TextBox();
+            label2 = new Label();
+            label3 = new Label();
+            label4 = new Label();
+            label5 = new Label();
+            label6 = new Label();
+            label7 = new Label();
+            label8 = new Label();
+            label9 = new Label();
+            label10 = new Label();
+            usernameUpdate_lbl = new Label();
+            label13 = new Label();
+            addStudentDtoBindingSource = new BindingSource(components);
+            showStud_grd = new DataGridView();
+            delStudMsg_lbl = new Label();
+            addStudMsg_lbl = new Label();
             ((System.ComponentModel.ISupportInitialize)studid_del_nm).BeginInit();
             menu.SuspendLayout();
             deleteStud_pnl.SuspendLayout();
@@ -102,6 +135,12 @@
             genderStud_box.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)trackidStud_nm).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ageStud_nm).BeginInit();
+            updateStud_pnl.SuspendLayout();
+            genderUpd_txt.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)trackidUpd_txt).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ageUpd_txt).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)addStudentDtoBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)showStud_grd).BeginInit();
             SuspendLayout();
             // 
             // userToolStripMenuItem
@@ -116,6 +155,7 @@
             showUserToolStripMenuItem.Name = "showUserToolStripMenuItem";
             showUserToolStripMenuItem.Size = new Size(141, 26);
             showUserToolStripMenuItem.Text = "Show";
+            showUserToolStripMenuItem.Click += showUserToolStripMenuItem_Click;
             // 
             // addUserToolStripMenuItem
             // 
@@ -184,6 +224,7 @@
             delStud_btn.TabIndex = 113;
             delStud_btn.Text = "Delete Student";
             delStud_btn.UseVisualStyleBackColor = true;
+            delStud_btn.Click += delStud_btn_Click;
             // 
             // studid_del_nm
             // 
@@ -286,19 +327,20 @@
             // 
             // deleteStud_pnl
             // 
+            deleteStud_pnl.Controls.Add(delStudMsg_lbl);
             deleteStud_pnl.Controls.Add(studid_del_lbl);
             deleteStud_pnl.Controls.Add(delStud_btn);
             deleteStud_pnl.Controls.Add(studid_del_nm);
-            deleteStud_pnl.Location = new Point(12, 63);
+            deleteStud_pnl.Location = new Point(65, 45);
             deleteStud_pnl.Name = "deleteStud_pnl";
-            deleteStud_pnl.Size = new Size(280, 395);
+            deleteStud_pnl.Size = new Size(184, 99);
             deleteStud_pnl.TabIndex = 114;
             // 
             // welcome_lbl
             // 
             welcome_lbl.AutoSize = true;
             welcome_lbl.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            welcome_lbl.Location = new Point(265, 51);
+            welcome_lbl.Location = new Point(256, 87);
             welcome_lbl.Name = "welcome_lbl";
             welcome_lbl.Size = new Size(139, 38);
             welcome_lbl.TabIndex = 0;
@@ -308,7 +350,7 @@
             // 
             stat_lbl.AutoSize = true;
             stat_lbl.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            stat_lbl.Location = new Point(265, 119);
+            stat_lbl.Location = new Point(296, 153);
             stat_lbl.Name = "stat_lbl";
             stat_lbl.Size = new Size(239, 38);
             stat_lbl.TabIndex = 8;
@@ -326,16 +368,16 @@
             stat_pnl.Controls.Add(students_lbl);
             stat_pnl.Controls.Add(welcome_lbl);
             stat_pnl.Controls.Add(stat_lbl);
-            stat_pnl.Location = new Point(316, 42);
+            stat_pnl.Location = new Point(255, 45);
             stat_pnl.Name = "stat_pnl";
-            stat_pnl.Size = new Size(304, 396);
+            stat_pnl.Size = new Size(159, 67);
             stat_pnl.TabIndex = 85;
             // 
             // noTracks_lbl
             // 
             noTracks_lbl.AutoSize = true;
             noTracks_lbl.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            noTracks_lbl.Location = new Point(559, 242);
+            noTracks_lbl.Location = new Point(590, 276);
             noTracks_lbl.Name = "noTracks_lbl";
             noTracks_lbl.Size = new Size(42, 25);
             noTracks_lbl.TabIndex = 16;
@@ -345,7 +387,7 @@
             // 
             noCrs_lbl.AutoSize = true;
             noCrs_lbl.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            noCrs_lbl.Location = new Point(415, 243);
+            noCrs_lbl.Location = new Point(446, 277);
             noCrs_lbl.Name = "noCrs_lbl";
             noCrs_lbl.Size = new Size(42, 25);
             noCrs_lbl.TabIndex = 15;
@@ -355,7 +397,7 @@
             // 
             noIns_lbl.AutoSize = true;
             noIns_lbl.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            noIns_lbl.Location = new Point(225, 243);
+            noIns_lbl.Location = new Point(256, 277);
             noIns_lbl.Name = "noIns_lbl";
             noIns_lbl.Size = new Size(42, 25);
             noIns_lbl.TabIndex = 14;
@@ -365,7 +407,7 @@
             // 
             noStud_lbl.AutoSize = true;
             noStud_lbl.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            noStud_lbl.Location = new Point(76, 243);
+            noStud_lbl.Location = new Point(107, 277);
             noStud_lbl.Name = "noStud_lbl";
             noStud_lbl.Size = new Size(42, 25);
             noStud_lbl.TabIndex = 13;
@@ -375,7 +417,7 @@
             // 
             tracks_lbl.AutoSize = true;
             tracks_lbl.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            tracks_lbl.Location = new Point(559, 184);
+            tracks_lbl.Location = new Point(590, 218);
             tracks_lbl.Name = "tracks_lbl";
             tracks_lbl.Size = new Size(71, 28);
             tracks_lbl.TabIndex = 12;
@@ -385,7 +427,7 @@
             // 
             course_lbl.AutoSize = true;
             course_lbl.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            course_lbl.Location = new Point(384, 184);
+            course_lbl.Location = new Point(415, 218);
             course_lbl.Name = "course_lbl";
             course_lbl.Size = new Size(85, 28);
             course_lbl.TabIndex = 11;
@@ -395,7 +437,7 @@
             // 
             instructor_lbl.AutoSize = true;
             instructor_lbl.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            instructor_lbl.Location = new Point(200, 184);
+            instructor_lbl.Location = new Point(231, 218);
             instructor_lbl.Name = "instructor_lbl";
             instructor_lbl.Size = new Size(114, 28);
             instructor_lbl.TabIndex = 10;
@@ -405,7 +447,7 @@
             // 
             students_lbl.AutoSize = true;
             students_lbl.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            students_lbl.Location = new Point(51, 184);
+            students_lbl.Location = new Point(82, 218);
             students_lbl.Name = "students_lbl";
             students_lbl.Size = new Size(95, 28);
             students_lbl.TabIndex = 9;
@@ -413,6 +455,8 @@
             // 
             // addStud_pnl
             // 
+            addStud_pnl.Controls.Add(addStudMsg_lbl);
+            addStud_pnl.Controls.Add(stud_head_lbl);
             addStud_pnl.Controls.Add(addStud_btn);
             addStud_pnl.Controls.Add(genderStud_box);
             addStud_pnl.Controls.Add(trackidStud_nm);
@@ -438,10 +482,20 @@
             addStud_pnl.Controls.Add(usernameStud_lbl);
             addStud_pnl.Controls.Add(passStud_lbl);
             addStud_pnl.Controls.Add(message_lbl);
-            addStud_pnl.Location = new Point(636, 63);
+            addStud_pnl.Location = new Point(639, 34);
             addStud_pnl.Name = "addStud_pnl";
-            addStud_pnl.Size = new Size(348, 369);
+            addStud_pnl.Size = new Size(140, 80);
             addStud_pnl.TabIndex = 115;
+            // 
+            // stud_head_lbl
+            // 
+            stud_head_lbl.AutoSize = true;
+            stud_head_lbl.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            stud_head_lbl.Location = new Point(236, 17);
+            stud_head_lbl.Name = "stud_head_lbl";
+            stud_head_lbl.Size = new Size(119, 25);
+            stud_head_lbl.TabIndex = 136;
+            stud_head_lbl.Text = "Add Student";
             // 
             // addStud_btn
             // 
@@ -451,6 +505,7 @@
             addStud_btn.TabIndex = 135;
             addStud_btn.Text = "Add Student";
             addStud_btn.UseVisualStyleBackColor = true;
+            addStud_btn.Click += addStud_btn_Click;
             // 
             // genderStud_box
             // 
@@ -669,11 +724,297 @@
             message_lbl.Size = new Size(0, 20);
             message_lbl.TabIndex = 111;
             // 
+            // updateStud_pnl
+            // 
+            updateStud_pnl.Controls.Add(label1);
+            updateStud_pnl.Controls.Add(updateStu_btn);
+            updateStud_pnl.Controls.Add(genderUpd_txt);
+            updateStud_pnl.Controls.Add(trackidUpd_txt);
+            updateStud_pnl.Controls.Add(ageUpd_txt);
+            updateStud_pnl.Controls.Add(zipUpd_txt);
+            updateStud_pnl.Controls.Add(streetUpd_txt);
+            updateStud_pnl.Controls.Add(fnameUpd_txt);
+            updateStud_pnl.Controls.Add(cityUpd_txt);
+            updateStud_pnl.Controls.Add(emailUpd_txt);
+            updateStud_pnl.Controls.Add(phoneUpd_txt);
+            updateStud_pnl.Controls.Add(lnameUpd_txt);
+            updateStud_pnl.Controls.Add(studidUpdate_txt);
+            updateStud_pnl.Controls.Add(label2);
+            updateStud_pnl.Controls.Add(label3);
+            updateStud_pnl.Controls.Add(label4);
+            updateStud_pnl.Controls.Add(label5);
+            updateStud_pnl.Controls.Add(label6);
+            updateStud_pnl.Controls.Add(label7);
+            updateStud_pnl.Controls.Add(label8);
+            updateStud_pnl.Controls.Add(label9);
+            updateStud_pnl.Controls.Add(label10);
+            updateStud_pnl.Controls.Add(usernameUpdate_lbl);
+            updateStud_pnl.Controls.Add(label13);
+            updateStud_pnl.Location = new Point(455, 56);
+            updateStud_pnl.Name = "updateStud_pnl";
+            updateStud_pnl.Size = new Size(122, 58);
+            updateStud_pnl.TabIndex = 116;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(150, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(146, 25);
+            label1.TabIndex = 136;
+            label1.Text = "Update Student";
+            // 
+            // updateStu_btn
+            // 
+            updateStu_btn.Location = new Point(215, 356);
+            updateStu_btn.Name = "updateStu_btn";
+            updateStu_btn.Size = new Size(167, 40);
+            updateStu_btn.TabIndex = 135;
+            updateStu_btn.Text = "Update Student";
+            updateStu_btn.UseVisualStyleBackColor = true;
+            // 
+            // genderUpd_txt
+            // 
+            genderUpd_txt.Controls.Add(radioButton1);
+            genderUpd_txt.Controls.Add(radioButton2);
+            genderUpd_txt.Location = new Point(327, 184);
+            genderUpd_txt.Name = "genderUpd_txt";
+            genderUpd_txt.Size = new Size(226, 55);
+            genderUpd_txt.TabIndex = 134;
+            genderUpd_txt.TabStop = false;
+            genderUpd_txt.Text = "Gender";
+            // 
+            // radioButton1
+            // 
+            radioButton1.AutoSize = true;
+            radioButton1.Location = new Point(27, 23);
+            radioButton1.Name = "radioButton1";
+            radioButton1.Size = new Size(63, 24);
+            radioButton1.TabIndex = 44;
+            radioButton1.TabStop = true;
+            radioButton1.Text = "Male";
+            radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // radioButton2
+            // 
+            radioButton2.AutoSize = true;
+            radioButton2.Location = new Point(124, 23);
+            radioButton2.Name = "radioButton2";
+            radioButton2.Size = new Size(78, 24);
+            radioButton2.TabIndex = 45;
+            radioButton2.TabStop = true;
+            radioButton2.Text = "Female";
+            radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // trackidUpd_txt
+            // 
+            trackidUpd_txt.Location = new Point(423, 297);
+            trackidUpd_txt.Name = "trackidUpd_txt";
+            trackidUpd_txt.Size = new Size(125, 27);
+            trackidUpd_txt.TabIndex = 133;
+            // 
+            // ageUpd_txt
+            // 
+            ageUpd_txt.Location = new Point(423, 247);
+            ageUpd_txt.Maximum = new decimal(new int[] { 40, 0, 0, 0 });
+            ageUpd_txt.Minimum = new decimal(new int[] { 21, 0, 0, 0 });
+            ageUpd_txt.Name = "ageUpd_txt";
+            ageUpd_txt.Size = new Size(125, 27);
+            ageUpd_txt.TabIndex = 132;
+            ageUpd_txt.Value = new decimal(new int[] { 22, 0, 0, 0 });
+            // 
+            // zipUpd_txt
+            // 
+            zipUpd_txt.Location = new Point(423, 130);
+            zipUpd_txt.Name = "zipUpd_txt";
+            zipUpd_txt.Size = new Size(125, 27);
+            zipUpd_txt.TabIndex = 131;
+            // 
+            // streetUpd_txt
+            // 
+            streetUpd_txt.Location = new Point(423, 84);
+            streetUpd_txt.Name = "streetUpd_txt";
+            streetUpd_txt.Size = new Size(125, 27);
+            streetUpd_txt.TabIndex = 130;
+            // 
+            // fnameUpd_txt
+            // 
+            fnameUpd_txt.Location = new Point(111, 88);
+            fnameUpd_txt.Name = "fnameUpd_txt";
+            fnameUpd_txt.Size = new Size(125, 27);
+            fnameUpd_txt.TabIndex = 129;
+            // 
+            // cityUpd_txt
+            // 
+            cityUpd_txt.Location = new Point(110, 301);
+            cityUpd_txt.Name = "cityUpd_txt";
+            cityUpd_txt.Size = new Size(125, 27);
+            cityUpd_txt.TabIndex = 128;
+            // 
+            // emailUpd_txt
+            // 
+            emailUpd_txt.Location = new Point(110, 242);
+            emailUpd_txt.Name = "emailUpd_txt";
+            emailUpd_txt.Size = new Size(125, 27);
+            emailUpd_txt.TabIndex = 127;
+            // 
+            // phoneUpd_txt
+            // 
+            phoneUpd_txt.Location = new Point(111, 188);
+            phoneUpd_txt.Name = "phoneUpd_txt";
+            phoneUpd_txt.Size = new Size(125, 27);
+            phoneUpd_txt.TabIndex = 126;
+            // 
+            // lnameUpd_txt
+            // 
+            lnameUpd_txt.Location = new Point(111, 130);
+            lnameUpd_txt.Name = "lnameUpd_txt";
+            lnameUpd_txt.Size = new Size(125, 27);
+            lnameUpd_txt.TabIndex = 125;
+            // 
+            // studidUpdate_txt
+            // 
+            studidUpdate_txt.Location = new Point(410, 17);
+            studidUpdate_txt.Name = "studidUpdate_txt";
+            studidUpdate_txt.Size = new Size(125, 27);
+            studidUpdate_txt.TabIndex = 123;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(320, 304);
+            label2.Name = "label2";
+            label2.Size = new Size(60, 20);
+            label2.TabIndex = 122;
+            label2.Text = "Track Id";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(334, 254);
+            label3.Name = "label3";
+            label3.Size = new Size(36, 20);
+            label3.TabIndex = 121;
+            label3.Text = "Age";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(322, 133);
+            label4.Name = "label4";
+            label4.Size = new Size(70, 20);
+            label4.TabIndex = 120;
+            label4.Text = "Zip Code";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(332, 91);
+            label5.Name = "label5";
+            label5.Size = new Size(48, 20);
+            label5.TabIndex = 119;
+            label5.Text = "Street";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(34, 308);
+            label6.Name = "label6";
+            label6.Size = new Size(34, 20);
+            label6.TabIndex = 118;
+            label6.Text = "City";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(30, 195);
+            label7.Name = "label7";
+            label7.Size = new Size(50, 20);
+            label7.TabIndex = 117;
+            label7.Text = "Phone";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(34, 249);
+            label8.Name = "label8";
+            label8.Size = new Size(46, 20);
+            label8.TabIndex = 116;
+            label8.Text = "Email";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(18, 135);
+            label9.Name = "label9";
+            label9.Size = new Size(79, 20);
+            label9.TabIndex = 115;
+            label9.Text = "Last Name";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(17, 91);
+            label10.Name = "label10";
+            label10.Size = new Size(80, 20);
+            label10.TabIndex = 114;
+            label10.Text = "First Name";
+            // 
+            // usernameUpdate_lbl
+            // 
+            usernameUpdate_lbl.AutoSize = true;
+            usernameUpdate_lbl.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            usernameUpdate_lbl.Location = new Point(287, 21);
+            usernameUpdate_lbl.Name = "usernameUpdate_lbl";
+            usernameUpdate_lbl.Size = new Size(82, 20);
+            usernameUpdate_lbl.TabIndex = 112;
+            usernameUpdate_lbl.Text = "Student Id";
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new Point(150, 280);
+            label13.Name = "label13";
+            label13.Size = new Size(0, 20);
+            label13.TabIndex = 111;
+            // 
+            // addStudentDtoBindingSource
+            // 
+            addStudentDtoBindingSource.DataSource = typeof(DTOs.AddStudentDto);
+            // 
+            // showStud_grd
+            // 
+            showStud_grd.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            showStud_grd.Location = new Point(620, 140);
+            showStud_grd.Name = "showStud_grd";
+            showStud_grd.RowHeadersWidth = 51;
+            showStud_grd.Size = new Size(159, 113);
+            showStud_grd.TabIndex = 117;
+            // 
+            // delStudMsg_lbl
+            // 
+            delStudMsg_lbl.AutoSize = true;
+            delStudMsg_lbl.Location = new Point(273, 252);
+            delStudMsg_lbl.Name = "delStudMsg_lbl";
+            delStudMsg_lbl.Size = new Size(0, 20);
+            delStudMsg_lbl.TabIndex = 114;
+            // 
+            // addStudMsg_lbl
+            // 
+            addStudMsg_lbl.AutoSize = true;
+            addStudMsg_lbl.Location = new Point(423, 366);
+            addStudMsg_lbl.Name = "addStudMsg_lbl";
+            addStudMsg_lbl.Size = new Size(0, 20);
+            addStudMsg_lbl.TabIndex = 137;
+            // 
             // AdminForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(showStud_grd);
+            Controls.Add(updateStud_pnl);
             Controls.Add(deleteStud_pnl);
             Controls.Add(addStud_pnl);
             Controls.Add(menu);
@@ -694,6 +1035,14 @@
             genderStud_box.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)trackidStud_nm).EndInit();
             ((System.ComponentModel.ISupportInitialize)ageStud_nm).EndInit();
+            updateStud_pnl.ResumeLayout(false);
+            updateStud_pnl.PerformLayout();
+            genderUpd_txt.ResumeLayout(false);
+            genderUpd_txt.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)trackidUpd_txt).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ageUpd_txt).EndInit();
+            ((System.ComponentModel.ISupportInitialize)addStudentDtoBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)showStud_grd).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -766,5 +1115,37 @@
         private Label course_lbl;
         private Label instructor_lbl;
         private Label students_lbl;
+        private Label stud_head_lbl;
+        private Panel updateStud_pnl;
+        private Label label1;
+        private Button updateStu_btn;
+        private GroupBox genderUpd_txt;
+        private RadioButton radioButton1;
+        private RadioButton radioButton2;
+        private NumericUpDown trackidUpd_txt;
+        private NumericUpDown ageUpd_txt;
+        private TextBox zipUpd_txt;
+        private TextBox streetUpd_txt;
+        private TextBox fnameUpd_txt;
+        private TextBox cityUpd_txt;
+        private TextBox emailUpd_txt;
+        private TextBox phoneUpd_txt;
+        private TextBox lnameUpd_txt;
+        private TextBox studidUpdate_txt;
+        private Label label2;
+        private Label label3;
+        private Label label4;
+        private Label label5;
+        private Label label6;
+        private Label label7;
+        private Label label8;
+        private Label label9;
+        private Label label10;
+        private Label usernameUpdate_lbl;
+        private Label label13;
+        private BindingSource addStudentDtoBindingSource;
+        private DataGridView showStud_grd;
+        private Label delStudMsg_lbl;
+        private Label addStudMsg_lbl;
     }
 }

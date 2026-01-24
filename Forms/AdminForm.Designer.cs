@@ -52,9 +52,6 @@ namespace ITIExaminationSystem.Forms
             showCrsToolStripMenuItem1 = new ToolStripMenuItem();
             addCrsToolStripMenuItem2 = new ToolStripMenuItem();
             logOutToolStripMenuItem1 = new ToolStripMenuItem();
-            instructorsCard = new Panel();
-            instructor_lbl = new Label();
-            noIns_lbl = new Label();
             showIns_pnl = new Panel();
             insMsg_lbl = new Label();
             instructors_dgv = new DataGridView();
@@ -93,22 +90,9 @@ namespace ITIExaminationSystem.Forms
             resetIns_btn = new Button();
             deleteStud_pnl = new Panel();
             delStudMsg_lbl = new Label();
-            welcome_lbl = new Label();
-            stat_lbl = new Label();
-            stat_pnl = new Panel();
-            studentsCard = new Panel();
-            students_lbl = new Label();
-            noStud_lbl = new Label();
-            coursesCard = new Panel();
-            course_lbl = new Label();
-            noCrs_lbl = new Label();
-            tracksCard = new Panel();
-            tracks_lbl = new Label();
-            noTracks_lbl = new Label();
             updateStud_pnl = new Panel();
             updStudMsg_lbl = new Label();
             label1 = new Label();
-            updateStu_btn = new Button();
             genderUpd_txt = new GroupBox();
             radioButton1 = new RadioButton();
             radioButton2 = new RadioButton();
@@ -133,6 +117,7 @@ namespace ITIExaminationSystem.Forms
             label10 = new Label();
             usernameUpdate_lbl = new Label();
             label13 = new Label();
+            updateStu_btn = new Button();
             addStud_pnl = new Panel();
             addStudMsg_lbl = new Label();
             stud_head_lbl = new Label();
@@ -211,19 +196,29 @@ namespace ITIExaminationSystem.Forms
             trk_name_txt = new TextBox();
             addTrk_btn = new Button();
             resetTrk_btn = new Button();
+            stat_lbl = new Label();
+            welcome_lbl = new Label();
+            tracksCard = new Panel();
+            tracks_lbl = new Label();
+            noTracks_lbl = new Label();
+            coursesCard = new Panel();
+            course_lbl = new Label();
+            noCrs_lbl = new Label();
+            instructorsCard = new Panel();
+            instructor_lbl = new Label();
+            noIns_lbl = new Label();
+            studentsCard = new Panel();
+            students_lbl = new Label();
+            noStud_lbl = new Label();
+            stat_pnl = new Panel();
             ((ISupportInitialize)studid_del_nm).BeginInit();
             menu.SuspendLayout();
-            instructorsCard.SuspendLayout();
             showIns_pnl.SuspendLayout();
             ((ISupportInitialize)instructors_dgv).BeginInit();
             addIns_pnl.SuspendLayout();
             ((ISupportInitialize)ins_salary_nm).BeginInit();
             ins_gender_box.SuspendLayout();
             deleteStud_pnl.SuspendLayout();
-            stat_pnl.SuspendLayout();
-            studentsCard.SuspendLayout();
-            coursesCard.SuspendLayout();
-            tracksCard.SuspendLayout();
             updateStud_pnl.SuspendLayout();
             genderUpd_txt.SuspendLayout();
             ((ISupportInitialize)trackidUpd_txt).BeginInit();
@@ -243,6 +238,11 @@ namespace ITIExaminationSystem.Forms
             showTrk_pnl.SuspendLayout();
             ((ISupportInitialize)tracks_dgv).BeginInit();
             addTrk_pnl.SuspendLayout();
+            tracksCard.SuspendLayout();
+            coursesCard.SuspendLayout();
+            instructorsCard.SuspendLayout();
+            studentsCard.SuspendLayout();
+            stat_pnl.SuspendLayout();
             SuspendLayout();
             // 
             // userToolStripMenuItem
@@ -329,7 +329,7 @@ namespace ITIExaminationSystem.Forms
             menu.Items.AddRange(new ToolStripItem[] { dashboardToolStripMenuItem, userToolStripMenuItem, coursesToolStripMenuItem, traToolStripMenuItem, logOutToolStripMenuItem, logOutToolStripMenuItem1 });
             menu.Location = new Point(0, 0);
             menu.Name = "menu";
-            menu.Size = new Size(833, 28);
+            menu.Size = new Size(1055, 28);
             menu.TabIndex = 84;
             menu.Text = "menu";
             // 
@@ -382,47 +382,18 @@ namespace ITIExaminationSystem.Forms
             logOutToolStripMenuItem1.Text = "Log out";
             logOutToolStripMenuItem1.Click += logOutToolStripMenuItem1_Click;
             // 
-            // instructorsCard
-            // 
-            instructorsCard.BackColor = Color.FromArgb(46, 204, 113);
-            instructorsCard.Controls.Add(instructor_lbl);
-            instructorsCard.Controls.Add(noIns_lbl);
-            instructorsCard.Location = new Point(190, 90);
-            instructorsCard.Name = "instructorsCard";
-            instructorsCard.Padding = new Padding(10);
-            instructorsCard.Size = new Size(150, 90);
-            instructorsCard.TabIndex = 21;
-            // 
-            // instructor_lbl
-            // 
-            instructor_lbl.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            instructor_lbl.ForeColor = Color.White;
-            instructor_lbl.Location = new Point(10, 10);
-            instructor_lbl.Name = "instructor_lbl";
-            instructor_lbl.Size = new Size(130, 24);
-            instructor_lbl.TabIndex = 0;
-            instructor_lbl.Text = "Instructors";
-            // 
-            // noIns_lbl
-            // 
-            noIns_lbl.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            noIns_lbl.ForeColor = Color.White;
-            noIns_lbl.Location = new Point(10, 40);
-            noIns_lbl.Name = "noIns_lbl";
-            noIns_lbl.Size = new Size(130, 36);
-            noIns_lbl.TabIndex = 1;
-            noIns_lbl.Text = "100";
-            noIns_lbl.TextAlign = ContentAlignment.MiddleLeft;
-            // 
             // showIns_pnl
             // 
+            showIns_pnl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            showIns_pnl.AutoScroll = true;
             showIns_pnl.Controls.Add(insMsg_lbl);
             showIns_pnl.Controls.Add(instructors_dgv);
             showIns_pnl.Controls.Add(insUpdate_btn);
             showIns_pnl.Controls.Add(insDelete_btn);
-            showIns_pnl.Location = new Point(154, 40);
+            showIns_pnl.Location = new Point(0, 228);
             showIns_pnl.Name = "showIns_pnl";
-            showIns_pnl.Size = new Size(558, 381);
+            showIns_pnl.Padding = new Padding(10);
+            showIns_pnl.Size = new Size(1055, 472);
             showIns_pnl.TabIndex = 118;
             // 
             // insMsg_lbl
@@ -437,6 +408,7 @@ namespace ITIExaminationSystem.Forms
             // 
             instructors_dgv.AllowUserToAddRows = false;
             instructors_dgv.AllowUserToDeleteRows = false;
+            instructors_dgv.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             instructors_dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             instructors_dgv.ColumnHeadersHeight = 29;
             instructors_dgv.Columns.AddRange(new DataGridViewColumn[] { insId, insColFullName, insColPhone, insColSalary });
@@ -446,7 +418,7 @@ namespace ITIExaminationSystem.Forms
             instructors_dgv.ReadOnly = true;
             instructors_dgv.RowHeadersWidth = 51;
             instructors_dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            instructors_dgv.Size = new Size(540, 300);
+            instructors_dgv.Size = new Size(1035, 380);
             instructors_dgv.TabIndex = 0;
             instructors_dgv.SelectionChanged += instructors_dgv_SelectionChanged;
             // 
@@ -484,8 +456,9 @@ namespace ITIExaminationSystem.Forms
             // 
             // insUpdate_btn
             // 
+            insUpdate_btn.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             insUpdate_btn.Enabled = false;
-            insUpdate_btn.Location = new Point(150, 350);
+            insUpdate_btn.Location = new Point(150, 405);
             insUpdate_btn.Name = "insUpdate_btn";
             insUpdate_btn.Size = new Size(120, 40);
             insUpdate_btn.TabIndex = 1;
@@ -494,8 +467,9 @@ namespace ITIExaminationSystem.Forms
             // 
             // insDelete_btn
             // 
+            insDelete_btn.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             insDelete_btn.Enabled = false;
-            insDelete_btn.Location = new Point(320, 350);
+            insDelete_btn.Location = new Point(320, 405);
             insDelete_btn.Name = "insDelete_btn";
             insDelete_btn.Size = new Size(120, 40);
             insDelete_btn.TabIndex = 2;
@@ -505,86 +479,97 @@ namespace ITIExaminationSystem.Forms
             // ins_username_lbl
             // 
             ins_username_lbl.AutoSize = true;
-            ins_username_lbl.Location = new Point(14, 54);
+            ins_username_lbl.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ins_username_lbl.Location = new Point(200, 80);
             ins_username_lbl.Name = "ins_username_lbl";
-            ins_username_lbl.Size = new Size(82, 20);
+            ins_username_lbl.Size = new Size(95, 23);
             ins_username_lbl.TabIndex = 0;
             ins_username_lbl.Text = "User Name";
             // 
             // ins_pass_lbl
             // 
             ins_pass_lbl.AutoSize = true;
-            ins_pass_lbl.Location = new Point(327, 54);
+            ins_pass_lbl.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ins_pass_lbl.Location = new Point(600, 80);
             ins_pass_lbl.Name = "ins_pass_lbl";
-            ins_pass_lbl.Size = new Size(70, 20);
+            ins_pass_lbl.Size = new Size(80, 23);
             ins_pass_lbl.TabIndex = 1;
             ins_pass_lbl.Text = "Password";
             // 
             // ins_name_lbl
             // 
             ins_name_lbl.AutoSize = true;
-            ins_name_lbl.Location = new Point(14, 95);
+            ins_name_lbl.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ins_name_lbl.Location = new Point(200, 150);
             ins_name_lbl.Name = "ins_name_lbl";
-            ins_name_lbl.Size = new Size(76, 20);
+            ins_name_lbl.Size = new Size(87, 23);
             ins_name_lbl.TabIndex = 2;
             ins_name_lbl.Text = "Full Name";
             // 
             // ins_phone_lbl
             // 
             ins_phone_lbl.AutoSize = true;
-            ins_phone_lbl.Location = new Point(14, 191);
+            ins_phone_lbl.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ins_phone_lbl.Location = new Point(200, 220);
             ins_phone_lbl.Name = "ins_phone_lbl";
-            ins_phone_lbl.Size = new Size(50, 20);
+            ins_phone_lbl.Size = new Size(59, 23);
             ins_phone_lbl.TabIndex = 3;
             ins_phone_lbl.Text = "Phone";
             // 
             // ins_email_lbl
             // 
             ins_email_lbl.AutoSize = true;
-            ins_email_lbl.Location = new Point(14, 245);
+            ins_email_lbl.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ins_email_lbl.Location = new Point(600, 220);
             ins_email_lbl.Name = "ins_email_lbl";
-            ins_email_lbl.Size = new Size(46, 20);
+            ins_email_lbl.Size = new Size(51, 23);
             ins_email_lbl.TabIndex = 3;
             ins_email_lbl.Text = "Email";
             // 
             // ins_city_lbl
             // 
             ins_city_lbl.AutoSize = true;
-            ins_city_lbl.Location = new Point(28, 147);
+            ins_city_lbl.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ins_city_lbl.Location = new Point(200, 290);
             ins_city_lbl.Name = "ins_city_lbl";
-            ins_city_lbl.Size = new Size(34, 20);
+            ins_city_lbl.Size = new Size(39, 23);
             ins_city_lbl.TabIndex = 7;
             ins_city_lbl.Text = "City";
             // 
             // ins_street_lbl
             // 
             ins_street_lbl.AutoSize = true;
-            ins_street_lbl.Location = new Point(327, 145);
+            ins_street_lbl.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ins_street_lbl.Location = new Point(600, 290);
             ins_street_lbl.Name = "ins_street_lbl";
-            ins_street_lbl.Size = new Size(48, 20);
+            ins_street_lbl.Size = new Size(54, 23);
             ins_street_lbl.TabIndex = 8;
             ins_street_lbl.Text = "Street";
             // 
             // ins_dob_lbl
             // 
             ins_dob_lbl.AutoSize = true;
-            ins_dob_lbl.Location = new Point(323, 98);
+            ins_dob_lbl.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ins_dob_lbl.Location = new Point(600, 150);
             ins_dob_lbl.Name = "ins_dob_lbl";
-            ins_dob_lbl.Size = new Size(94, 20);
+            ins_dob_lbl.Size = new Size(107, 23);
             ins_dob_lbl.TabIndex = 6;
             ins_dob_lbl.Text = "Date of Birth";
             // 
             // ins_salary_lbl
             // 
             ins_salary_lbl.AutoSize = true;
-            ins_salary_lbl.Location = new Point(320, 249);
+            ins_salary_lbl.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ins_salary_lbl.Location = new Point(200, 360);
             ins_salary_lbl.Name = "ins_salary_lbl";
-            ins_salary_lbl.Size = new Size(49, 20);
+            ins_salary_lbl.Size = new Size(55, 23);
             ins_salary_lbl.TabIndex = 5;
             ins_salary_lbl.Text = "Salary";
             // 
             // addIns_pnl
             // 
+            addIns_pnl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            addIns_pnl.AutoScroll = true;
             addIns_pnl.Controls.Add(ipdIns_btn);
             addIns_pnl.Controls.Add(addInsHead_lbl);
             addIns_pnl.Controls.Add(addInsMsg_lbl);
@@ -609,17 +594,18 @@ namespace ITIExaminationSystem.Forms
             addIns_pnl.Controls.Add(ins_gender_box);
             addIns_pnl.Controls.Add(addIns_btn);
             addIns_pnl.Controls.Add(resetIns_btn);
-            addIns_pnl.Location = new Point(183, 28);
+            addIns_pnl.Location = new Point(0, 228);
             addIns_pnl.Name = "addIns_pnl";
-            addIns_pnl.Size = new Size(389, 449);
+            addIns_pnl.Padding = new Padding(10);
+            addIns_pnl.Size = new Size(1055, 472);
             addIns_pnl.TabIndex = 119;
             addIns_pnl.Visible = false;
             // 
             // ipdIns_btn
             // 
-            ipdIns_btn.Location = new Point(258, 339);
+            ipdIns_btn.Location = new Point(700, 470);
             ipdIns_btn.Name = "ipdIns_btn";
-            ipdIns_btn.Size = new Size(167, 40);
+            ipdIns_btn.Size = new Size(180, 50);
             ipdIns_btn.TabIndex = 138;
             ipdIns_btn.Text = "Update Instructor";
             ipdIns_btn.Click += ipdIns_btn_Click;
@@ -627,10 +613,10 @@ namespace ITIExaminationSystem.Forms
             // addInsHead_lbl
             // 
             addInsHead_lbl.AutoSize = true;
-            addInsHead_lbl.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            addInsHead_lbl.Location = new Point(195, 14);
+            addInsHead_lbl.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            addInsHead_lbl.Location = new Point(330, 20);
             addInsHead_lbl.Name = "addInsHead_lbl";
-            addInsHead_lbl.Size = new Size(149, 28);
+            addInsHead_lbl.Size = new Size(204, 37);
             addInsHead_lbl.TabIndex = 137;
             addInsHead_lbl.Text = "Add Instructor";
             // 
@@ -644,78 +630,78 @@ namespace ITIExaminationSystem.Forms
             // 
             // ins_pass_txt
             // 
-            ins_pass_txt.Location = new Point(423, 51);
+            ins_pass_txt.Location = new Point(600, 105);
             ins_pass_txt.Name = "ins_pass_txt";
-            ins_pass_txt.Size = new Size(200, 27);
+            ins_pass_txt.Size = new Size(280, 27);
             ins_pass_txt.TabIndex = 1;
             ins_pass_txt.UseSystemPasswordChar = true;
             // 
             // ins_username_txt
             // 
-            ins_username_txt.Location = new Point(110, 51);
+            ins_username_txt.Location = new Point(200, 105);
             ins_username_txt.Name = "ins_username_txt";
-            ins_username_txt.Size = new Size(200, 27);
+            ins_username_txt.Size = new Size(280, 27);
             ins_username_txt.TabIndex = 0;
             // 
             // ins_name_txt
             // 
-            ins_name_txt.Location = new Point(110, 95);
+            ins_name_txt.Location = new Point(200, 175);
             ins_name_txt.Name = "ins_name_txt";
-            ins_name_txt.Size = new Size(200, 27);
+            ins_name_txt.Size = new Size(280, 27);
             ins_name_txt.TabIndex = 2;
             // 
             // ins_phone_txt
             // 
-            ins_phone_txt.Location = new Point(110, 188);
+            ins_phone_txt.Location = new Point(200, 245);
             ins_phone_txt.Name = "ins_phone_txt";
-            ins_phone_txt.Size = new Size(200, 27);
+            ins_phone_txt.Size = new Size(280, 27);
             ins_phone_txt.TabIndex = 3;
             // 
             // ins_email_txt
             // 
-            ins_email_txt.Location = new Point(110, 242);
+            ins_email_txt.Location = new Point(600, 245);
             ins_email_txt.Name = "ins_email_txt";
-            ins_email_txt.Size = new Size(200, 27);
+            ins_email_txt.Size = new Size(280, 27);
             ins_email_txt.TabIndex = 4;
             // 
             // ins_salary_nm
             // 
-            ins_salary_nm.Location = new Point(423, 247);
+            ins_salary_nm.Location = new Point(200, 385);
             ins_salary_nm.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             ins_salary_nm.Minimum = new decimal(new int[] { 5000, 0, 0, 0 });
             ins_salary_nm.Name = "ins_salary_nm";
-            ins_salary_nm.Size = new Size(125, 27);
+            ins_salary_nm.Size = new Size(280, 27);
             ins_salary_nm.TabIndex = 5;
             ins_salary_nm.Value = new decimal(new int[] { 10000, 0, 0, 0 });
             // 
             // ins_dob_picker
             // 
-            ins_dob_picker.Location = new Point(423, 95);
+            ins_dob_picker.Location = new Point(600, 175);
             ins_dob_picker.Name = "ins_dob_picker";
-            ins_dob_picker.Size = new Size(200, 27);
+            ins_dob_picker.Size = new Size(280, 27);
             ins_dob_picker.TabIndex = 6;
             // 
             // ins_city_txt
             // 
-            ins_city_txt.Location = new Point(110, 145);
+            ins_city_txt.Location = new Point(200, 315);
             ins_city_txt.Name = "ins_city_txt";
-            ins_city_txt.Size = new Size(196, 27);
+            ins_city_txt.Size = new Size(280, 27);
             ins_city_txt.TabIndex = 7;
             // 
             // ins_street_txt
             // 
-            ins_street_txt.Location = new Point(423, 142);
+            ins_street_txt.Location = new Point(600, 315);
             ins_street_txt.Name = "ins_street_txt";
-            ins_street_txt.Size = new Size(190, 27);
+            ins_street_txt.Size = new Size(280, 27);
             ins_street_txt.TabIndex = 8;
             // 
             // ins_gender_box
             // 
             ins_gender_box.Controls.Add(ins_male_rdo);
             ins_gender_box.Controls.Add(ins_female_rdo);
-            ins_gender_box.Location = new Point(327, 184);
+            ins_gender_box.Location = new Point(600, 360);
             ins_gender_box.Name = "ins_gender_box";
-            ins_gender_box.Size = new Size(226, 55);
+            ins_gender_box.Size = new Size(280, 65);
             ins_gender_box.TabIndex = 9;
             ins_gender_box.TabStop = false;
             ins_gender_box.Text = "Gender";
@@ -738,18 +724,18 @@ namespace ITIExaminationSystem.Forms
             // 
             // addIns_btn
             // 
-            addIns_btn.Location = new Point(215, 356);
+            addIns_btn.Location = new Point(200, 470);
             addIns_btn.Name = "addIns_btn";
-            addIns_btn.Size = new Size(167, 40);
+            addIns_btn.Size = new Size(180, 50);
             addIns_btn.TabIndex = 10;
             addIns_btn.Text = "Add Instructor";
             addIns_btn.Click += addIns_btn_Click;
             // 
             // resetIns_btn
             // 
-            resetIns_btn.Location = new Point(392, 356);
+            resetIns_btn.Location = new Point(450, 470);
             resetIns_btn.Name = "resetIns_btn";
-            resetIns_btn.Size = new Size(80, 40);
+            resetIns_btn.Size = new Size(180, 50);
             resetIns_btn.TabIndex = 11;
             resetIns_btn.Text = "Reset";
             resetIns_btn.Click += resetIns_btn_Click;
@@ -773,141 +759,12 @@ namespace ITIExaminationSystem.Forms
             delStudMsg_lbl.Size = new Size(0, 20);
             delStudMsg_lbl.TabIndex = 114;
             // 
-            // welcome_lbl
-            // 
-            welcome_lbl.AutoSize = true;
-            welcome_lbl.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            welcome_lbl.Location = new Point(18, 10);
-            welcome_lbl.Name = "welcome_lbl";
-            welcome_lbl.Size = new Size(139, 38);
-            welcome_lbl.TabIndex = 0;
-            welcome_lbl.Text = "Welcome";
-            // 
-            // stat_lbl
-            // 
-            stat_lbl.AutoSize = true;
-            stat_lbl.Font = new Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            stat_lbl.Location = new Point(18, 48);
-            stat_lbl.Name = "stat_lbl";
-            stat_lbl.Size = new Size(201, 32);
-            stat_lbl.TabIndex = 8;
-            stat_lbl.Text = "System Statistics";
-            // 
-            // stat_pnl
-            // 
-            stat_pnl.BackColor = SystemColors.ControlLight;
-            stat_pnl.Controls.Add(studentsCard);
-            stat_pnl.Controls.Add(instructorsCard);
-            stat_pnl.Controls.Add(coursesCard);
-            stat_pnl.Controls.Add(tracksCard);
-            stat_pnl.Controls.Add(welcome_lbl);
-            stat_pnl.Controls.Add(stat_lbl);
-            stat_pnl.Location = new Point(45, 111);
-            stat_pnl.Name = "stat_pnl";
-            stat_pnl.Size = new Size(700, 200);
-            stat_pnl.TabIndex = 85;
-            // 
-            // studentsCard
-            // 
-            studentsCard.BackColor = Color.FromArgb(52, 152, 219);
-            studentsCard.Controls.Add(students_lbl);
-            studentsCard.Controls.Add(noStud_lbl);
-            studentsCard.Location = new Point(20, 90);
-            studentsCard.Name = "studentsCard";
-            studentsCard.Padding = new Padding(10);
-            studentsCard.Size = new Size(150, 90);
-            studentsCard.TabIndex = 20;
-            // 
-            // students_lbl
-            // 
-            students_lbl.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            students_lbl.ForeColor = Color.White;
-            students_lbl.Location = new Point(10, 10);
-            students_lbl.Name = "students_lbl";
-            students_lbl.Size = new Size(130, 24);
-            students_lbl.TabIndex = 0;
-            students_lbl.Text = "Students";
-            // 
-            // noStud_lbl
-            // 
-            noStud_lbl.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            noStud_lbl.ForeColor = Color.White;
-            noStud_lbl.Location = new Point(10, 40);
-            noStud_lbl.Name = "noStud_lbl";
-            noStud_lbl.Size = new Size(130, 36);
-            noStud_lbl.TabIndex = 1;
-            noStud_lbl.Text = "100";
-            noStud_lbl.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // coursesCard
-            // 
-            coursesCard.BackColor = Color.FromArgb(241, 196, 15);
-            coursesCard.Controls.Add(course_lbl);
-            coursesCard.Controls.Add(noCrs_lbl);
-            coursesCard.Location = new Point(360, 90);
-            coursesCard.Name = "coursesCard";
-            coursesCard.Padding = new Padding(10);
-            coursesCard.Size = new Size(150, 90);
-            coursesCard.TabIndex = 22;
-            // 
-            // course_lbl
-            // 
-            course_lbl.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            course_lbl.ForeColor = Color.White;
-            course_lbl.Location = new Point(10, 10);
-            course_lbl.Name = "course_lbl";
-            course_lbl.Size = new Size(130, 24);
-            course_lbl.TabIndex = 0;
-            course_lbl.Text = "Courses";
-            // 
-            // noCrs_lbl
-            // 
-            noCrs_lbl.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            noCrs_lbl.ForeColor = Color.White;
-            noCrs_lbl.Location = new Point(10, 40);
-            noCrs_lbl.Name = "noCrs_lbl";
-            noCrs_lbl.Size = new Size(130, 36);
-            noCrs_lbl.TabIndex = 1;
-            noCrs_lbl.Text = "100";
-            noCrs_lbl.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // tracksCard
-            // 
-            tracksCard.BackColor = Color.FromArgb(155, 89, 182);
-            tracksCard.Controls.Add(tracks_lbl);
-            tracksCard.Controls.Add(noTracks_lbl);
-            tracksCard.Location = new Point(530, 90);
-            tracksCard.Name = "tracksCard";
-            tracksCard.Padding = new Padding(10);
-            tracksCard.Size = new Size(150, 90);
-            tracksCard.TabIndex = 23;
-            // 
-            // tracks_lbl
-            // 
-            tracks_lbl.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            tracks_lbl.ForeColor = Color.White;
-            tracks_lbl.Location = new Point(10, 10);
-            tracks_lbl.Name = "tracks_lbl";
-            tracks_lbl.Size = new Size(130, 24);
-            tracks_lbl.TabIndex = 0;
-            tracks_lbl.Text = "Tracks";
-            // 
-            // noTracks_lbl
-            // 
-            noTracks_lbl.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            noTracks_lbl.ForeColor = Color.White;
-            noTracks_lbl.Location = new Point(10, 40);
-            noTracks_lbl.Name = "noTracks_lbl";
-            noTracks_lbl.Size = new Size(130, 36);
-            noTracks_lbl.TabIndex = 1;
-            noTracks_lbl.Text = "100";
-            noTracks_lbl.TextAlign = ContentAlignment.MiddleLeft;
-            // 
             // updateStud_pnl
             // 
+            updateStud_pnl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            updateStud_pnl.AutoScroll = true;
             updateStud_pnl.Controls.Add(updStudMsg_lbl);
             updateStud_pnl.Controls.Add(label1);
-            updateStud_pnl.Controls.Add(updateStu_btn);
             updateStud_pnl.Controls.Add(genderUpd_txt);
             updateStud_pnl.Controls.Add(trackidUpd_txt);
             updateStud_pnl.Controls.Add(ageUpd_txt);
@@ -930,9 +787,10 @@ namespace ITIExaminationSystem.Forms
             updateStud_pnl.Controls.Add(label10);
             updateStud_pnl.Controls.Add(usernameUpdate_lbl);
             updateStud_pnl.Controls.Add(label13);
-            updateStud_pnl.Location = new Point(291, 62);
+            updateStud_pnl.Location = new Point(0, 228);
             updateStud_pnl.Name = "updateStud_pnl";
-            updateStud_pnl.Size = new Size(84, 197);
+            updateStud_pnl.Padding = new Padding(10);
+            updateStud_pnl.Size = new Size(1055, 472);
             updateStud_pnl.TabIndex = 116;
             // 
             // updStudMsg_lbl
@@ -952,16 +810,6 @@ namespace ITIExaminationSystem.Forms
             label1.Size = new Size(146, 25);
             label1.TabIndex = 136;
             label1.Text = "Update Student";
-            // 
-            // updateStu_btn
-            // 
-            updateStu_btn.Location = new Point(215, 356);
-            updateStu_btn.Name = "updateStu_btn";
-            updateStu_btn.Size = new Size(167, 40);
-            updateStu_btn.TabIndex = 135;
-            updateStu_btn.Text = "Update Student";
-            updateStu_btn.UseVisualStyleBackColor = true;
-            updateStu_btn.Click += updateStu_btn_Click;
             // 
             // genderUpd_txt
             // 
@@ -1169,8 +1017,20 @@ namespace ITIExaminationSystem.Forms
             label13.Size = new Size(0, 20);
             label13.TabIndex = 111;
             // 
+            // updateStu_btn
+            // 
+            updateStu_btn.Location = new Point(215, 550);
+            updateStu_btn.Name = "updateStu_btn";
+            updateStu_btn.Size = new Size(167, 40);
+            updateStu_btn.TabIndex = 135;
+            updateStu_btn.Text = "Update Student";
+            updateStu_btn.UseVisualStyleBackColor = true;
+            updateStu_btn.Click += updateStu_btn_Click;
+            // 
             // addStud_pnl
             // 
+            addStud_pnl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            addStud_pnl.AutoScroll = true;
             addStud_pnl.Controls.Add(addStudMsg_lbl);
             addStud_pnl.Controls.Add(stud_head_lbl);
             addStud_pnl.Controls.Add(addStud_btn);
@@ -1199,9 +1059,11 @@ namespace ITIExaminationSystem.Forms
             addStud_pnl.Controls.Add(usernameStud_lbl);
             addStud_pnl.Controls.Add(passStud_lbl);
             addStud_pnl.Controls.Add(message_lbl);
-            addStud_pnl.Location = new Point(48, 55);
+            addStud_pnl.Controls.Add(updateStu_btn);
+            addStud_pnl.Location = new Point(0, 228);
             addStud_pnl.Name = "addStud_pnl";
-            addStud_pnl.Size = new Size(105, 389);
+            addStud_pnl.Padding = new Padding(10);
+            addStud_pnl.Size = new Size(1055, 472);
             addStud_pnl.TabIndex = 115;
             // 
             // addStudMsg_lbl
@@ -1216,18 +1078,18 @@ namespace ITIExaminationSystem.Forms
             // stud_head_lbl
             // 
             stud_head_lbl.AutoSize = true;
-            stud_head_lbl.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            stud_head_lbl.Location = new Point(20, 10);
+            stud_head_lbl.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            stud_head_lbl.Location = new Point(350, 20);
             stud_head_lbl.Name = "stud_head_lbl";
-            stud_head_lbl.Size = new Size(130, 28);
+            stud_head_lbl.Size = new Size(177, 37);
             stud_head_lbl.TabIndex = 136;
             stud_head_lbl.Text = "Add Student";
             // 
             // addStud_btn
             // 
-            addStud_btn.Location = new Point(215, 356);
+            addStud_btn.Location = new Point(200, 550);
             addStud_btn.Name = "addStud_btn";
-            addStud_btn.Size = new Size(120, 40);
+            addStud_btn.Size = new Size(180, 50);
             addStud_btn.TabIndex = 135;
             addStud_btn.Text = "Add Student";
             addStud_btn.UseVisualStyleBackColor = true;
@@ -1235,9 +1097,9 @@ namespace ITIExaminationSystem.Forms
             // 
             // resetAdd_btn
             // 
-            resetAdd_btn.Location = new Point(347, 356);
+            resetAdd_btn.Location = new Point(450, 550);
             resetAdd_btn.Name = "resetAdd_btn";
-            resetAdd_btn.Size = new Size(80, 40);
+            resetAdd_btn.Size = new Size(180, 50);
             resetAdd_btn.TabIndex = 138;
             resetAdd_btn.Text = "Reset";
             resetAdd_btn.UseVisualStyleBackColor = true;
@@ -1247,9 +1109,9 @@ namespace ITIExaminationSystem.Forms
             // 
             genderStud_box.Controls.Add(male_rdo);
             genderStud_box.Controls.Add(female_rdo);
-            genderStud_box.Location = new Point(327, 184);
+            genderStud_box.Location = new Point(600, 410);
             genderStud_box.Name = "genderStud_box";
-            genderStud_box.Size = new Size(226, 55);
+            genderStud_box.Size = new Size(280, 65);
             genderStud_box.TabIndex = 134;
             genderStud_box.TabStop = false;
             genderStud_box.Text = "Gender";
@@ -1278,189 +1140,200 @@ namespace ITIExaminationSystem.Forms
             // 
             // trackidStud_nm
             // 
-            trackidStud_nm.Location = new Point(423, 297);
+            trackidStud_nm.Location = new Point(200, 445);
             trackidStud_nm.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             trackidStud_nm.Name = "trackidStud_nm";
-            trackidStud_nm.Size = new Size(125, 27);
+            trackidStud_nm.Size = new Size(280, 27);
             trackidStud_nm.TabIndex = 133;
             addToolTip.SetToolTip(trackidStud_nm, "Select an existing Track Id (>=1)");
             trackidStud_nm.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // ageStud_nm
             // 
-            ageStud_nm.Location = new Point(423, 247);
+            ageStud_nm.Location = new Point(600, 375);
             ageStud_nm.Maximum = new decimal(new int[] { 120, 0, 0, 0 });
             ageStud_nm.Minimum = new decimal(new int[] { 16, 0, 0, 0 });
             ageStud_nm.Name = "ageStud_nm";
-            ageStud_nm.Size = new Size(125, 27);
+            ageStud_nm.Size = new Size(280, 27);
             ageStud_nm.TabIndex = 132;
             addToolTip.SetToolTip(ageStud_nm, "Student age (16-120)");
             ageStud_nm.Value = new decimal(new int[] { 22, 0, 0, 0 });
             // 
             // zipStud_txt
             // 
-            zipStud_txt.Location = new Point(423, 130);
+            zipStud_txt.Location = new Point(200, 375);
             zipStud_txt.Name = "zipStud_txt";
-            zipStud_txt.Size = new Size(125, 27);
+            zipStud_txt.Size = new Size(280, 27);
             zipStud_txt.TabIndex = 131;
             // 
             // streetStud_txt
             // 
-            streetStud_txt.Location = new Point(423, 84);
+            streetStud_txt.Location = new Point(600, 305);
             streetStud_txt.Name = "streetStud_txt";
-            streetStud_txt.Size = new Size(125, 27);
+            streetStud_txt.Size = new Size(280, 27);
             streetStud_txt.TabIndex = 130;
             // 
             // cityStud_txt
             // 
-            cityStud_txt.Location = new Point(423, 44);
+            cityStud_txt.Location = new Point(200, 305);
             cityStud_txt.Name = "cityStud_txt";
-            cityStud_txt.Size = new Size(125, 27);
+            cityStud_txt.Size = new Size(280, 27);
             cityStud_txt.TabIndex = 129;
             // 
             // phoneStud_txt
             // 
-            phoneStud_txt.Location = new Point(110, 301);
+            phoneStud_txt.Location = new Point(600, 235);
             phoneStud_txt.Name = "phoneStud_txt";
-            phoneStud_txt.Size = new Size(125, 27);
+            phoneStud_txt.Size = new Size(280, 27);
             phoneStud_txt.TabIndex = 128;
             addToolTip.SetToolTip(phoneStud_txt, "Enter phone (digits, +, -, spaces allowed)");
             // 
             // emailStud_txt
             // 
-            emailStud_txt.Location = new Point(110, 242);
+            emailStud_txt.Location = new Point(200, 235);
             emailStud_txt.Name = "emailStud_txt";
-            emailStud_txt.Size = new Size(125, 27);
+            emailStud_txt.Size = new Size(280, 27);
             emailStud_txt.TabIndex = 127;
             addToolTip.SetToolTip(emailStud_txt, "Enter a valid email address");
             // 
             // lnameStud_txt
             // 
-            lnameStud_txt.Location = new Point(111, 188);
+            lnameStud_txt.Location = new Point(600, 165);
             lnameStud_txt.Name = "lnameStud_txt";
-            lnameStud_txt.Size = new Size(125, 27);
+            lnameStud_txt.Size = new Size(280, 27);
             lnameStud_txt.TabIndex = 126;
             // 
             // fnameStud_txt
             // 
-            fnameStud_txt.Location = new Point(111, 130);
+            fnameStud_txt.Location = new Point(200, 165);
             fnameStud_txt.Name = "fnameStud_txt";
-            fnameStud_txt.Size = new Size(125, 27);
+            fnameStud_txt.Size = new Size(280, 27);
             fnameStud_txt.TabIndex = 125;
             // 
             // passStud_txt
             // 
-            passStud_txt.Location = new Point(111, 88);
+            passStud_txt.Location = new Point(600, 95);
             passStud_txt.Name = "passStud_txt";
-            passStud_txt.Size = new Size(125, 27);
+            passStud_txt.Size = new Size(280, 27);
             passStud_txt.TabIndex = 124;
             addToolTip.SetToolTip(passStud_txt, "Enter a password (min 6 characters)");
             passStud_txt.UseSystemPasswordChar = true;
             // 
             // usernameStud_txt
             // 
-            usernameStud_txt.Location = new Point(110, 51);
+            usernameStud_txt.Location = new Point(200, 95);
             usernameStud_txt.Name = "usernameStud_txt";
-            usernameStud_txt.Size = new Size(125, 27);
+            usernameStud_txt.Size = new Size(280, 27);
             usernameStud_txt.TabIndex = 123;
             addToolTip.SetToolTip(usernameStud_txt, "Enter a username (min 3 characters)");
             // 
             // trackidStud_lbl
             // 
             trackidStud_lbl.AutoSize = true;
-            trackidStud_lbl.Location = new Point(320, 304);
+            trackidStud_lbl.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            trackidStud_lbl.Location = new Point(200, 420);
             trackidStud_lbl.Name = "trackidStud_lbl";
-            trackidStud_lbl.Size = new Size(60, 20);
+            trackidStud_lbl.Size = new Size(69, 23);
             trackidStud_lbl.TabIndex = 122;
             trackidStud_lbl.Text = "Track Id";
             // 
             // ageStud_lbl
             // 
             ageStud_lbl.AutoSize = true;
-            ageStud_lbl.Location = new Point(334, 254);
+            ageStud_lbl.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ageStud_lbl.Location = new Point(600, 350);
             ageStud_lbl.Name = "ageStud_lbl";
-            ageStud_lbl.Size = new Size(36, 20);
+            ageStud_lbl.Size = new Size(40, 23);
             ageStud_lbl.TabIndex = 121;
             ageStud_lbl.Text = "Age";
             // 
             // zipStud_lbl
             // 
             zipStud_lbl.AutoSize = true;
-            zipStud_lbl.Location = new Point(322, 133);
+            zipStud_lbl.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            zipStud_lbl.Location = new Point(200, 350);
             zipStud_lbl.Name = "zipStud_lbl";
-            zipStud_lbl.Size = new Size(70, 20);
+            zipStud_lbl.Size = new Size(79, 23);
             zipStud_lbl.TabIndex = 120;
             zipStud_lbl.Text = "Zip Code";
             // 
             // streetStud_lbl
             // 
             streetStud_lbl.AutoSize = true;
-            streetStud_lbl.Location = new Point(332, 91);
+            streetStud_lbl.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            streetStud_lbl.Location = new Point(600, 280);
             streetStud_lbl.Name = "streetStud_lbl";
-            streetStud_lbl.Size = new Size(48, 20);
+            streetStud_lbl.Size = new Size(54, 23);
             streetStud_lbl.TabIndex = 119;
             streetStud_lbl.Text = "Street";
             // 
             // cityStud_lbl
             // 
             cityStud_lbl.AutoSize = true;
-            cityStud_lbl.Location = new Point(336, 47);
+            cityStud_lbl.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cityStud_lbl.Location = new Point(200, 280);
             cityStud_lbl.Name = "cityStud_lbl";
-            cityStud_lbl.Size = new Size(34, 20);
+            cityStud_lbl.Size = new Size(39, 23);
             cityStud_lbl.TabIndex = 118;
             cityStud_lbl.Text = "City";
             // 
             // phoneStud_lbl
             // 
             phoneStud_lbl.AutoSize = true;
-            phoneStud_lbl.Location = new Point(18, 304);
+            phoneStud_lbl.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            phoneStud_lbl.Location = new Point(600, 210);
             phoneStud_lbl.Name = "phoneStud_lbl";
-            phoneStud_lbl.Size = new Size(50, 20);
+            phoneStud_lbl.Size = new Size(59, 23);
             phoneStud_lbl.TabIndex = 117;
             phoneStud_lbl.Text = "Phone";
             // 
             // emailStud_lbl
             // 
             emailStud_lbl.AutoSize = true;
-            emailStud_lbl.Location = new Point(22, 249);
+            emailStud_lbl.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            emailStud_lbl.Location = new Point(200, 210);
             emailStud_lbl.Name = "emailStud_lbl";
-            emailStud_lbl.Size = new Size(46, 20);
+            emailStud_lbl.Size = new Size(51, 23);
             emailStud_lbl.TabIndex = 116;
             emailStud_lbl.Text = "Email";
             // 
             // lnameStud_lbl
             // 
             lnameStud_lbl.AutoSize = true;
-            lnameStud_lbl.Location = new Point(17, 193);
+            lnameStud_lbl.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lnameStud_lbl.Location = new Point(600, 140);
             lnameStud_lbl.Name = "lnameStud_lbl";
-            lnameStud_lbl.Size = new Size(79, 20);
+            lnameStud_lbl.Size = new Size(91, 23);
             lnameStud_lbl.TabIndex = 115;
             lnameStud_lbl.Text = "Last Name";
             // 
             // fnameStud_lbl
             // 
             fnameStud_lbl.AutoSize = true;
-            fnameStud_lbl.Location = new Point(14, 137);
+            fnameStud_lbl.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            fnameStud_lbl.Location = new Point(200, 140);
             fnameStud_lbl.Name = "fnameStud_lbl";
-            fnameStud_lbl.Size = new Size(80, 20);
+            fnameStud_lbl.Size = new Size(92, 23);
             fnameStud_lbl.TabIndex = 114;
             fnameStud_lbl.Text = "First Name";
             // 
             // usernameStud_lbl
             // 
             usernameStud_lbl.AutoSize = true;
-            usernameStud_lbl.Location = new Point(14, 51);
+            usernameStud_lbl.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            usernameStud_lbl.Location = new Point(200, 70);
             usernameStud_lbl.Name = "usernameStud_lbl";
-            usernameStud_lbl.Size = new Size(82, 20);
+            usernameStud_lbl.Size = new Size(95, 23);
             usernameStud_lbl.TabIndex = 112;
             usernameStud_lbl.Text = "User Name";
             // 
             // passStud_lbl
             // 
             passStud_lbl.AutoSize = true;
-            passStud_lbl.Location = new Point(14, 91);
+            passStud_lbl.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            passStud_lbl.Location = new Point(600, 70);
             passStud_lbl.Name = "passStud_lbl";
-            passStud_lbl.Size = new Size(70, 20);
+            passStud_lbl.Size = new Size(80, 23);
             passStud_lbl.TabIndex = 113;
             passStud_lbl.Text = "Password";
             // 
@@ -1474,13 +1347,16 @@ namespace ITIExaminationSystem.Forms
             // 
             // showStud_pnl
             // 
+            showStud_pnl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            showStud_pnl.AutoScroll = true;
             showStud_pnl.Controls.Add(opMsg_lbl);
             showStud_pnl.Controls.Add(dgvUpdate_btn);
             showStud_pnl.Controls.Add(students_dgv);
             showStud_pnl.Controls.Add(dgvDelete_btn);
-            showStud_pnl.Location = new Point(120, 60);
+            showStud_pnl.Location = new Point(0, 228);
             showStud_pnl.Name = "showStud_pnl";
-            showStud_pnl.Size = new Size(560, 420);
+            showStud_pnl.Padding = new Padding(10);
+            showStud_pnl.Size = new Size(1055, 472);
             showStud_pnl.TabIndex = 117;
             // 
             // opMsg_lbl
@@ -1493,8 +1369,9 @@ namespace ITIExaminationSystem.Forms
             // 
             // dgvUpdate_btn
             // 
+            dgvUpdate_btn.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             dgvUpdate_btn.Enabled = false;
-            dgvUpdate_btn.Location = new Point(150, 350);
+            dgvUpdate_btn.Location = new Point(150, 405);
             dgvUpdate_btn.Name = "dgvUpdate_btn";
             dgvUpdate_btn.Size = new Size(120, 40);
             dgvUpdate_btn.TabIndex = 1;
@@ -1506,6 +1383,7 @@ namespace ITIExaminationSystem.Forms
             // 
             students_dgv.AllowUserToAddRows = false;
             students_dgv.AllowUserToDeleteRows = false;
+            students_dgv.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             students_dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             students_dgv.ColumnHeadersHeight = 29;
             students_dgv.Columns.AddRange(new DataGridViewColumn[] { stdId, colFullName, colPhone, colTrackId });
@@ -1515,7 +1393,7 @@ namespace ITIExaminationSystem.Forms
             students_dgv.ReadOnly = true;
             students_dgv.RowHeadersWidth = 51;
             students_dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            students_dgv.Size = new Size(540, 300);
+            students_dgv.Size = new Size(1035, 380);
             students_dgv.TabIndex = 0;
             students_dgv.SelectionChanged += students_dgv_SelectionChanged;
             // 
@@ -1553,8 +1431,9 @@ namespace ITIExaminationSystem.Forms
             // 
             // dgvDelete_btn
             // 
+            dgvDelete_btn.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             dgvDelete_btn.Enabled = false;
-            dgvDelete_btn.Location = new Point(320, 350);
+            dgvDelete_btn.Location = new Point(320, 405);
             dgvDelete_btn.Name = "dgvDelete_btn";
             dgvDelete_btn.Size = new Size(120, 40);
             dgvDelete_btn.TabIndex = 2;
@@ -1564,13 +1443,16 @@ namespace ITIExaminationSystem.Forms
             // 
             // showCrs_pnl
             // 
+            showCrs_pnl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            showCrs_pnl.AutoScroll = true;
             showCrs_pnl.Controls.Add(crsMsg_lbl);
             showCrs_pnl.Controls.Add(courses_dgv);
             showCrs_pnl.Controls.Add(crsUpdate_btn);
             showCrs_pnl.Controls.Add(crsDelete_btn);
-            showCrs_pnl.Location = new Point(154, 40);
+            showCrs_pnl.Location = new Point(0, 228);
             showCrs_pnl.Name = "showCrs_pnl";
-            showCrs_pnl.Size = new Size(558, 381);
+            showCrs_pnl.Padding = new Padding(10);
+            showCrs_pnl.Size = new Size(1055, 472);
             showCrs_pnl.TabIndex = 120;
             // 
             // crsMsg_lbl
@@ -1585,6 +1467,7 @@ namespace ITIExaminationSystem.Forms
             // 
             courses_dgv.AllowUserToAddRows = false;
             courses_dgv.AllowUserToDeleteRows = false;
+            courses_dgv.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             courses_dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             courses_dgv.ColumnHeadersHeight = 29;
             courses_dgv.Columns.AddRange(new DataGridViewColumn[] { crsId, crsColName, crsColInsId, crsColTrackId });
@@ -1594,7 +1477,7 @@ namespace ITIExaminationSystem.Forms
             courses_dgv.ReadOnly = true;
             courses_dgv.RowHeadersWidth = 51;
             courses_dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            courses_dgv.Size = new Size(540, 300);
+            courses_dgv.Size = new Size(1035, 380);
             courses_dgv.TabIndex = 0;
             courses_dgv.SelectionChanged += courses_dgv_SelectionChanged;
             // 
@@ -1632,8 +1515,9 @@ namespace ITIExaminationSystem.Forms
             // 
             // crsUpdate_btn
             // 
+            crsUpdate_btn.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             crsUpdate_btn.Enabled = false;
-            crsUpdate_btn.Location = new Point(150, 350);
+            crsUpdate_btn.Location = new Point(150, 405);
             crsUpdate_btn.Name = "crsUpdate_btn";
             crsUpdate_btn.Size = new Size(120, 40);
             crsUpdate_btn.TabIndex = 1;
@@ -1642,8 +1526,9 @@ namespace ITIExaminationSystem.Forms
             // 
             // crsDelete_btn
             // 
+            crsDelete_btn.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             crsDelete_btn.Enabled = false;
-            crsDelete_btn.Location = new Point(320, 350);
+            crsDelete_btn.Location = new Point(320, 405);
             crsDelete_btn.Name = "crsDelete_btn";
             crsDelete_btn.Size = new Size(120, 40);
             crsDelete_btn.TabIndex = 2;
@@ -1652,6 +1537,8 @@ namespace ITIExaminationSystem.Forms
             // 
             // addCrs_pnl
             // 
+            addCrs_pnl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            addCrs_pnl.AutoScroll = true;
             addCrs_pnl.Controls.Add(updCrs_btn);
             addCrs_pnl.Controls.Add(addCrsHead_lbl);
             addCrs_pnl.Controls.Add(addCrsMsg_lbl);
@@ -1663,17 +1550,18 @@ namespace ITIExaminationSystem.Forms
             addCrs_pnl.Controls.Add(crs_trackid_nm);
             addCrs_pnl.Controls.Add(addCrs_btn);
             addCrs_pnl.Controls.Add(resetCrs_btn);
-            addCrs_pnl.Location = new Point(183, 28);
+            addCrs_pnl.Location = new Point(0, 228);
             addCrs_pnl.Name = "addCrs_pnl";
-            addCrs_pnl.Size = new Size(389, 449);
+            addCrs_pnl.Padding = new Padding(10);
+            addCrs_pnl.Size = new Size(1055, 472);
             addCrs_pnl.TabIndex = 121;
             addCrs_pnl.Visible = false;
             // 
             // updCrs_btn
             // 
-            updCrs_btn.Location = new Point(258, 339);
+            updCrs_btn.Location = new Point(700, 350);
             updCrs_btn.Name = "updCrs_btn";
-            updCrs_btn.Size = new Size(167, 40);
+            updCrs_btn.Size = new Size(180, 50);
             updCrs_btn.TabIndex = 138;
             updCrs_btn.Text = "Update Course";
             updCrs_btn.Click += updCrs_btn_Click;
@@ -1681,10 +1569,10 @@ namespace ITIExaminationSystem.Forms
             // addCrsHead_lbl
             // 
             addCrsHead_lbl.AutoSize = true;
-            addCrsHead_lbl.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            addCrsHead_lbl.Location = new Point(195, 14);
+            addCrsHead_lbl.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            addCrsHead_lbl.Location = new Point(350, 20);
             addCrsHead_lbl.Name = "addCrsHead_lbl";
-            addCrsHead_lbl.Size = new Size(120, 28);
+            addCrsHead_lbl.Size = new Size(165, 37);
             addCrsHead_lbl.TabIndex = 137;
             addCrsHead_lbl.Text = "Add Course";
             // 
@@ -1699,80 +1587,86 @@ namespace ITIExaminationSystem.Forms
             // crs_name_lbl
             // 
             crs_name_lbl.AutoSize = true;
-            crs_name_lbl.Location = new Point(14, 54);
+            crs_name_lbl.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            crs_name_lbl.Location = new Point(200, 100);
             crs_name_lbl.Name = "crs_name_lbl";
-            crs_name_lbl.Size = new Size(98, 20);
+            crs_name_lbl.Size = new Size(114, 23);
             crs_name_lbl.TabIndex = 0;
             crs_name_lbl.Text = "Course Name";
             // 
             // crs_insid_lbl
             // 
             crs_insid_lbl.AutoSize = true;
-            crs_insid_lbl.Location = new Point(14, 95);
+            crs_insid_lbl.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            crs_insid_lbl.Location = new Point(200, 175);
             crs_insid_lbl.Name = "crs_insid_lbl";
-            crs_insid_lbl.Size = new Size(88, 20);
+            crs_insid_lbl.Size = new Size(104, 23);
             crs_insid_lbl.TabIndex = 1;
             crs_insid_lbl.Text = "Instructor Id";
             // 
             // crs_trackid_lbl
             // 
             crs_trackid_lbl.AutoSize = true;
-            crs_trackid_lbl.Location = new Point(14, 136);
+            crs_trackid_lbl.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            crs_trackid_lbl.Location = new Point(200, 250);
             crs_trackid_lbl.Name = "crs_trackid_lbl";
-            crs_trackid_lbl.Size = new Size(60, 20);
+            crs_trackid_lbl.Size = new Size(69, 23);
             crs_trackid_lbl.TabIndex = 2;
             crs_trackid_lbl.Text = "Track Id";
             // 
             // crs_name_txt
             // 
-            crs_name_txt.Location = new Point(110, 51);
+            crs_name_txt.Location = new Point(200, 125);
             crs_name_txt.Name = "crs_name_txt";
-            crs_name_txt.Size = new Size(200, 27);
+            crs_name_txt.Size = new Size(350, 27);
             crs_name_txt.TabIndex = 0;
             // 
             // crs_insid_nm
             // 
-            crs_insid_nm.Location = new Point(110, 92);
+            crs_insid_nm.Location = new Point(200, 200);
             crs_insid_nm.Name = "crs_insid_nm";
-            crs_insid_nm.Size = new Size(200, 27);
+            crs_insid_nm.Size = new Size(350, 27);
             crs_insid_nm.TabIndex = 1;
             // 
             // crs_trackid_nm
             // 
-            crs_trackid_nm.Location = new Point(110, 133);
+            crs_trackid_nm.Location = new Point(200, 275);
             crs_trackid_nm.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             crs_trackid_nm.Name = "crs_trackid_nm";
-            crs_trackid_nm.Size = new Size(200, 27);
+            crs_trackid_nm.Size = new Size(350, 27);
             crs_trackid_nm.TabIndex = 2;
             crs_trackid_nm.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // addCrs_btn
             // 
-            addCrs_btn.Location = new Point(215, 356);
+            addCrs_btn.Location = new Point(200, 350);
             addCrs_btn.Name = "addCrs_btn";
-            addCrs_btn.Size = new Size(167, 40);
+            addCrs_btn.Size = new Size(180, 50);
             addCrs_btn.TabIndex = 3;
             addCrs_btn.Text = "Add Course";
             addCrs_btn.Click += addCrs_btn_Click;
             // 
             // resetCrs_btn
             // 
-            resetCrs_btn.Location = new Point(392, 356);
+            resetCrs_btn.Location = new Point(450, 350);
             resetCrs_btn.Name = "resetCrs_btn";
-            resetCrs_btn.Size = new Size(80, 40);
+            resetCrs_btn.Size = new Size(180, 50);
             resetCrs_btn.TabIndex = 4;
             resetCrs_btn.Text = "Reset";
             resetCrs_btn.Click += resetCrs_btn_Click;
             // 
             // showTrk_pnl
             // 
+            showTrk_pnl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            showTrk_pnl.AutoScroll = true;
             showTrk_pnl.Controls.Add(trkMsg_lbl);
             showTrk_pnl.Controls.Add(tracks_dgv);
             showTrk_pnl.Controls.Add(trkUpdate_btn);
             showTrk_pnl.Controls.Add(trkDelete_btn);
-            showTrk_pnl.Location = new Point(154, 40);
+            showTrk_pnl.Location = new Point(0, 228);
             showTrk_pnl.Name = "showTrk_pnl";
-            showTrk_pnl.Size = new Size(558, 381);
+            showTrk_pnl.Padding = new Padding(10);
+            showTrk_pnl.Size = new Size(1055, 472);
             showTrk_pnl.TabIndex = 122;
             // 
             // trkMsg_lbl
@@ -1787,6 +1681,7 @@ namespace ITIExaminationSystem.Forms
             // 
             tracks_dgv.AllowUserToAddRows = false;
             tracks_dgv.AllowUserToDeleteRows = false;
+            tracks_dgv.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             tracks_dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             tracks_dgv.ColumnHeadersHeight = 29;
             tracks_dgv.Columns.AddRange(new DataGridViewColumn[] { trkId, trkColName });
@@ -1796,7 +1691,7 @@ namespace ITIExaminationSystem.Forms
             tracks_dgv.ReadOnly = true;
             tracks_dgv.RowHeadersWidth = 51;
             tracks_dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            tracks_dgv.Size = new Size(540, 300);
+            tracks_dgv.Size = new Size(1035, 380);
             tracks_dgv.TabIndex = 0;
             tracks_dgv.SelectionChanged += tracks_dgv_SelectionChanged;
             // 
@@ -1818,8 +1713,9 @@ namespace ITIExaminationSystem.Forms
             // 
             // trkUpdate_btn
             // 
+            trkUpdate_btn.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             trkUpdate_btn.Enabled = false;
-            trkUpdate_btn.Location = new Point(150, 350);
+            trkUpdate_btn.Location = new Point(150, 405);
             trkUpdate_btn.Name = "trkUpdate_btn";
             trkUpdate_btn.Size = new Size(120, 40);
             trkUpdate_btn.TabIndex = 1;
@@ -1828,8 +1724,9 @@ namespace ITIExaminationSystem.Forms
             // 
             // trkDelete_btn
             // 
+            trkDelete_btn.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             trkDelete_btn.Enabled = false;
-            trkDelete_btn.Location = new Point(320, 350);
+            trkDelete_btn.Location = new Point(320, 405);
             trkDelete_btn.Name = "trkDelete_btn";
             trkDelete_btn.Size = new Size(120, 40);
             trkDelete_btn.TabIndex = 2;
@@ -1838,6 +1735,8 @@ namespace ITIExaminationSystem.Forms
             // 
             // addTrk_pnl
             // 
+            addTrk_pnl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            addTrk_pnl.AutoScroll = true;
             addTrk_pnl.Controls.Add(updTrk_btn);
             addTrk_pnl.Controls.Add(addTrkHead_lbl);
             addTrk_pnl.Controls.Add(addTrkMsg_lbl);
@@ -1845,17 +1744,18 @@ namespace ITIExaminationSystem.Forms
             addTrk_pnl.Controls.Add(trk_name_txt);
             addTrk_pnl.Controls.Add(addTrk_btn);
             addTrk_pnl.Controls.Add(resetTrk_btn);
-            addTrk_pnl.Location = new Point(183, 28);
+            addTrk_pnl.Location = new Point(0, 228);
             addTrk_pnl.Name = "addTrk_pnl";
-            addTrk_pnl.Size = new Size(389, 449);
+            addTrk_pnl.Padding = new Padding(10);
+            addTrk_pnl.Size = new Size(1055, 472);
             addTrk_pnl.TabIndex = 123;
             addTrk_pnl.Visible = false;
             // 
             // updTrk_btn
             // 
-            updTrk_btn.Location = new Point(258, 339);
+            updTrk_btn.Location = new Point(700, 220);
             updTrk_btn.Name = "updTrk_btn";
-            updTrk_btn.Size = new Size(167, 40);
+            updTrk_btn.Size = new Size(180, 50);
             updTrk_btn.TabIndex = 138;
             updTrk_btn.Text = "Update Track";
             updTrk_btn.Click += updTrk_btn_Click;
@@ -1863,10 +1763,10 @@ namespace ITIExaminationSystem.Forms
             // addTrkHead_lbl
             // 
             addTrkHead_lbl.AutoSize = true;
-            addTrkHead_lbl.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            addTrkHead_lbl.Location = new Point(195, 14);
+            addTrkHead_lbl.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            addTrkHead_lbl.Location = new Point(350, 20);
             addTrkHead_lbl.Name = "addTrkHead_lbl";
-            addTrkHead_lbl.Size = new Size(106, 28);
+            addTrkHead_lbl.Size = new Size(145, 37);
             addTrkHead_lbl.TabIndex = 137;
             addTrkHead_lbl.Text = "Add Track";
             // 
@@ -1881,41 +1781,207 @@ namespace ITIExaminationSystem.Forms
             // trk_name_lbl
             // 
             trk_name_lbl.AutoSize = true;
-            trk_name_lbl.Location = new Point(14, 54);
+            trk_name_lbl.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            trk_name_lbl.Location = new Point(250, 100);
             trk_name_lbl.Name = "trk_name_lbl";
-            trk_name_lbl.Size = new Size(87, 20);
+            trk_name_lbl.Size = new Size(100, 23);
             trk_name_lbl.TabIndex = 0;
             trk_name_lbl.Text = "Track Name";
             // 
             // trk_name_txt
             // 
-            trk_name_txt.Location = new Point(110, 51);
+            trk_name_txt.Location = new Point(250, 125);
             trk_name_txt.Name = "trk_name_txt";
-            trk_name_txt.Size = new Size(200, 27);
+            trk_name_txt.Size = new Size(350, 27);
             trk_name_txt.TabIndex = 0;
             // 
             // addTrk_btn
             // 
-            addTrk_btn.Location = new Point(106, 339);
+            addTrk_btn.Location = new Point(200, 220);
             addTrk_btn.Name = "addTrk_btn";
-            addTrk_btn.Size = new Size(167, 40);
+            addTrk_btn.Size = new Size(180, 50);
             addTrk_btn.TabIndex = 139;
             addTrk_btn.Text = "Add Track";
             addTrk_btn.Click += addTrk_btn_Click;
             // 
             // resetTrk_btn
             // 
-            resetTrk_btn.Location = new Point(258, 339);
+            resetTrk_btn.Location = new Point(450, 220);
             resetTrk_btn.Name = "resetTrk_btn";
-            resetTrk_btn.Size = new Size(167, 40);
+            resetTrk_btn.Size = new Size(180, 50);
             resetTrk_btn.TabIndex = 140;
             resetTrk_btn.Text = "Reset";
             resetTrk_btn.Click += resetTrk_btn_Click;
             // 
+            // stat_lbl
+            // 
+            stat_lbl.AutoSize = true;
+            stat_lbl.Font = new Font("Segoe UI", 17F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            stat_lbl.Location = new Point(100, 220);
+            stat_lbl.Name = "stat_lbl";
+            stat_lbl.Size = new Size(243, 40);
+            stat_lbl.TabIndex = 8;
+            stat_lbl.Text = "System Statistics";
+            // 
+            // welcome_lbl
+            // 
+            welcome_lbl.AutoSize = true;
+            welcome_lbl.Font = new Font("Segoe UI", 20F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            welcome_lbl.Location = new Point(300, 120);
+            welcome_lbl.Name = "welcome_lbl";
+            welcome_lbl.Size = new Size(168, 46);
+            welcome_lbl.TabIndex = 0;
+            welcome_lbl.Text = "Welcome";
+            // 
+            // tracksCard
+            // 
+            tracksCard.BackColor = Color.FromArgb(155, 89, 182);
+            tracksCard.Controls.Add(tracks_lbl);
+            tracksCard.Controls.Add(noTracks_lbl);
+            tracksCard.Location = new Point(790, 300);
+            tracksCard.Name = "tracksCard";
+            tracksCard.Padding = new Padding(10);
+            tracksCard.Size = new Size(200, 120);
+            tracksCard.TabIndex = 23;
+            // 
+            // tracks_lbl
+            // 
+            tracks_lbl.Font = new Font("Segoe UI", 15F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            tracks_lbl.ForeColor = Color.White;
+            tracks_lbl.Location = new Point(10, 10);
+            tracks_lbl.Name = "tracks_lbl";
+            tracks_lbl.Size = new Size(140, 30);
+            tracks_lbl.TabIndex = 0;
+            tracks_lbl.Text = "Tracks";
+            // 
+            // noTracks_lbl
+            // 
+            noTracks_lbl.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            noTracks_lbl.ForeColor = Color.White;
+            noTracks_lbl.Location = new Point(10, 40);
+            noTracks_lbl.Name = "noTracks_lbl";
+            noTracks_lbl.Size = new Size(150, 45);
+            noTracks_lbl.TabIndex = 1;
+            noTracks_lbl.Text = "100";
+            noTracks_lbl.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // coursesCard
+            // 
+            coursesCard.BackColor = Color.FromArgb(241, 196, 15);
+            coursesCard.Controls.Add(course_lbl);
+            coursesCard.Controls.Add(noCrs_lbl);
+            coursesCard.Location = new Point(560, 300);
+            coursesCard.Name = "coursesCard";
+            coursesCard.Padding = new Padding(10);
+            coursesCard.Size = new Size(200, 120);
+            coursesCard.TabIndex = 22;
+            // 
+            // course_lbl
+            // 
+            course_lbl.Font = new Font("Segoe UI", 15F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            course_lbl.ForeColor = Color.White;
+            course_lbl.Location = new Point(10, 10);
+            course_lbl.Name = "course_lbl";
+            course_lbl.Size = new Size(140, 30);
+            course_lbl.TabIndex = 0;
+            course_lbl.Text = "Courses";
+            // 
+            // noCrs_lbl
+            // 
+            noCrs_lbl.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            noCrs_lbl.ForeColor = Color.White;
+            noCrs_lbl.Location = new Point(10, 40);
+            noCrs_lbl.Name = "noCrs_lbl";
+            noCrs_lbl.Size = new Size(150, 45);
+            noCrs_lbl.TabIndex = 1;
+            noCrs_lbl.Text = "100";
+            noCrs_lbl.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // instructorsCard
+            // 
+            instructorsCard.BackColor = Color.FromArgb(46, 204, 113);
+            instructorsCard.Controls.Add(instructor_lbl);
+            instructorsCard.Controls.Add(noIns_lbl);
+            instructorsCard.Location = new Point(330, 300);
+            instructorsCard.Name = "instructorsCard";
+            instructorsCard.Padding = new Padding(10);
+            instructorsCard.Size = new Size(200, 120);
+            instructorsCard.TabIndex = 21;
+            // 
+            // instructor_lbl
+            // 
+            instructor_lbl.Font = new Font("Segoe UI", 15F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            instructor_lbl.ForeColor = Color.White;
+            instructor_lbl.Location = new Point(10, 10);
+            instructor_lbl.Name = "instructor_lbl";
+            instructor_lbl.Size = new Size(140, 30);
+            instructor_lbl.TabIndex = 0;
+            instructor_lbl.Text = "Instructors";
+            // 
+            // noIns_lbl
+            // 
+            noIns_lbl.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            noIns_lbl.ForeColor = Color.White;
+            noIns_lbl.Location = new Point(10, 40);
+            noIns_lbl.Name = "noIns_lbl";
+            noIns_lbl.Size = new Size(150, 45);
+            noIns_lbl.TabIndex = 1;
+            noIns_lbl.Text = "100";
+            noIns_lbl.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // studentsCard
+            // 
+            studentsCard.BackColor = Color.FromArgb(52, 152, 219);
+            studentsCard.Controls.Add(students_lbl);
+            studentsCard.Controls.Add(noStud_lbl);
+            studentsCard.Location = new Point(100, 300);
+            studentsCard.Name = "studentsCard";
+            studentsCard.Padding = new Padding(10);
+            studentsCard.Size = new Size(200, 120);
+            studentsCard.TabIndex = 20;
+            // 
+            // students_lbl
+            // 
+            students_lbl.Font = new Font("Segoe UI", 15F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            students_lbl.ForeColor = Color.White;
+            students_lbl.Location = new Point(10, 10);
+            students_lbl.Name = "students_lbl";
+            students_lbl.Size = new Size(140, 30);
+            students_lbl.TabIndex = 0;
+            students_lbl.Text = "Students";
+            // 
+            // noStud_lbl
+            // 
+            noStud_lbl.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            noStud_lbl.ForeColor = Color.White;
+            noStud_lbl.Location = new Point(10, 50);
+            noStud_lbl.Name = "noStud_lbl";
+            noStud_lbl.Size = new Size(150, 45);
+            noStud_lbl.TabIndex = 1;
+            noStud_lbl.Text = "100";
+            noStud_lbl.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // stat_pnl
+            // 
+            stat_pnl.BackColor = SystemColors.ControlLight;
+            stat_pnl.Controls.Add(studentsCard);
+            stat_pnl.Controls.Add(instructorsCard);
+            stat_pnl.Controls.Add(coursesCard);
+            stat_pnl.Controls.Add(tracksCard);
+            stat_pnl.Controls.Add(welcome_lbl);
+            stat_pnl.Controls.Add(stat_lbl);
+            stat_pnl.Dock = DockStyle.Top;
+            stat_pnl.Location = new Point(0, 28);
+            stat_pnl.Name = "stat_pnl";
+            stat_pnl.Size = new Size(1055, 1024);
+            stat_pnl.TabIndex = 85;
+            // 
             // AdminForm
             // 
             AcceptButton = addStud_btn;
-            ClientSize = new Size(833, 453);
+            AutoScaleDimensions = new SizeF(120F, 120F);
+            AutoScaleMode = AutoScaleMode.Dpi;
+            ClientSize = new Size(1055, 700);
             Controls.Add(addTrk_pnl);
             Controls.Add(showTrk_pnl);
             Controls.Add(addCrs_pnl);
@@ -1925,15 +1991,16 @@ namespace ITIExaminationSystem.Forms
             Controls.Add(showIns_pnl);
             Controls.Add(showStud_pnl);
             Controls.Add(addStud_pnl);
-            Controls.Add(menu);
             Controls.Add(stat_pnl);
+            Controls.Add(menu);
+            MinimumSize = new Size(600, 400);
             Name = "AdminForm";
-            Text = "AdminForm";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Admin Dashboard";
             Load += AdminForm_Load;
             ((ISupportInitialize)studid_del_nm).EndInit();
             menu.ResumeLayout(false);
             menu.PerformLayout();
-            instructorsCard.ResumeLayout(false);
             showIns_pnl.ResumeLayout(false);
             showIns_pnl.PerformLayout();
             ((ISupportInitialize)instructors_dgv).EndInit();
@@ -1943,11 +2010,6 @@ namespace ITIExaminationSystem.Forms
             ins_gender_box.ResumeLayout(false);
             deleteStud_pnl.ResumeLayout(false);
             deleteStud_pnl.PerformLayout();
-            stat_pnl.ResumeLayout(false);
-            stat_pnl.PerformLayout();
-            studentsCard.ResumeLayout(false);
-            coursesCard.ResumeLayout(false);
-            tracksCard.ResumeLayout(false);
             updateStud_pnl.ResumeLayout(false);
             updateStud_pnl.PerformLayout();
             genderUpd_txt.ResumeLayout(false);
@@ -1976,6 +2038,12 @@ namespace ITIExaminationSystem.Forms
             ((ISupportInitialize)tracks_dgv).EndInit();
             addTrk_pnl.ResumeLayout(false);
             addTrk_pnl.PerformLayout();
+            tracksCard.ResumeLayout(false);
+            coursesCard.ResumeLayout(false);
+            instructorsCard.ResumeLayout(false);
+            studentsCard.ResumeLayout(false);
+            stat_pnl.ResumeLayout(false);
+            stat_pnl.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -2000,9 +2068,6 @@ namespace ITIExaminationSystem.Forms
         private ToolStripMenuItem showCrsToolStripMenuItem1;
         private ToolStripMenuItem addCrsToolStripMenuItem2;
         private ToolStripMenuItem logOutToolStripMenuItem1;
-        private Label welcome_lbl;
-        private Label stat_lbl;
-        private Panel stat_pnl;
         private Panel showStud_pnl;
         private DataGridView students_dgv;
         private Button dgvUpdate_btn;
@@ -2068,14 +2133,6 @@ namespace ITIExaminationSystem.Forms
         private Label usernameStud_lbl;
         private Label passStud_lbl;
         private Label message_lbl;
-        private Label noTracks_lbl;
-        private Label noCrs_lbl;
-        private Label noIns_lbl;
-        private Label noStud_lbl;
-        private Label tracks_lbl;
-        private Label course_lbl;
-        private Label instructor_lbl;
-        private Label students_lbl;
         private Label stud_head_lbl;
         private Panel updateStud_pnl;
         private Label label1;
@@ -2105,12 +2162,6 @@ namespace ITIExaminationSystem.Forms
         private Label usernameUpdate_lbl;
         private Label label13;
         private BindingSource addStudentDtoBindingSource;
-
-        // new stat card panels
-        private Panel studentsCard;
-        private Panel instructorsCard;
-        private Panel coursesCard;
-        private Panel tracksCard;
 
         private Label delStudMsg_lbl;
         private Label addStudMsg_lbl;
@@ -2170,5 +2221,20 @@ namespace ITIExaminationSystem.Forms
         private Button updTrk_btn;
         private DataGridViewTextBoxColumn trkId;
         private DataGridViewTextBoxColumn trkColName;
+        private Label stat_lbl;
+        private Label welcome_lbl;
+        private Panel tracksCard;
+        private Label tracks_lbl;
+        private Label noTracks_lbl;
+        private Panel coursesCard;
+        private Label course_lbl;
+        private Label noCrs_lbl;
+        private Panel instructorsCard;
+        private Label instructor_lbl;
+        private Label noIns_lbl;
+        private Panel studentsCard;
+        private Label students_lbl;
+        private Label noStud_lbl;
+        private Panel stat_pnl;
     }
 }

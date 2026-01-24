@@ -40,7 +40,6 @@ namespace ITIExaminationSystem.Forms
         {
 
             HideAllControls();
-            menu.Visible = true;
             stat_pnl.Visible = true;
             //stat_pnl.Dock = DockStyle.Fill;
 
@@ -60,6 +59,12 @@ namespace ITIExaminationSystem.Forms
         {
             HideAllControls();
             addStud_pnl.Visible = true;
+            addStud_btn.Visible = true;
+            resetAdd_btn.Visible = true;
+            updateStu_btn.Visible = false;
+            stud_head_lbl.Text = "Add Student";
+            usernameStud_txt.Enabled = true;
+            passStud_txt.Enabled = true;
             addStud_pnl.Dock = DockStyle.Fill;
             ClearAddStudentForm();
         }
@@ -275,27 +280,52 @@ namespace ITIExaminationSystem.Forms
         {
             if (students_dgv.SelectedRows.Count != 1) return;
             var id = (int)students_dgv.SelectedRows[0].Cells["stdId"].Value;
+
+            // Show add student panel for update (like instructor update)
             HideAllControls();
-            updateStud_pnl.Visible = true;
-            updateStud_pnl.Dock = DockStyle.Fill;
-            studidUpdate_txt.Text = id.ToString();
-            // load full student details if available
-            var detailRes = _dbManager.SelectOne<StudentDto>
-                (SP.SelectStudent, new { id = id });
+            addStud_pnl.Visible = true;
+            addStud_pnl.Dock = DockStyle.Fill;
+
+            // Configure buttons - hide add/reset, show update
+            addStud_btn.Visible = false;
+            resetAdd_btn.Visible = false;
+            updateStu_btn.Visible = true;
+
+            // Change header
+            stud_head_lbl.Text = "Update Student";
+
+            // Disable username and password fields (cannot edit credentials)
+            usernameStud_txt.Enabled = false;
+            passStud_txt.Enabled = false;
+
+            // Load student details from database
+            var detailRes = _dbManager.SelectOne<StudentDto>(SP.SelectStudent, new { id = id });
             if (detailRes != null && detailRes.Data != null)
             {
                 var d = detailRes.Data;
-                fnameUpd_txt.Text = d.std_first_name;
-                lnameUpd_txt.Text = d.std_last_name;
-                phoneUpd_txt.Text = d.std_phoneno;
-                emailUpd_txt.Text = d.std_email;
-                cityUpd_txt.Text = d.std_city;
-                streetUpd_txt.Text = d.std_street;
-                zipUpd_txt.Text = d.std_zipcode;
-                ageUpd_txt.Value = Math.Min(Math.Max(d.std_age, (int)ageUpd_txt.Minimum), (int)ageUpd_txt.Maximum);
-                try { trackidUpd_txt.Value = Math.Max(trackidUpd_txt.Minimum, d.track_id); } catch { }
-                if (d.std_gender == 'M') { radioButton1.Checked = true; radioButton2.Checked = false; }
-                else if (d.std_gender == 'F') { radioButton2.Checked = true; radioButton1.Checked = false; }
+                usernameStud_txt.Text = d.user_name;
+                passStud_txt.Text = d.pass;
+                fnameStud_txt.Text = d.std_first_name;
+                lnameStud_txt.Text = d.std_last_name;
+                emailStud_txt.Text = d.std_email;
+                phoneStud_txt.Text = d.std_phoneno;
+                cityStud_txt.Text = d.std_city;
+                streetStud_txt.Text = d.std_street;
+                zipStud_txt.Text = d.std_zipcode;
+                ageStud_nm.Value = Math.Min(Math.Max(d.std_age, (int)ageStud_nm.Minimum), (int)ageStud_nm.Maximum);
+                try { trackidStud_nm.Value = Math.Max(trackidStud_nm.Minimum, d.track_id); } catch { }
+
+                // Set gender
+                if (d.std_gender == 'M')
+                {
+                    male_rdo.Checked = true;
+                    female_rdo.Checked = false;
+                }
+                else if (d.std_gender == 'F')
+                {
+                    female_rdo.Checked = true;
+                    male_rdo.Checked = false;
+                }
             }
         }
 
@@ -374,48 +404,56 @@ namespace ITIExaminationSystem.Forms
 
         private void updateStu_btn_Click(object? sender, EventArgs e)
         {
-            // Use studidUpdate_txt to get the student id and other fields in updateStud_pnl to update
-            if (!int.TryParse(studidUpdate_txt.Text, out int id))
+            // Clear previous message
+            addStudMsg_lbl.Text = string.Empty;
+
+            // Get student ID from the selected row in the grid
+            if (students_dgv.SelectedRows.Count != 1)
             {
-                MessageBox.Show("Invalid Student Id", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                addStudMsg_lbl.ForeColor = Color.Red;
+                addStudMsg_lbl.Text = "Invalid student selection.";
                 return;
             }
 
-            // minimal validation
-            if (!TryValidateUpdateStudent(out var validationError))
+            int id = (int)students_dgv.SelectedRows[0].Cells["stdId"].Value;
+
+            // Validate all editable fields (using addStud validation)
+            if (!TryValidateAddStudent(out var validationError))
             {
-                updStudMsg_lbl.ForeColor = Color.Red;
-                updStudMsg_lbl.Text = validationError;
+                addStudMsg_lbl.ForeColor = Color.Red;
+                addStudMsg_lbl.Text = validationError;
                 return;
             }
 
-            var updateDto = new
+            // Create DTO with student ID and updated fields from addStud_pnl
+            var dto = new
             {
                 user_id = id,
-                std_first_name = fnameUpd_txt.Text.Trim(),
-                std_last_name = lnameUpd_txt.Text.Trim(),
-                std_phoneno = phoneUpd_txt.Text.Trim(),
-                std_email = emailUpd_txt.Text.Trim(),
-                std_street = streetUpd_txt.Text.Trim(),
-                std_zipcode = zipUpd_txt.Text.Trim(),
-                std_city = cityUpd_txt.Text.Trim(),
-                std_age = (int)ageUpd_txt.Value,
-                std_gender = radioButton1.Checked ? 'M' : (radioButton2.Checked ? 'F' : ' '),
-                track_id = (int)trackidUpd_txt.Value
+                std_first_name = fnameStud_txt.Text.Trim(),
+                std_last_name = lnameStud_txt.Text.Trim(),
+                std_phoneno = phoneStud_txt.Text.Trim(),
+                std_email = emailStud_txt.Text.Trim(),
+                std_street = streetStud_txt.Text.Trim(),
+                std_zipcode = zipStud_txt.Text.Trim(),
+                std_city = cityStud_txt.Text.Trim(),
+                std_age = (int)ageStud_nm.Value,
+                std_gender = male_rdo.Checked ? "M" : (female_rdo.Checked ? "F" : (string?)null),
+                track_id = (int)trackidStud_nm.Value
             };
 
-            var result = _dbManager.ExecuteSPWithReturn(SP.UpdateStudent, updateDto);
+            // Execute update
+            var result = _dbManager.ExecuteSPWithReturn(SP.UpdateStudent, dto);
             if (result == 1)
             {
-                opMsg_lbl.ForeColor = Color.Green;
-                opMsg_lbl.Text = "Student updated successfully";
-                // go back to list
+                addStudMsg_lbl.ForeColor = Color.Green;
+                addStudMsg_lbl.Text = "Student updated successfully";
+                // Refresh the student list
                 showUserToolStripMenuItem_Click(sender, e);
             }
             else
             {
-                opMsg_lbl.ForeColor = Color.Red;
-                opMsg_lbl.Text = "Failed to update student";
+                addStudMsg_lbl.ForeColor = Color.Red;
+                addStudMsg_lbl.Text = "Failed to update student";
             }
         }
 
@@ -512,6 +550,8 @@ namespace ITIExaminationSystem.Forms
             resetIns_btn.Visible = false;
             ipdIns_btn.Visible = true;
             addInsHead_lbl.Text = "Update Instructor";
+            ins_username_txt.Enabled = false;
+            ins_pass_txt.Enabled = false;
             addIns_pnl.Dock = DockStyle.Fill;
             // load instructor details if proc available
             var res = _dbManager.SelectOne<InstructorDto>(SP.SelectInstructor, new { id = id });
@@ -524,7 +564,7 @@ namespace ITIExaminationSystem.Forms
                 ins_phone_txt.Text = d.ins_phoneNo ?? string.Empty;
                 ins_email_txt.Text = d.ins_email ?? string.Empty;
                 ins_salary_nm.Value = d.ins_salary;
-                ins_dob_picker.Value = d.ins_dob; 
+                ins_dob_picker.Value = d.ins_dob;
                 ins_city_txt.Text = d.ins_city ?? string.Empty;
                 ins_street_txt.Text = d.ins_street ?? string.Empty;
                 if (d.ins_gender == 'M') { ins_male_rdo.Checked = true; ins_female_rdo.Checked = false; }
@@ -720,6 +760,8 @@ namespace ITIExaminationSystem.Forms
             addIns_btn.Visible = true;
             resetIns_btn.Visible = true;
             ipdIns_btn.Visible = false;
+            ins_username_txt.Enabled = true;
+            ins_pass_txt.Enabled = true;
             addInsHead_lbl.Text = "Add Instructor";
             addIns_pnl.Dock = DockStyle.Fill;
         }
@@ -737,7 +779,7 @@ namespace ITIExaminationSystem.Forms
 
             var dto = new
             {
-                user_id=id,
+                user_id = id,
                 ins_name = ins_name_txt.Text.Trim(),
                 ins_phoneNo = ins_phone_txt.Text.Trim(),
                 ins_email = ins_email_txt.Text.Trim(),
@@ -748,7 +790,7 @@ namespace ITIExaminationSystem.Forms
                 ins_gender = ins_male_rdo.Checked ? "M" : (ins_female_rdo.Checked ? "F" : (string?)null)
             };
             var result = _dbManager.ExecuteSPWithReturn(SP.UpdateInstructor, dto);
-            if(result == 1)
+            if (result == 1)
             {
                 insMsg_lbl.ForeColor = Color.Green;
                 insMsg_lbl.Text = "Instructor Updated successfully";

@@ -761,6 +761,237 @@ namespace ITIExaminationSystem.Forms
                 addInsMsg_lbl.Text = "Failed to Update instructor";
             }
         }
+
+        // ============== COURSES MANAGEMENT ==============
+
+        private void showCourses()
+        {
+            HideAllControls();
+            menu.Visible = true;
+            var res = _dbManager.SelectMany<SelectCourseDto>(SP.SelectCourses);
+            if (res != null && res.Data != null)
+            {
+                var list = res.Data.Select(c => new { c.crs_id, c.crs_name, c.ins_id, c.track_id }).ToList();
+                courses_dgv.DataSource = list;
+            }
+            courses_dgv.ClearSelection();
+            crsUpdate_btn.Enabled = false;
+            crsDelete_btn.Enabled = false;
+            showCrs_pnl.Visible = true;
+            showCrs_pnl.Dock = DockStyle.Fill;
+        }
+
+        private void courses_dgv_SelectionChanged(object? sender, EventArgs e)
+        {
+            if (courses_dgv.SelectedRows.Count == 1)
+            {
+                crsUpdate_btn.Enabled = true;
+                crsDelete_btn.Enabled = true;
+            }
+            else
+            {
+                crsUpdate_btn.Enabled = false;
+                crsDelete_btn.Enabled = false;
+            }
+        }
+
+        private void crsUpdate_btn_Click(object? sender, EventArgs e)
+        {
+            if (courses_dgv.SelectedRows.Count != 1) return;
+            var id = (int)courses_dgv.SelectedRows[0].Cells["crsId"].Value;
+            // show add/update course panel with id prefilled
+            HideAllControls();
+            addCrs_pnl.Visible = true;
+            addCrs_btn.Visible = false;
+            resetCrs_btn.Visible = false;
+            updCrs_btn.Visible = true;
+            addCrsHead_lbl.Text = "Update Course";
+            addCrs_pnl.Dock = DockStyle.Fill;
+            // load course details
+            var res = _dbManager.SelectOne<SelectCourseDto>(SP.SelectCourse, new { crs_id = id });
+            if (res != null && res.Data != null)
+            {
+                var d = res.Data;
+                crs_name_txt.Text = d.crs_name;
+                crs_insid_nm.Value = d.ins_id ?? 0;
+                crs_trackid_nm.Value = d.track_id;
+            }
+        }
+
+        private void crsDelete_btn_Click(object? sender, EventArgs e)
+        {
+            if (courses_dgv.SelectedRows.Count != 1) return;
+            var id = (int)courses_dgv.SelectedRows[0].Cells["crsId"].Value;
+            var result = _dbManager.ExecuteSPWithReturn(SP.DeleteCourse, new { crs_id = id });
+            if (result == 1)
+            {
+                crsMsg_lbl.ForeColor = Color.Green;
+                crsMsg_lbl.Text = "Course deleted successfully";
+                showCourses();
+            }
+            else
+            {
+                crsMsg_lbl.ForeColor = Color.Red;
+                crsMsg_lbl.Text = "Failed to delete course";
+            }
+        }
+
+        private bool TryValidateAddCourse(out string errorMessage)
+        {
+            errorMessage = string.Empty;
+
+            var crsName = crs_name_txt.Text?.Trim() ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(crsName))
+            {
+                errorMessage = "Course name is required.";
+                return false;
+            }
+            if (crsName.Length < 3)
+            {
+                errorMessage = "Course name must be at least 3 characters.";
+                return false;
+            }
+
+            var insId = (int)crs_insid_nm.Value;
+            // Instructor ID can be 0 (nullable), but if provided, must be valid
+            if (insId < 0)
+            {
+                errorMessage = "Invalid instructor ID.";
+                return false;
+            }
+
+            var trackId = (int)crs_trackid_nm.Value;
+            if (trackId <= 0)
+            {
+                errorMessage = "Track ID must be greater than 0.";
+                return false;
+            }
+
+            return true;
+        }
+
+        private void addCrs_btn_Click(object? sender, EventArgs e)
+        {
+            addCrsMsg_lbl.Text = string.Empty;
+
+            if (!TryValidateAddCourse(out var validationError))
+            {
+                addCrsMsg_lbl.ForeColor = Color.Red;
+                addCrsMsg_lbl.Text = validationError;
+                return;
+            }
+
+            var dto = new
+            {
+                crs_name = crs_name_txt.Text.Trim(),
+                ins_id = (int)crs_insid_nm.Value == 0 ? (int?)null : (int)crs_insid_nm.Value,
+                track_id = (int)crs_trackid_nm.Value
+            };
+
+            var result = _dbManager.ExecuteSPWithReturn(SP.AddCourse, dto);
+            if (result == 1)
+            {
+                addCrsMsg_lbl.ForeColor = Color.Green;
+                addCrsMsg_lbl.Text = "Course added successfully";
+                ClearAddCourseForm();
+                // Optionally refresh the list
+                showCourses();
+            }
+            else if (result == -2)
+            {
+                addCrsMsg_lbl.ForeColor = Color.Red;
+                addCrsMsg_lbl.Text = "Instructor ID does not exist";
+            }
+            else if (result == -3)
+            {
+                addCrsMsg_lbl.ForeColor = Color.Red;
+                addCrsMsg_lbl.Text = "Track ID does not exist";
+            }
+            else
+            {
+                addCrsMsg_lbl.ForeColor = Color.Red;
+                addCrsMsg_lbl.Text = "Failed to add course";
+            }
+        }
+
+        private void resetCrs_btn_Click(object? sender, EventArgs e)
+        {
+            ClearAddCourseForm();
+        }
+
+        private void ClearAddCourseForm()
+        {
+            crs_name_txt.Text = string.Empty;
+            crs_insid_nm.Value = 0;
+            crs_trackid_nm.Value = 1;
+            addCrsMsg_lbl.Text = string.Empty;
+        }
+
+        private void showCrsToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            crsMsg_lbl.Text = "";
+            showCourses();
+        }
+
+        private void addCrsToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            HideAllControls();
+            ClearAddCourseForm();
+            addCrs_pnl.Visible = true;
+            addCrs_btn.Visible = true;
+            resetCrs_btn.Visible = true;
+            updCrs_btn.Visible = false;
+            addCrsHead_lbl.Text = "Add Course";
+            addCrs_pnl.Dock = DockStyle.Fill;
+        }
+
+        private void updCrs_btn_Click(object sender, EventArgs e)
+        {
+            addCrsMsg_lbl.Text = string.Empty;
+            var id = (int)courses_dgv.SelectedRows[0].Cells["crsId"].Value;
+            if (!TryValidateAddCourse(out var validationError))
+            {
+                addCrsMsg_lbl.ForeColor = Color.Red;
+                addCrsMsg_lbl.Text = validationError;
+                return;
+            }
+
+            var dto = new
+            {
+                crs_id = id,
+                crs_name = crs_name_txt.Text.Trim(),
+                ins_id = (int)crs_insid_nm.Value == 0 ? (int?)null : (int)crs_insid_nm.Value,
+                track_id = (int)crs_trackid_nm.Value
+            };
+
+            var result = _dbManager.ExecuteSPWithReturn(SP.UpdateCourse, dto);
+            if (result == 1)
+            {
+                crsMsg_lbl.ForeColor = Color.Green;
+                crsMsg_lbl.Text = "Course updated successfully";
+                showCourses();
+            }
+            else if (result == -1)
+            {
+                addCrsMsg_lbl.ForeColor = Color.Red;
+                addCrsMsg_lbl.Text = "Course ID does not exist";
+            }
+            else if (result == -2)
+            {
+                addCrsMsg_lbl.ForeColor = Color.Red;
+                addCrsMsg_lbl.Text = "Instructor ID does not exist";
+            }
+            else if (result == -3)
+            {
+                addCrsMsg_lbl.ForeColor = Color.Red;
+                addCrsMsg_lbl.Text = "Track ID does not exist";
+            }
+            else
+            {
+                addCrsMsg_lbl.ForeColor = Color.Red;
+                addCrsMsg_lbl.Text = "Failed to update course";
+            }
+        }
     }
 }
 

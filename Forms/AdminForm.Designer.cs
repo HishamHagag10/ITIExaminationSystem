@@ -39,10 +39,8 @@ namespace ITIExaminationSystem.Forms
             addUserToolStripMenuItem = new ToolStripMenuItem();
             dashboardToolStripMenuItem = new ToolStripMenuItem();
             logOutToolStripMenuItem = new ToolStripMenuItem();
-            addToolStripMenuItem2 = new ToolStripMenuItem();
-            updateToolStripMenuItem1 = new ToolStripMenuItem();
-            deleteToolStripMenuItem1 = new ToolStripMenuItem();
-            deleteToolStripMenuItem6 = new ToolStripMenuItem();
+            showTrackToolStripMenuItem2 = new ToolStripMenuItem();
+            add_trackToolStripMenuItem1 = new ToolStripMenuItem();
             delStud_btn = new Button();
             studid_del_nm = new NumericUpDown();
             studid_del_lbl = new Label();
@@ -51,15 +49,14 @@ namespace ITIExaminationSystem.Forms
             showInsToolStripMenuItem = new ToolStripMenuItem();
             addInsToolStripMenuItem = new ToolStripMenuItem();
             traToolStripMenuItem = new ToolStripMenuItem();
-            addToolStripMenuItem1 = new ToolStripMenuItem();
-            updateToolStripMenuItem2 = new ToolStripMenuItem();
-            deleteToolStripMenuItem2 = new ToolStripMenuItem();
-            deleteToolStripMenuItem5 = new ToolStripMenuItem();
+            showCrsToolStripMenuItem1 = new ToolStripMenuItem();
+            addCrsToolStripMenuItem2 = new ToolStripMenuItem();
             logOutToolStripMenuItem1 = new ToolStripMenuItem();
             instructorsCard = new Panel();
             instructor_lbl = new Label();
             noIns_lbl = new Label();
             showIns_pnl = new Panel();
+            insMsg_lbl = new Label();
             instructors_dgv = new DataGridView();
             insId = new DataGridViewTextBoxColumn();
             insColFullName = new DataGridViewTextBoxColumn();
@@ -178,7 +175,27 @@ namespace ITIExaminationSystem.Forms
             dgvDelete_btn = new Button();
             addStudentDtoBindingSource = new BindingSource(components);
             addToolTip = new ToolTip(components);
-            insMsg_lbl = new Label();
+            showCrs_pnl = new Panel();
+            crsMsg_lbl = new Label();
+            courses_dgv = new DataGridView();
+            crsId = new DataGridViewTextBoxColumn();
+            crsColName = new DataGridViewTextBoxColumn();
+            crsColInsId = new DataGridViewTextBoxColumn();
+            crsColTrackId = new DataGridViewTextBoxColumn();
+            crsUpdate_btn = new Button();
+            crsDelete_btn = new Button();
+            addCrs_pnl = new Panel();
+            updCrs_btn = new Button();
+            addCrsHead_lbl = new Label();
+            addCrsMsg_lbl = new Label();
+            crs_name_lbl = new Label();
+            crs_insid_lbl = new Label();
+            crs_trackid_lbl = new Label();
+            crs_name_txt = new TextBox();
+            crs_insid_nm = new NumericUpDown();
+            crs_trackid_nm = new NumericUpDown();
+            addCrs_btn = new Button();
+            resetCrs_btn = new Button();
             ((ISupportInitialize)studid_del_nm).BeginInit();
             menu.SuspendLayout();
             instructorsCard.SuspendLayout();
@@ -203,6 +220,11 @@ namespace ITIExaminationSystem.Forms
             showStud_pnl.SuspendLayout();
             ((ISupportInitialize)students_dgv).BeginInit();
             ((ISupportInitialize)addStudentDtoBindingSource).BeginInit();
+            showCrs_pnl.SuspendLayout();
+            ((ISupportInitialize)courses_dgv).BeginInit();
+            addCrs_pnl.SuspendLayout();
+            ((ISupportInitialize)crs_insid_nm).BeginInit();
+            ((ISupportInitialize)crs_trackid_nm).BeginInit();
             SuspendLayout();
             // 
             // userToolStripMenuItem
@@ -235,34 +257,22 @@ namespace ITIExaminationSystem.Forms
             // 
             // logOutToolStripMenuItem
             // 
-            logOutToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { addToolStripMenuItem2, updateToolStripMenuItem1, deleteToolStripMenuItem1, deleteToolStripMenuItem6 });
+            logOutToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { showTrackToolStripMenuItem2, add_trackToolStripMenuItem1 });
             logOutToolStripMenuItem.Name = "logOutToolStripMenuItem";
             logOutToolStripMenuItem.Size = new Size(63, 24);
             logOutToolStripMenuItem.Text = "Tracks";
             // 
-            // addToolStripMenuItem2
+            // showTrackToolStripMenuItem2
             // 
-            addToolStripMenuItem2.Name = "addToolStripMenuItem2";
-            addToolStripMenuItem2.Size = new Size(141, 26);
-            addToolStripMenuItem2.Text = "Show";
+            showTrackToolStripMenuItem2.Name = "showTrackToolStripMenuItem2";
+            showTrackToolStripMenuItem2.Size = new Size(224, 26);
+            showTrackToolStripMenuItem2.Text = "Show";
             // 
-            // updateToolStripMenuItem1
+            // add_trackToolStripMenuItem1
             // 
-            updateToolStripMenuItem1.Name = "updateToolStripMenuItem1";
-            updateToolStripMenuItem1.Size = new Size(141, 26);
-            updateToolStripMenuItem1.Text = "Add";
-            // 
-            // deleteToolStripMenuItem1
-            // 
-            deleteToolStripMenuItem1.Name = "deleteToolStripMenuItem1";
-            deleteToolStripMenuItem1.Size = new Size(141, 26);
-            deleteToolStripMenuItem1.Text = "Update";
-            // 
-            // deleteToolStripMenuItem6
-            // 
-            deleteToolStripMenuItem6.Name = "deleteToolStripMenuItem6";
-            deleteToolStripMenuItem6.Size = new Size(141, 26);
-            deleteToolStripMenuItem6.Text = "Delete";
+            add_trackToolStripMenuItem1.Name = "add_trackToolStripMenuItem1";
+            add_trackToolStripMenuItem1.Size = new Size(224, 26);
+            add_trackToolStripMenuItem1.Text = "Add";
             // 
             // delStud_btn
             // 
@@ -326,34 +336,24 @@ namespace ITIExaminationSystem.Forms
             // 
             // traToolStripMenuItem
             // 
-            traToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { addToolStripMenuItem1, updateToolStripMenuItem2, deleteToolStripMenuItem2, deleteToolStripMenuItem5 });
+            traToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { showCrsToolStripMenuItem1, addCrsToolStripMenuItem2 });
             traToolStripMenuItem.Name = "traToolStripMenuItem";
             traToolStripMenuItem.Size = new Size(74, 24);
             traToolStripMenuItem.Text = "Courses";
             // 
-            // addToolStripMenuItem1
+            // showCrsToolStripMenuItem1
             // 
-            addToolStripMenuItem1.Name = "addToolStripMenuItem1";
-            addToolStripMenuItem1.Size = new Size(141, 26);
-            addToolStripMenuItem1.Text = "Show";
+            showCrsToolStripMenuItem1.Name = "showCrsToolStripMenuItem1";
+            showCrsToolStripMenuItem1.Size = new Size(128, 26);
+            showCrsToolStripMenuItem1.Text = "Show";
+            showCrsToolStripMenuItem1.Click += showCrsToolStripMenuItem1_Click;
             // 
-            // updateToolStripMenuItem2
+            // addCrsToolStripMenuItem2
             // 
-            updateToolStripMenuItem2.Name = "updateToolStripMenuItem2";
-            updateToolStripMenuItem2.Size = new Size(141, 26);
-            updateToolStripMenuItem2.Text = "Add";
-            // 
-            // deleteToolStripMenuItem2
-            // 
-            deleteToolStripMenuItem2.Name = "deleteToolStripMenuItem2";
-            deleteToolStripMenuItem2.Size = new Size(141, 26);
-            deleteToolStripMenuItem2.Text = "Update";
-            // 
-            // deleteToolStripMenuItem5
-            // 
-            deleteToolStripMenuItem5.Name = "deleteToolStripMenuItem5";
-            deleteToolStripMenuItem5.Size = new Size(141, 26);
-            deleteToolStripMenuItem5.Text = "Delete";
+            addCrsToolStripMenuItem2.Name = "addCrsToolStripMenuItem2";
+            addCrsToolStripMenuItem2.Size = new Size(128, 26);
+            addCrsToolStripMenuItem2.Text = "Add";
+            addCrsToolStripMenuItem2.Click += addCrsToolStripMenuItem2_Click;
             // 
             // logOutToolStripMenuItem1
             // 
@@ -404,6 +404,14 @@ namespace ITIExaminationSystem.Forms
             showIns_pnl.Name = "showIns_pnl";
             showIns_pnl.Size = new Size(558, 381);
             showIns_pnl.TabIndex = 118;
+            // 
+            // insMsg_lbl
+            // 
+            insMsg_lbl.AutoSize = true;
+            insMsg_lbl.Location = new Point(465, 355);
+            insMsg_lbl.Name = "insMsg_lbl";
+            insMsg_lbl.Size = new Size(0, 20);
+            insMsg_lbl.TabIndex = 3;
             // 
             // instructors_dgv
             // 
@@ -1534,18 +1542,214 @@ namespace ITIExaminationSystem.Forms
             dgvDelete_btn.UseVisualStyleBackColor = true;
             dgvDelete_btn.Click += dgvDelete_btn_Click;
             // 
-            // insMsg_lbl
+            // showCrs_pnl
             // 
-            insMsg_lbl.AutoSize = true;
-            insMsg_lbl.Location = new Point(465, 355);
-            insMsg_lbl.Name = "insMsg_lbl";
-            insMsg_lbl.Size = new Size(0, 20);
-            insMsg_lbl.TabIndex = 3;
+            showCrs_pnl.Controls.Add(crsMsg_lbl);
+            showCrs_pnl.Controls.Add(courses_dgv);
+            showCrs_pnl.Controls.Add(crsUpdate_btn);
+            showCrs_pnl.Controls.Add(crsDelete_btn);
+            showCrs_pnl.Location = new Point(154, 40);
+            showCrs_pnl.Name = "showCrs_pnl";
+            showCrs_pnl.Size = new Size(558, 381);
+            showCrs_pnl.TabIndex = 120;
+            // 
+            // crsMsg_lbl
+            // 
+            crsMsg_lbl.AutoSize = true;
+            crsMsg_lbl.Location = new Point(465, 355);
+            crsMsg_lbl.Name = "crsMsg_lbl";
+            crsMsg_lbl.Size = new Size(0, 20);
+            crsMsg_lbl.TabIndex = 3;
+            // 
+            // courses_dgv
+            // 
+            courses_dgv.AllowUserToAddRows = false;
+            courses_dgv.AllowUserToDeleteRows = false;
+            courses_dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            courses_dgv.ColumnHeadersHeight = 29;
+            courses_dgv.Columns.AddRange(new DataGridViewColumn[] { crsId, crsColName, crsColInsId, crsColTrackId });
+            courses_dgv.Location = new Point(10, 10);
+            courses_dgv.MultiSelect = false;
+            courses_dgv.Name = "courses_dgv";
+            courses_dgv.ReadOnly = true;
+            courses_dgv.RowHeadersWidth = 51;
+            courses_dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            courses_dgv.Size = new Size(540, 300);
+            courses_dgv.TabIndex = 0;
+            courses_dgv.SelectionChanged += courses_dgv_SelectionChanged;
+            // 
+            // crsId
+            // 
+            crsId.DataPropertyName = "crs_id";
+            crsId.HeaderText = "Id";
+            crsId.MinimumWidth = 6;
+            crsId.Name = "crsId";
+            crsId.ReadOnly = true;
+            // 
+            // crsColName
+            // 
+            crsColName.DataPropertyName = "crs_name";
+            crsColName.HeaderText = "Course Name";
+            crsColName.MinimumWidth = 6;
+            crsColName.Name = "crsColName";
+            crsColName.ReadOnly = true;
+            // 
+            // crsColInsId
+            // 
+            crsColInsId.DataPropertyName = "ins_id";
+            crsColInsId.HeaderText = "Instructor Id";
+            crsColInsId.MinimumWidth = 6;
+            crsColInsId.Name = "crsColInsId";
+            crsColInsId.ReadOnly = true;
+            // 
+            // crsColTrackId
+            // 
+            crsColTrackId.DataPropertyName = "track_id";
+            crsColTrackId.HeaderText = "Track Id";
+            crsColTrackId.MinimumWidth = 6;
+            crsColTrackId.Name = "crsColTrackId";
+            crsColTrackId.ReadOnly = true;
+            // 
+            // crsUpdate_btn
+            // 
+            crsUpdate_btn.Enabled = false;
+            crsUpdate_btn.Location = new Point(150, 350);
+            crsUpdate_btn.Name = "crsUpdate_btn";
+            crsUpdate_btn.Size = new Size(120, 40);
+            crsUpdate_btn.TabIndex = 1;
+            crsUpdate_btn.Text = "Update";
+            crsUpdate_btn.Click += crsUpdate_btn_Click;
+            // 
+            // crsDelete_btn
+            // 
+            crsDelete_btn.Enabled = false;
+            crsDelete_btn.Location = new Point(320, 350);
+            crsDelete_btn.Name = "crsDelete_btn";
+            crsDelete_btn.Size = new Size(120, 40);
+            crsDelete_btn.TabIndex = 2;
+            crsDelete_btn.Text = "Delete";
+            crsDelete_btn.Click += crsDelete_btn_Click;
+            // 
+            // addCrs_pnl
+            // 
+            addCrs_pnl.Controls.Add(updCrs_btn);
+            addCrs_pnl.Controls.Add(addCrsHead_lbl);
+            addCrs_pnl.Controls.Add(addCrsMsg_lbl);
+            addCrs_pnl.Controls.Add(crs_name_lbl);
+            addCrs_pnl.Controls.Add(crs_insid_lbl);
+            addCrs_pnl.Controls.Add(crs_trackid_lbl);
+            addCrs_pnl.Controls.Add(crs_name_txt);
+            addCrs_pnl.Controls.Add(crs_insid_nm);
+            addCrs_pnl.Controls.Add(crs_trackid_nm);
+            addCrs_pnl.Controls.Add(addCrs_btn);
+            addCrs_pnl.Controls.Add(resetCrs_btn);
+            addCrs_pnl.Location = new Point(183, 28);
+            addCrs_pnl.Name = "addCrs_pnl";
+            addCrs_pnl.Size = new Size(389, 449);
+            addCrs_pnl.TabIndex = 121;
+            addCrs_pnl.Visible = false;
+            // 
+            // updCrs_btn
+            // 
+            updCrs_btn.Location = new Point(258, 339);
+            updCrs_btn.Name = "updCrs_btn";
+            updCrs_btn.Size = new Size(167, 40);
+            updCrs_btn.TabIndex = 138;
+            updCrs_btn.Text = "Update Course";
+            updCrs_btn.Click += updCrs_btn_Click;
+            // 
+            // addCrsHead_lbl
+            // 
+            addCrsHead_lbl.AutoSize = true;
+            addCrsHead_lbl.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            addCrsHead_lbl.Location = new Point(195, 14);
+            addCrsHead_lbl.Name = "addCrsHead_lbl";
+            addCrsHead_lbl.Size = new Size(120, 28);
+            addCrsHead_lbl.TabIndex = 137;
+            addCrsHead_lbl.Text = "Add Course";
+            // 
+            // addCrsMsg_lbl
+            // 
+            addCrsMsg_lbl.AutoSize = true;
+            addCrsMsg_lbl.Location = new Point(174, 308);
+            addCrsMsg_lbl.Name = "addCrsMsg_lbl";
+            addCrsMsg_lbl.Size = new Size(0, 20);
+            addCrsMsg_lbl.TabIndex = 12;
+            // 
+            // crs_name_lbl
+            // 
+            crs_name_lbl.AutoSize = true;
+            crs_name_lbl.Location = new Point(14, 54);
+            crs_name_lbl.Name = "crs_name_lbl";
+            crs_name_lbl.Size = new Size(98, 20);
+            crs_name_lbl.TabIndex = 0;
+            crs_name_lbl.Text = "Course Name";
+            // 
+            // crs_insid_lbl
+            // 
+            crs_insid_lbl.AutoSize = true;
+            crs_insid_lbl.Location = new Point(14, 95);
+            crs_insid_lbl.Name = "crs_insid_lbl";
+            crs_insid_lbl.Size = new Size(88, 20);
+            crs_insid_lbl.TabIndex = 1;
+            crs_insid_lbl.Text = "Instructor Id";
+            // 
+            // crs_trackid_lbl
+            // 
+            crs_trackid_lbl.AutoSize = true;
+            crs_trackid_lbl.Location = new Point(14, 136);
+            crs_trackid_lbl.Name = "crs_trackid_lbl";
+            crs_trackid_lbl.Size = new Size(60, 20);
+            crs_trackid_lbl.TabIndex = 2;
+            crs_trackid_lbl.Text = "Track Id";
+            // 
+            // crs_name_txt
+            // 
+            crs_name_txt.Location = new Point(110, 51);
+            crs_name_txt.Name = "crs_name_txt";
+            crs_name_txt.Size = new Size(200, 27);
+            crs_name_txt.TabIndex = 0;
+            // 
+            // crs_insid_nm
+            // 
+            crs_insid_nm.Location = new Point(110, 92);
+            crs_insid_nm.Name = "crs_insid_nm";
+            crs_insid_nm.Size = new Size(200, 27);
+            crs_insid_nm.TabIndex = 1;
+            // 
+            // crs_trackid_nm
+            // 
+            crs_trackid_nm.Location = new Point(110, 133);
+            crs_trackid_nm.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            crs_trackid_nm.Name = "crs_trackid_nm";
+            crs_trackid_nm.Size = new Size(200, 27);
+            crs_trackid_nm.TabIndex = 2;
+            crs_trackid_nm.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            // 
+            // addCrs_btn
+            // 
+            addCrs_btn.Location = new Point(215, 356);
+            addCrs_btn.Name = "addCrs_btn";
+            addCrs_btn.Size = new Size(167, 40);
+            addCrs_btn.TabIndex = 3;
+            addCrs_btn.Text = "Add Course";
+            addCrs_btn.Click += addCrs_btn_Click;
+            // 
+            // resetCrs_btn
+            // 
+            resetCrs_btn.Location = new Point(392, 356);
+            resetCrs_btn.Name = "resetCrs_btn";
+            resetCrs_btn.Size = new Size(80, 40);
+            resetCrs_btn.TabIndex = 4;
+            resetCrs_btn.Text = "Reset";
+            resetCrs_btn.Click += resetCrs_btn_Click;
             // 
             // AdminForm
             // 
             AcceptButton = addStud_btn;
             ClientSize = new Size(833, 453);
+            Controls.Add(addCrs_pnl);
+            Controls.Add(showCrs_pnl);
             Controls.Add(addIns_pnl);
             Controls.Add(updateStud_pnl);
             Controls.Add(showIns_pnl);
@@ -1590,6 +1794,13 @@ namespace ITIExaminationSystem.Forms
             showStud_pnl.PerformLayout();
             ((ISupportInitialize)students_dgv).EndInit();
             ((ISupportInitialize)addStudentDtoBindingSource).EndInit();
+            showCrs_pnl.ResumeLayout(false);
+            showCrs_pnl.PerformLayout();
+            ((ISupportInitialize)courses_dgv).EndInit();
+            addCrs_pnl.ResumeLayout(false);
+            addCrs_pnl.PerformLayout();
+            ((ISupportInitialize)crs_insid_nm).EndInit();
+            ((ISupportInitialize)crs_trackid_nm).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1601,10 +1812,8 @@ namespace ITIExaminationSystem.Forms
         private ToolStripMenuItem addUserToolStripMenuItem;
         private ToolStripMenuItem dashboardToolStripMenuItem;
         private ToolStripMenuItem logOutToolStripMenuItem;
-        private ToolStripMenuItem addToolStripMenuItem2;
-        private ToolStripMenuItem updateToolStripMenuItem1;
-        private ToolStripMenuItem deleteToolStripMenuItem1;
-        private ToolStripMenuItem deleteToolStripMenuItem6;
+        private ToolStripMenuItem showTrackToolStripMenuItem2;
+        private ToolStripMenuItem add_trackToolStripMenuItem1;
         private Button delStud_btn;
         private NumericUpDown studid_del_nm;
         private Label studid_del_lbl;
@@ -1613,10 +1822,8 @@ namespace ITIExaminationSystem.Forms
         private ToolStripMenuItem showInsToolStripMenuItem;
         private ToolStripMenuItem addInsToolStripMenuItem;
         private ToolStripMenuItem traToolStripMenuItem;
-        private ToolStripMenuItem addToolStripMenuItem1;
-        private ToolStripMenuItem updateToolStripMenuItem2;
-        private ToolStripMenuItem deleteToolStripMenuItem2;
-        private ToolStripMenuItem deleteToolStripMenuItem5;
+        private ToolStripMenuItem showCrsToolStripMenuItem1;
+        private ToolStripMenuItem addCrsToolStripMenuItem2;
         private ToolStripMenuItem logOutToolStripMenuItem1;
         private Label welcome_lbl;
         private Label stat_lbl;
@@ -1748,5 +1955,28 @@ namespace ITIExaminationSystem.Forms
         private DataGridViewTextBoxColumn colPhone;
         private DataGridViewTextBoxColumn colTrackId;
         private Button ipdIns_btn;
+        
+        // Courses panel fields
+        private Panel showCrs_pnl;
+        private Panel addCrs_pnl;
+        private DataGridView courses_dgv;
+        private Button crsUpdate_btn;
+        private Button crsDelete_btn;
+        private Label crsMsg_lbl;
+        private Label addCrsHead_lbl;
+        private Label addCrsMsg_lbl;
+        private TextBox crs_name_txt;
+        private NumericUpDown crs_insid_nm;
+        private NumericUpDown crs_trackid_nm;
+        private Label crs_name_lbl;
+        private Label crs_insid_lbl;
+        private Label crs_trackid_lbl;
+        private Button addCrs_btn;
+        private Button resetCrs_btn;
+        private Button updCrs_btn;
+        private DataGridViewTextBoxColumn crsId;
+        private DataGridViewTextBoxColumn crsColName;
+        private DataGridViewTextBoxColumn crsColInsId;
+        private DataGridViewTextBoxColumn crsColTrackId;
     }
 }

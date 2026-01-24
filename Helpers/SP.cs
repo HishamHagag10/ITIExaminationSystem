@@ -19,5 +19,17 @@ namespace ITIExaminationSystem.Helpers
         public const string SelectInstructors = "sp_SelectInstructors";
         public const string SelectInstructor = "selectInstructor";
 
+        public const string AddCourse = "sp_CreateCourse";
+        public const string DeleteCourse = "sp_DeleteCourse";
+        public const string UpdateCourse = "sp_UpdateCourse";
+        public const string SelectCourses = "sp_SelectCourses";
+        public const string SelectCourse = "sp_SelectCourse";
+
+        public const string AddTrack = "sp_CreateTrack";
+        public const string DeleteTrack = "sp_DeleteTrack";
+        public const string UpdateTrack = "sp_UpdateTrack";
+        public const string SelectTracks = "sp_SelectTracks";
+        public const string SelectTrack = "sp_SelectTrack";
+
     }
 }

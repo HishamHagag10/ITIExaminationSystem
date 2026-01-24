@@ -992,6 +992,199 @@ namespace ITIExaminationSystem.Forms
                 addCrsMsg_lbl.Text = "Failed to update course";
             }
         }
+
+        // ============== TRACKS MANAGEMENT ==============
+
+        private void showTracks()
+        {
+            HideAllControls();
+            menu.Visible = true;
+            var res = _dbManager.SelectMany<TrackDto>(SP.SelectTracks);
+            if (res != null && res.Data != null)
+            {
+                var list = res.Data.Select(t => new { t.track_id, t.track_name }).ToList();
+                tracks_dgv.DataSource = list;
+            }
+            tracks_dgv.ClearSelection();
+            trkUpdate_btn.Enabled = false;
+            trkDelete_btn.Enabled = false;
+            showTrk_pnl.Visible = true;
+            showTrk_pnl.Dock = DockStyle.Fill;
+        }
+
+        private void tracks_dgv_SelectionChanged(object? sender, EventArgs e)
+        {
+            if (tracks_dgv.SelectedRows.Count == 1)
+            {
+                trkUpdate_btn.Enabled = true;
+                trkDelete_btn.Enabled = true;
+            }
+            else
+            {
+                trkUpdate_btn.Enabled = false;
+                trkDelete_btn.Enabled = false;
+            }
+        }
+
+        private void trkUpdate_btn_Click(object? sender, EventArgs e)
+        {
+            if (tracks_dgv.SelectedRows.Count != 1) return;
+            var id = (int)tracks_dgv.SelectedRows[0].Cells["trkId"].Value;
+            // show add/update track panel with id prefilled
+            HideAllControls();
+            addTrk_pnl.Visible = true;
+            addTrk_btn.Visible = false;
+            resetTrk_btn.Visible = false;
+            updTrk_btn.Visible = true;
+            addTrkHead_lbl.Text = "Update Track";
+            addTrk_pnl.Dock = DockStyle.Fill;
+            // load track details
+            var res = _dbManager.SelectOne<TrackDto>(SP.SelectTrack, new { track_id = id });
+            if (res != null && res.Data != null)
+            {
+                var d = res.Data;
+                trk_name_txt.Text = d.track_name;
+            }
+        }
+
+        private void trkDelete_btn_Click(object? sender, EventArgs e)
+        {
+            if (tracks_dgv.SelectedRows.Count != 1) return;
+            var id = (int)tracks_dgv.SelectedRows[0].Cells["trkId"].Value;
+            var result = _dbManager.ExecuteSPWithReturn(SP.DeleteTrack, new { track_id = id });
+            if (result == 1)
+            {
+                trkMsg_lbl.ForeColor = Color.Green;
+                trkMsg_lbl.Text = "Track deleted successfully";
+                showTracks();
+            }
+            else if (result == -1)
+            {
+                trkMsg_lbl.ForeColor = Color.Red;
+                trkMsg_lbl.Text = "Track does not exist";
+            }
+            else
+            {
+                trkMsg_lbl.ForeColor = Color.Red;
+                trkMsg_lbl.Text = "Failed to delete track";
+            }
+        }
+
+        private bool TryValidateAddTrack(out string errorMessage)
+        {
+            errorMessage = string.Empty;
+
+            var trkName = trk_name_txt.Text?.Trim() ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(trkName))
+            {
+                errorMessage = "Track name is required.";
+                return false;
+            }
+            if (trkName.Length < 2)
+            {
+                errorMessage = "Track name must be at least 2 characters.";
+                return false;
+            }
+
+            return true;
+        }
+
+        private void addTrk_btn_Click(object? sender, EventArgs e)
+        {
+            addTrkMsg_lbl.Text = string.Empty;
+
+            if (!TryValidateAddTrack(out var validationError))
+            {
+                addTrkMsg_lbl.ForeColor = Color.Red;
+                addTrkMsg_lbl.Text = validationError;
+                return;
+            }
+
+            var dto = new
+            {
+                track_name = trk_name_txt.Text.Trim()
+            };
+
+            var result = _dbManager.ExecuteSPWithReturn(SP.AddTrack, dto);
+            if (result == 1)
+            {
+                addTrkMsg_lbl.ForeColor = Color.Green;
+                addTrkMsg_lbl.Text = "Track added successfully";
+                ClearAddTrackForm();
+                // Optionally refresh the list
+                showTracks();
+            }
+            else
+            {
+                addTrkMsg_lbl.ForeColor = Color.Red;
+                addTrkMsg_lbl.Text = "Failed to add track";
+            }
+        }
+
+        private void resetTrk_btn_Click(object? sender, EventArgs e)
+        {
+            ClearAddTrackForm();
+        }
+
+        private void ClearAddTrackForm()
+        {
+            trk_name_txt.Text = string.Empty;
+            addTrkMsg_lbl.Text = string.Empty;
+        }
+
+        private void showTrkToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            trkMsg_lbl.Text = "";
+            showTracks();
+        }
+
+        private void addTrkToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            HideAllControls();
+            ClearAddTrackForm();
+            addTrk_pnl.Visible = true;
+            addTrk_btn.Visible = true;
+            resetTrk_btn.Visible = true;
+            updTrk_btn.Visible = false;
+            addTrkHead_lbl.Text = "Add Track";
+            addTrk_pnl.Dock = DockStyle.Fill;
+        }
+
+        private void updTrk_btn_Click(object sender, EventArgs e)
+        {
+            addTrkMsg_lbl.Text = string.Empty;
+            var id = (int)tracks_dgv.SelectedRows[0].Cells["trkId"].Value;
+            if (!TryValidateAddTrack(out var validationError))
+            {
+                addTrkMsg_lbl.ForeColor = Color.Red;
+                addTrkMsg_lbl.Text = validationError;
+                return;
+            }
+
+            var dto = new
+            {
+                track_id = id,
+                track_name = trk_name_txt.Text.Trim()
+            };
+
+            var result = _dbManager.ExecuteSPWithReturn(SP.UpdateTrack, dto);
+            if (result == 1)
+            {
+                trkMsg_lbl.ForeColor = Color.Green;
+                trkMsg_lbl.Text = "Track updated successfully";
+                showTracks();
+            }
+            else if (result == -1)
+            {
+                addTrkMsg_lbl.ForeColor = Color.Red;
+                addTrkMsg_lbl.Text = "Track does not exist";
+            }
+            else
+            {
+                addTrkMsg_lbl.ForeColor = Color.Red;
+                addTrkMsg_lbl.Text = "Failed to update track";
+            }
+        }
     }
 }
 

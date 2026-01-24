@@ -196,6 +196,21 @@ namespace ITIExaminationSystem.Forms
             crs_trackid_nm = new NumericUpDown();
             addCrs_btn = new Button();
             resetCrs_btn = new Button();
+            showTrk_pnl = new Panel();
+            trkMsg_lbl = new Label();
+            tracks_dgv = new DataGridView();
+            trkId = new DataGridViewTextBoxColumn();
+            trkColName = new DataGridViewTextBoxColumn();
+            trkUpdate_btn = new Button();
+            trkDelete_btn = new Button();
+            addTrk_pnl = new Panel();
+            updTrk_btn = new Button();
+            addTrkHead_lbl = new Label();
+            addTrkMsg_lbl = new Label();
+            trk_name_lbl = new Label();
+            trk_name_txt = new TextBox();
+            addTrk_btn = new Button();
+            resetTrk_btn = new Button();
             ((ISupportInitialize)studid_del_nm).BeginInit();
             menu.SuspendLayout();
             instructorsCard.SuspendLayout();
@@ -225,6 +240,9 @@ namespace ITIExaminationSystem.Forms
             addCrs_pnl.SuspendLayout();
             ((ISupportInitialize)crs_insid_nm).BeginInit();
             ((ISupportInitialize)crs_trackid_nm).BeginInit();
+            showTrk_pnl.SuspendLayout();
+            ((ISupportInitialize)tracks_dgv).BeginInit();
+            addTrk_pnl.SuspendLayout();
             SuspendLayout();
             // 
             // userToolStripMenuItem
@@ -265,14 +283,16 @@ namespace ITIExaminationSystem.Forms
             // showTrackToolStripMenuItem2
             // 
             showTrackToolStripMenuItem2.Name = "showTrackToolStripMenuItem2";
-            showTrackToolStripMenuItem2.Size = new Size(224, 26);
+            showTrackToolStripMenuItem2.Size = new Size(128, 26);
             showTrackToolStripMenuItem2.Text = "Show";
+            showTrackToolStripMenuItem2.Click += showTrkToolStripMenuItem_Click;
             // 
             // add_trackToolStripMenuItem1
             // 
             add_trackToolStripMenuItem1.Name = "add_trackToolStripMenuItem1";
-            add_trackToolStripMenuItem1.Size = new Size(224, 26);
+            add_trackToolStripMenuItem1.Size = new Size(128, 26);
             add_trackToolStripMenuItem1.Text = "Add";
+            add_trackToolStripMenuItem1.Click += addTrkToolStripMenuItem_Click;
             // 
             // delStud_btn
             // 
@@ -1744,10 +1764,160 @@ namespace ITIExaminationSystem.Forms
             resetCrs_btn.Text = "Reset";
             resetCrs_btn.Click += resetCrs_btn_Click;
             // 
+            // showTrk_pnl
+            // 
+            showTrk_pnl.Controls.Add(trkMsg_lbl);
+            showTrk_pnl.Controls.Add(tracks_dgv);
+            showTrk_pnl.Controls.Add(trkUpdate_btn);
+            showTrk_pnl.Controls.Add(trkDelete_btn);
+            showTrk_pnl.Location = new Point(154, 40);
+            showTrk_pnl.Name = "showTrk_pnl";
+            showTrk_pnl.Size = new Size(558, 381);
+            showTrk_pnl.TabIndex = 122;
+            // 
+            // trkMsg_lbl
+            // 
+            trkMsg_lbl.AutoSize = true;
+            trkMsg_lbl.Location = new Point(465, 355);
+            trkMsg_lbl.Name = "trkMsg_lbl";
+            trkMsg_lbl.Size = new Size(0, 20);
+            trkMsg_lbl.TabIndex = 3;
+            // 
+            // tracks_dgv
+            // 
+            tracks_dgv.AllowUserToAddRows = false;
+            tracks_dgv.AllowUserToDeleteRows = false;
+            tracks_dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            tracks_dgv.ColumnHeadersHeight = 29;
+            tracks_dgv.Columns.AddRange(new DataGridViewColumn[] { trkId, trkColName });
+            tracks_dgv.Location = new Point(10, 10);
+            tracks_dgv.MultiSelect = false;
+            tracks_dgv.Name = "tracks_dgv";
+            tracks_dgv.ReadOnly = true;
+            tracks_dgv.RowHeadersWidth = 51;
+            tracks_dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            tracks_dgv.Size = new Size(540, 300);
+            tracks_dgv.TabIndex = 0;
+            tracks_dgv.SelectionChanged += tracks_dgv_SelectionChanged;
+            // 
+            // trkId
+            // 
+            trkId.DataPropertyName = "track_id";
+            trkId.HeaderText = "Id";
+            trkId.MinimumWidth = 6;
+            trkId.Name = "trkId";
+            trkId.ReadOnly = true;
+            // 
+            // trkColName
+            // 
+            trkColName.DataPropertyName = "track_name";
+            trkColName.HeaderText = "Track Name";
+            trkColName.MinimumWidth = 6;
+            trkColName.Name = "trkColName";
+            trkColName.ReadOnly = true;
+            // 
+            // trkUpdate_btn
+            // 
+            trkUpdate_btn.Enabled = false;
+            trkUpdate_btn.Location = new Point(150, 350);
+            trkUpdate_btn.Name = "trkUpdate_btn";
+            trkUpdate_btn.Size = new Size(120, 40);
+            trkUpdate_btn.TabIndex = 1;
+            trkUpdate_btn.Text = "Update";
+            trkUpdate_btn.Click += trkUpdate_btn_Click;
+            // 
+            // trkDelete_btn
+            // 
+            trkDelete_btn.Enabled = false;
+            trkDelete_btn.Location = new Point(320, 350);
+            trkDelete_btn.Name = "trkDelete_btn";
+            trkDelete_btn.Size = new Size(120, 40);
+            trkDelete_btn.TabIndex = 2;
+            trkDelete_btn.Text = "Delete";
+            trkDelete_btn.Click += trkDelete_btn_Click;
+            // 
+            // addTrk_pnl
+            // 
+            addTrk_pnl.Controls.Add(updTrk_btn);
+            addTrk_pnl.Controls.Add(addTrkHead_lbl);
+            addTrk_pnl.Controls.Add(addTrkMsg_lbl);
+            addTrk_pnl.Controls.Add(trk_name_lbl);
+            addTrk_pnl.Controls.Add(trk_name_txt);
+            addTrk_pnl.Controls.Add(addTrk_btn);
+            addTrk_pnl.Controls.Add(resetTrk_btn);
+            addTrk_pnl.Location = new Point(183, 28);
+            addTrk_pnl.Name = "addTrk_pnl";
+            addTrk_pnl.Size = new Size(389, 449);
+            addTrk_pnl.TabIndex = 123;
+            addTrk_pnl.Visible = false;
+            // 
+            // updTrk_btn
+            // 
+            updTrk_btn.Location = new Point(258, 339);
+            updTrk_btn.Name = "updTrk_btn";
+            updTrk_btn.Size = new Size(167, 40);
+            updTrk_btn.TabIndex = 138;
+            updTrk_btn.Text = "Update Track";
+            updTrk_btn.Click += updTrk_btn_Click;
+            // 
+            // addTrkHead_lbl
+            // 
+            addTrkHead_lbl.AutoSize = true;
+            addTrkHead_lbl.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            addTrkHead_lbl.Location = new Point(195, 14);
+            addTrkHead_lbl.Name = "addTrkHead_lbl";
+            addTrkHead_lbl.Size = new Size(106, 28);
+            addTrkHead_lbl.TabIndex = 137;
+            addTrkHead_lbl.Text = "Add Track";
+            // 
+            // addTrkMsg_lbl
+            // 
+            addTrkMsg_lbl.AutoSize = true;
+            addTrkMsg_lbl.Location = new Point(174, 280);
+            addTrkMsg_lbl.Name = "addTrkMsg_lbl";
+            addTrkMsg_lbl.Size = new Size(0, 20);
+            addTrkMsg_lbl.TabIndex = 12;
+            // 
+            // trk_name_lbl
+            // 
+            trk_name_lbl.AutoSize = true;
+            trk_name_lbl.Location = new Point(14, 54);
+            trk_name_lbl.Name = "trk_name_lbl";
+            trk_name_lbl.Size = new Size(87, 20);
+            trk_name_lbl.TabIndex = 0;
+            trk_name_lbl.Text = "Track Name";
+            // 
+            // trk_name_txt
+            // 
+            trk_name_txt.Location = new Point(110, 51);
+            trk_name_txt.Name = "trk_name_txt";
+            trk_name_txt.Size = new Size(200, 27);
+            trk_name_txt.TabIndex = 0;
+            // 
+            // addTrk_btn
+            // 
+            addTrk_btn.Location = new Point(106, 339);
+            addTrk_btn.Name = "addTrk_btn";
+            addTrk_btn.Size = new Size(167, 40);
+            addTrk_btn.TabIndex = 139;
+            addTrk_btn.Text = "Add Track";
+            addTrk_btn.Click += addTrk_btn_Click;
+            // 
+            // resetTrk_btn
+            // 
+            resetTrk_btn.Location = new Point(258, 339);
+            resetTrk_btn.Name = "resetTrk_btn";
+            resetTrk_btn.Size = new Size(167, 40);
+            resetTrk_btn.TabIndex = 140;
+            resetTrk_btn.Text = "Reset";
+            resetTrk_btn.Click += resetTrk_btn_Click;
+            // 
             // AdminForm
             // 
             AcceptButton = addStud_btn;
             ClientSize = new Size(833, 453);
+            Controls.Add(addTrk_pnl);
+            Controls.Add(showTrk_pnl);
             Controls.Add(addCrs_pnl);
             Controls.Add(showCrs_pnl);
             Controls.Add(addIns_pnl);
@@ -1801,6 +1971,11 @@ namespace ITIExaminationSystem.Forms
             addCrs_pnl.PerformLayout();
             ((ISupportInitialize)crs_insid_nm).EndInit();
             ((ISupportInitialize)crs_trackid_nm).EndInit();
+            showTrk_pnl.ResumeLayout(false);
+            showTrk_pnl.PerformLayout();
+            ((ISupportInitialize)tracks_dgv).EndInit();
+            addTrk_pnl.ResumeLayout(false);
+            addTrk_pnl.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1978,5 +2153,22 @@ namespace ITIExaminationSystem.Forms
         private DataGridViewTextBoxColumn crsColName;
         private DataGridViewTextBoxColumn crsColInsId;
         private DataGridViewTextBoxColumn crsColTrackId;
+        
+        // Tracks panel fields
+        private Panel showTrk_pnl;
+        private Panel addTrk_pnl;
+        private DataGridView tracks_dgv;
+        private Button trkUpdate_btn;
+        private Button trkDelete_btn;
+        private Label trkMsg_lbl;
+        private Label addTrkHead_lbl;
+        private Label addTrkMsg_lbl;
+        private TextBox trk_name_txt;
+        private Label trk_name_lbl;
+        private Button addTrk_btn;
+        private Button resetTrk_btn;
+        private Button updTrk_btn;
+        private DataGridViewTextBoxColumn trkId;
+        private DataGridViewTextBoxColumn trkColName;
     }
 }

@@ -30,6 +30,5 @@ namespace ITIExaminationSystem.Helpers
         public const string UpdateTrack = "sp_UpdateTrack";
         public const string SelectTracks = "sp_SelectTracks";
         public const string SelectTrack = "sp_SelectTrack";
-
     }
 }

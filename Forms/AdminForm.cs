@@ -22,6 +22,7 @@ namespace ITIExaminationSystem.Forms
             InitializeComponent();
             _dbManager = dbManager;
         }
+
         private void AdminForm_Load(object sender, EventArgs e)
         {
             dashboardToolStripMenuItem_Click(sender, e);
@@ -197,7 +198,7 @@ namespace ITIExaminationSystem.Forms
                 return;
             }
 
-            AddStudentDto studentDto = new AddStudentDto()
+            StudentDto studentDto = new StudentDto()
             {
                 // rename the properties to match the DTO
                 user_name = usernameStud_txt.Text.Trim(),
@@ -273,13 +274,13 @@ namespace ITIExaminationSystem.Forms
         private void dgvUpdate_btn_Click(object? sender, EventArgs e)
         {
             if (students_dgv.SelectedRows.Count != 1) return;
-            var id = (int)students_dgv.SelectedRows[0].Cells["Id"].Value;
+            var id = (int)students_dgv.SelectedRows[0].Cells["stdId"].Value;
             HideAllControls();
             updateStud_pnl.Visible = true;
             updateStud_pnl.Dock = DockStyle.Fill;
             studidUpdate_txt.Text = id.ToString();
             // load full student details if available
-            var detailRes = _dbManager.SelectOne<AddStudentDto>
+            var detailRes = _dbManager.SelectOne<StudentDto>
                 (SP.SelectStudent, new { id = id });
             if (detailRes != null && detailRes.Data != null)
             {
@@ -390,7 +391,7 @@ namespace ITIExaminationSystem.Forms
 
             var updateDto = new
             {
-                std_id = id,
+                user_id = id,
                 std_first_name = fnameUpd_txt.Text.Trim(),
                 std_last_name = lnameUpd_txt.Text.Trim(),
                 std_phoneno = phoneUpd_txt.Text.Trim(),
@@ -407,7 +408,7 @@ namespace ITIExaminationSystem.Forms
             if (result == 1)
             {
                 opMsg_lbl.ForeColor = Color.Green;
-                opMsg_lbl.Text="Student updated successfully";
+                opMsg_lbl.Text = "Student updated successfully";
                 // go back to list
                 showUserToolStripMenuItem_Click(sender, e);
             }
@@ -421,7 +422,7 @@ namespace ITIExaminationSystem.Forms
         private void dgvDelete_btn_Click(object? sender, EventArgs e)
         {
             if (students_dgv.SelectedRows.Count != 1) return;
-            var id = (int)students_dgv.SelectedRows[0].Cells["Id"].Value;
+            var id = (int)students_dgv.SelectedRows[0].Cells["stdId"].Value;
             var result = _dbManager.
                 ExecuteSPWithReturn(SP.DeleteStudent, new
                 {
@@ -468,6 +469,299 @@ namespace ITIExaminationSystem.Forms
         {
             ClearAddStudentForm();
         }
-        
+
+        private void showInstructors()
+        {
+            HideAllControls();
+            menu.Visible = true;
+            var res = _dbManager.SelectMany<SelectInstructorDto>(SP.SelectInstructors);
+            if (res != null && res.Data != null)
+            {
+                var list = res.Data.Select(i => new { i.Id, i.Name, i.Phone, i.Salary }).ToList();
+                instructors_dgv.DataSource = list;
+            }
+            instructors_dgv.ClearSelection();
+            insUpdate_btn.Enabled = false;
+            insDelete_btn.Enabled = false;
+            showIns_pnl.Visible = true;
+            showIns_pnl.Dock = DockStyle.Fill;
+        }
+
+        private void instructors_dgv_SelectionChanged(object? sender, EventArgs e)
+        {
+            if (instructors_dgv.SelectedRows.Count == 1)
+            {
+                insUpdate_btn.Enabled = true;
+                insDelete_btn.Enabled = true;
+            }
+            else
+            {
+                insUpdate_btn.Enabled = false;
+                insDelete_btn.Enabled = false;
+            }
+        }
+
+        private void insUpdate_btn_Click(object? sender, EventArgs e)
+        {
+            if (instructors_dgv.SelectedRows.Count != 1) return;
+            var id = (int)instructors_dgv.SelectedRows[0].Cells["insId"].Value;
+            // show add/update instructor panel with id prefilled
+            HideAllControls();
+            addIns_pnl.Visible = true;
+            addIns_btn.Visible = false;
+            resetIns_btn.Visible = false;
+            ipdIns_btn.Visible = true;
+            addInsHead_lbl.Text = "Update Instructor";
+            addIns_pnl.Dock = DockStyle.Fill;
+            // load instructor details if proc available
+            var res = _dbManager.SelectOne<InstructorDto>(SP.SelectInstructor, new { id = id });
+            if (res != null && res.Data != null)
+            {
+                var d = res.Data;
+                ins_username_txt.Text = d.user_name;
+                ins_pass_txt.Text = d.pass;
+                ins_name_txt.Text = d.ins_name;
+                ins_phone_txt.Text = d.ins_phoneNo ?? string.Empty;
+                ins_email_txt.Text = d.ins_email ?? string.Empty;
+                ins_salary_nm.Value = d.ins_salary;
+                ins_dob_picker.Value = d.ins_dob; 
+                ins_city_txt.Text = d.ins_city ?? string.Empty;
+                ins_street_txt.Text = d.ins_street ?? string.Empty;
+                if (d.ins_gender == 'M') { ins_male_rdo.Checked = true; ins_female_rdo.Checked = false; }
+                else if (d.ins_gender == 'F') { ins_female_rdo.Checked = true; ins_male_rdo.Checked = false; }
+            }
+        }
+
+        private void insDelete_btn_Click(object? sender, EventArgs e)
+        {
+            if (instructors_dgv.SelectedRows.Count != 1) return;
+            var id = (int)instructors_dgv.SelectedRows[0].Cells["insId"].Value;
+            var result = _dbManager.ExecuteSPWithReturn(SP.DeleteInstructor, new { id = id });
+            if (result == 1)
+            {
+                insMsg_lbl.ForeColor = Color.Green;
+                insMsg_lbl.Text = "Instructor deleted successfully";
+                showInstructors();
+            }
+            else
+            {
+                insMsg_lbl.ForeColor = Color.Red;
+                insMsg_lbl.Text = "Failed to delete instructor";
+            }
+        }
+        private void addIns_btn_Click(object? sender, EventArgs e)
+        {
+            // Clear previous message
+            addInsMsg_lbl.Text = string.Empty;
+
+            if (!TryValidateAddInstructor(out var validationError))
+            {
+                addInsMsg_lbl.ForeColor = Color.Red;
+                addInsMsg_lbl.Text = validationError;
+                return;
+            }
+
+            var dto = new InstructorDto()
+            {
+                user_name = ins_username_txt.Text.Trim(),
+                pass = ins_pass_txt.Text,
+                ins_name = ins_name_txt.Text.Trim(),
+                ins_gender = ins_male_rdo.Checked ? 'M' : 'F',
+                ins_phoneNo = ins_phone_txt.Text.Trim(),
+                ins_email = ins_email_txt.Text.Trim(),
+                ins_salary = ins_salary_nm.Value,
+                ins_dob = ins_dob_picker.Value,
+                ins_city = ins_city_txt.Text.Trim(),
+                ins_street = ins_street_txt.Text.Trim(),
+            };
+
+            var result = _dbManager.ExecuteSPWithReturn(SP.AddInstructor, dto);
+            if (result == 1)
+            {
+                insMsg_lbl.ForeColor = Color.Green;
+                insMsg_lbl.Text = "Instructor added successfully";
+                // refresh list
+                showInstructors();
+            }
+            else
+            {
+                addInsMsg_lbl.ForeColor = Color.Red;
+                addInsMsg_lbl.Text = "Failed to add instructor";
+            }
+        }
+
+        // Validate inputs before creating the AddInstructorDto
+        private bool TryValidateAddInstructor(out string errorMessage)
+        {
+            errorMessage = string.Empty;
+
+            var username = ins_username_txt.Text?.Trim() ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                errorMessage = "Username is required.";
+                return false;
+            }
+            if (username.Length < 3)
+            {
+                errorMessage = "Username must be at least 3 characters.";
+                return false;
+            }
+
+            var password = ins_pass_txt.Text ?? string.Empty;
+            if (string.IsNullOrEmpty(password))
+            {
+                errorMessage = "Password is required.";
+                return false;
+            }
+            if (password.Length < 6)
+            {
+                errorMessage = "Password must be at least 6 characters.";
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(ins_name_txt.Text))
+            {
+                errorMessage = "Instructor name is required.";
+                return false;
+            }
+
+            var email = ins_email_txt.Text?.Trim() ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                errorMessage = "Email is required.";
+                return false;
+            }
+            var emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            if (!Regex.IsMatch(email, emailPattern, RegexOptions.IgnoreCase))
+            {
+                errorMessage = "Invalid email format.";
+                return false;
+            }
+
+            var phone = ins_phone_txt.Text?.Trim() ?? string.Empty;
+            var phonePattern = @"^[\d\+\-\s\(\)]+$";
+            if (string.IsNullOrWhiteSpace(phone) || !Regex.IsMatch(phone, phonePattern) || phone.Length < 7)
+            {
+                errorMessage = "Invalid phone number.";
+                return false;
+            }
+
+            // Salary already constrained by control; ensure value present
+            try
+            {
+                var salary = ins_salary_nm.Value;
+                if (salary < ins_salary_nm.Minimum || salary > ins_salary_nm.Maximum)
+                {
+                    errorMessage = "Salary is out of allowed range.";
+                    return false;
+                }
+            }
+            catch { }
+
+            // DOB -> instructor should be at least 18 and not older than 100
+            try
+            {
+                var dob = ins_dob_picker.Value;
+                var today = DateTime.Today;
+                var age = today.Year - dob.Year;
+                if (dob > today.AddYears(-age)) age--;
+                if (age < 18 || age > 100)
+                {
+                    errorMessage = "Instructor age must be between 18 and 100.";
+                    return false;
+                }
+            }
+            catch { }
+
+            if (string.IsNullOrWhiteSpace(ins_city_txt.Text))
+            {
+                errorMessage = "City is required.";
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(ins_street_txt.Text))
+            {
+                errorMessage = "Street is required.";
+                return false;
+            }
+
+            if (!ins_male_rdo.Checked && !ins_female_rdo.Checked)
+            {
+                errorMessage = "Please select a gender.";
+                return false;
+            }
+
+            return true;
+        }
+
+        private void resetIns_btn_Click(object? sender, EventArgs e)
+        {
+            ins_username_txt.Text = string.Empty;
+            ins_pass_txt.Text = string.Empty;
+            ins_name_txt.Text = string.Empty;
+            ins_phone_txt.Text = string.Empty;
+            ins_email_txt.Text = string.Empty;
+            ins_salary_nm.Value = 10000;
+            ins_city_txt.Text = string.Empty;
+            ins_street_txt.Text = string.Empty;
+            ins_male_rdo.Checked = false;
+            ins_female_rdo.Checked = false;
+        }
+        private void showInsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            insMsg_lbl.Text = "";
+            showInstructors();
+        }
+
+        private void addInsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            HideAllControls();
+            resetIns_btn_Click(sender, e);
+            addIns_pnl.Visible = true;
+            addIns_btn.Visible = true;
+            resetIns_btn.Visible = true;
+            ipdIns_btn.Visible = false;
+            addInsHead_lbl.Text = "Add Instructor";
+            addIns_pnl.Dock = DockStyle.Fill;
+        }
+
+        private void ipdIns_btn_Click(object sender, EventArgs e)
+        {
+            addInsMsg_lbl.Text = string.Empty;
+            var id = (int)instructors_dgv.SelectedRows[0].Cells["insId"].Value;
+            if (!TryValidateAddInstructor(out var validationError))
+            {
+                addInsMsg_lbl.ForeColor = Color.Red;
+                addInsMsg_lbl.Text = validationError;
+                return;
+            }
+
+            var dto = new
+            {
+                user_id=id,
+                ins_name = ins_name_txt.Text.Trim(),
+                ins_phoneNo = ins_phone_txt.Text.Trim(),
+                ins_email = ins_email_txt.Text.Trim(),
+                ins_salary = ins_salary_nm.Value,
+                ins_dob = ins_dob_picker.Value,
+                ins_city = ins_city_txt.Text.Trim(),
+                ins_street = ins_street_txt.Text.Trim(),
+                ins_gender = ins_male_rdo.Checked ? "M" : (ins_female_rdo.Checked ? "F" : (string?)null)
+            };
+            var result = _dbManager.ExecuteSPWithReturn(SP.UpdateInstructor, dto);
+            if(result == 1)
+            {
+                insMsg_lbl.ForeColor = Color.Green;
+                insMsg_lbl.Text = "Instructor Updated successfully";
+                // refresh list
+                showInstructors();
+            }
+            else
+            {
+                addInsMsg_lbl.ForeColor = Color.Red;
+                addInsMsg_lbl.Text = "Failed to Update instructor";
+            }
+        }
     }
 }
+
+

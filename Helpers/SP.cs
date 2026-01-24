@@ -12,5 +12,12 @@ namespace ITIExaminationSystem.Helpers
         public const string UpdateStudent = "sp_UpdateStudent";
         public const string SelectStudents = "sp_SelectStudents";
         public const string SelectStudent = "selectStudent";
+        
+        public const string AddInstructor = "insertInstructor";
+        public const string DeleteInstructor = "deleteInstructor";
+        public const string UpdateInstructor = "sp_UpdateInstructor";
+        public const string SelectInstructors = "sp_SelectInstructors";
+        public const string SelectInstructor = "selectInstructor";
+
     }
 }

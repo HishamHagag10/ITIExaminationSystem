@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ITIExaminationSystem.DTOs
 {
-    public class AddStudentDto:DTO
+    public class StudentDto:DTO
     {
         public string user_name { get; set; } = string.Empty;
         public string pass { get; set; } = string.Empty;

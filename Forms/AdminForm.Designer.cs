@@ -48,16 +48,52 @@ namespace ITIExaminationSystem.Forms
             studid_del_lbl = new Label();
             menu = new MenuStrip();
             coursesToolStripMenuItem = new ToolStripMenuItem();
-            addToolStripMenuItem = new ToolStripMenuItem();
-            updateToolStripMenuItem = new ToolStripMenuItem();
-            deleteToolStripMenuItem = new ToolStripMenuItem();
-            deleteToolStripMenuItem4 = new ToolStripMenuItem();
+            showInsToolStripMenuItem = new ToolStripMenuItem();
+            addInsToolStripMenuItem = new ToolStripMenuItem();
             traToolStripMenuItem = new ToolStripMenuItem();
             addToolStripMenuItem1 = new ToolStripMenuItem();
             updateToolStripMenuItem2 = new ToolStripMenuItem();
             deleteToolStripMenuItem2 = new ToolStripMenuItem();
             deleteToolStripMenuItem5 = new ToolStripMenuItem();
             logOutToolStripMenuItem1 = new ToolStripMenuItem();
+            instructorsCard = new Panel();
+            instructor_lbl = new Label();
+            noIns_lbl = new Label();
+            showIns_pnl = new Panel();
+            instructors_dgv = new DataGridView();
+            insId = new DataGridViewTextBoxColumn();
+            insColFullName = new DataGridViewTextBoxColumn();
+            insColPhone = new DataGridViewTextBoxColumn();
+            insColSalary = new DataGridViewTextBoxColumn();
+            insUpdate_btn = new Button();
+            insDelete_btn = new Button();
+            ins_username_lbl = new Label();
+            ins_pass_lbl = new Label();
+            ins_name_lbl = new Label();
+            ins_phone_lbl = new Label();
+            ins_email_lbl = new Label();
+            ins_city_lbl = new Label();
+            ins_street_lbl = new Label();
+            ins_dob_lbl = new Label();
+            ins_salary_lbl = new Label();
+            addIns_pnl = new Panel();
+            ipdIns_btn = new Button();
+            addInsHead_lbl = new Label();
+            addInsMsg_lbl = new Label();
+            ins_pass_txt = new TextBox();
+            ins_username_txt = new TextBox();
+            ins_name_txt = new TextBox();
+            ins_phone_txt = new TextBox();
+            ins_email_txt = new TextBox();
+            ins_salary_nm = new NumericUpDown();
+            ins_dob_picker = new DateTimePicker();
+            ins_city_txt = new TextBox();
+            ins_street_txt = new TextBox();
+            ins_gender_box = new GroupBox();
+            ins_male_rdo = new RadioButton();
+            ins_female_rdo = new RadioButton();
+            addIns_btn = new Button();
+            resetIns_btn = new Button();
             deleteStud_pnl = new Panel();
             delStudMsg_lbl = new Label();
             welcome_lbl = new Label();
@@ -66,9 +102,6 @@ namespace ITIExaminationSystem.Forms
             studentsCard = new Panel();
             students_lbl = new Label();
             noStud_lbl = new Label();
-            instructorsCard = new Panel();
-            instructor_lbl = new Label();
-            noIns_lbl = new Label();
             coursesCard = new Panel();
             course_lbl = new Label();
             noCrs_lbl = new Label();
@@ -138,15 +171,25 @@ namespace ITIExaminationSystem.Forms
             opMsg_lbl = new Label();
             dgvUpdate_btn = new Button();
             students_dgv = new DataGridView();
+            stdId = new DataGridViewTextBoxColumn();
+            colFullName = new DataGridViewTextBoxColumn();
+            colPhone = new DataGridViewTextBoxColumn();
+            colTrackId = new DataGridViewTextBoxColumn();
             dgvDelete_btn = new Button();
             addStudentDtoBindingSource = new BindingSource(components);
             addToolTip = new ToolTip(components);
+            insMsg_lbl = new Label();
             ((ISupportInitialize)studid_del_nm).BeginInit();
             menu.SuspendLayout();
+            instructorsCard.SuspendLayout();
+            showIns_pnl.SuspendLayout();
+            ((ISupportInitialize)instructors_dgv).BeginInit();
+            addIns_pnl.SuspendLayout();
+            ((ISupportInitialize)ins_salary_nm).BeginInit();
+            ins_gender_box.SuspendLayout();
             deleteStud_pnl.SuspendLayout();
             stat_pnl.SuspendLayout();
             studentsCard.SuspendLayout();
-            instructorsCard.SuspendLayout();
             coursesCard.SuspendLayout();
             tracksCard.SuspendLayout();
             updateStud_pnl.SuspendLayout();
@@ -256,40 +299,30 @@ namespace ITIExaminationSystem.Forms
             menu.Items.AddRange(new ToolStripItem[] { dashboardToolStripMenuItem, userToolStripMenuItem, coursesToolStripMenuItem, traToolStripMenuItem, logOutToolStripMenuItem, logOutToolStripMenuItem1 });
             menu.Location = new Point(0, 0);
             menu.Name = "menu";
-            menu.Size = new Size(834, 28);
+            menu.Size = new Size(833, 28);
             menu.TabIndex = 84;
             menu.Text = "menu";
             // 
             // coursesToolStripMenuItem
             // 
-            coursesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { addToolStripMenuItem, updateToolStripMenuItem, deleteToolStripMenuItem, deleteToolStripMenuItem4 });
+            coursesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { showInsToolStripMenuItem, addInsToolStripMenuItem });
             coursesToolStripMenuItem.Name = "coursesToolStripMenuItem";
             coursesToolStripMenuItem.Size = new Size(91, 24);
             coursesToolStripMenuItem.Text = "Instructors";
             // 
-            // addToolStripMenuItem
+            // showInsToolStripMenuItem
             // 
-            addToolStripMenuItem.Name = "addToolStripMenuItem";
-            addToolStripMenuItem.Size = new Size(141, 26);
-            addToolStripMenuItem.Text = "Show";
+            showInsToolStripMenuItem.Name = "showInsToolStripMenuItem";
+            showInsToolStripMenuItem.Size = new Size(128, 26);
+            showInsToolStripMenuItem.Text = "Show";
+            showInsToolStripMenuItem.Click += showInsToolStripMenuItem_Click;
             // 
-            // updateToolStripMenuItem
+            // addInsToolStripMenuItem
             // 
-            updateToolStripMenuItem.Name = "updateToolStripMenuItem";
-            updateToolStripMenuItem.Size = new Size(141, 26);
-            updateToolStripMenuItem.Text = "Add";
-            // 
-            // deleteToolStripMenuItem
-            // 
-            deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            deleteToolStripMenuItem.Size = new Size(141, 26);
-            deleteToolStripMenuItem.Text = "Update";
-            // 
-            // deleteToolStripMenuItem4
-            // 
-            deleteToolStripMenuItem4.Name = "deleteToolStripMenuItem4";
-            deleteToolStripMenuItem4.Size = new Size(141, 26);
-            deleteToolStripMenuItem4.Text = "Delete";
+            addInsToolStripMenuItem.Name = "addInsToolStripMenuItem";
+            addInsToolStripMenuItem.Size = new Size(128, 26);
+            addInsToolStripMenuItem.Text = "Add";
+            addInsToolStripMenuItem.Click += addInsToolStripMenuItem_Click;
             // 
             // traToolStripMenuItem
             // 
@@ -328,6 +361,370 @@ namespace ITIExaminationSystem.Forms
             logOutToolStripMenuItem1.Size = new Size(74, 24);
             logOutToolStripMenuItem1.Text = "Log out";
             logOutToolStripMenuItem1.Click += logOutToolStripMenuItem1_Click;
+            // 
+            // instructorsCard
+            // 
+            instructorsCard.BackColor = Color.FromArgb(46, 204, 113);
+            instructorsCard.Controls.Add(instructor_lbl);
+            instructorsCard.Controls.Add(noIns_lbl);
+            instructorsCard.Location = new Point(190, 90);
+            instructorsCard.Name = "instructorsCard";
+            instructorsCard.Padding = new Padding(10);
+            instructorsCard.Size = new Size(150, 90);
+            instructorsCard.TabIndex = 21;
+            // 
+            // instructor_lbl
+            // 
+            instructor_lbl.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            instructor_lbl.ForeColor = Color.White;
+            instructor_lbl.Location = new Point(10, 10);
+            instructor_lbl.Name = "instructor_lbl";
+            instructor_lbl.Size = new Size(130, 24);
+            instructor_lbl.TabIndex = 0;
+            instructor_lbl.Text = "Instructors";
+            // 
+            // noIns_lbl
+            // 
+            noIns_lbl.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            noIns_lbl.ForeColor = Color.White;
+            noIns_lbl.Location = new Point(10, 40);
+            noIns_lbl.Name = "noIns_lbl";
+            noIns_lbl.Size = new Size(130, 36);
+            noIns_lbl.TabIndex = 1;
+            noIns_lbl.Text = "100";
+            noIns_lbl.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // showIns_pnl
+            // 
+            showIns_pnl.Controls.Add(insMsg_lbl);
+            showIns_pnl.Controls.Add(instructors_dgv);
+            showIns_pnl.Controls.Add(insUpdate_btn);
+            showIns_pnl.Controls.Add(insDelete_btn);
+            showIns_pnl.Location = new Point(154, 40);
+            showIns_pnl.Name = "showIns_pnl";
+            showIns_pnl.Size = new Size(558, 381);
+            showIns_pnl.TabIndex = 118;
+            // 
+            // instructors_dgv
+            // 
+            instructors_dgv.AllowUserToAddRows = false;
+            instructors_dgv.AllowUserToDeleteRows = false;
+            instructors_dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            instructors_dgv.ColumnHeadersHeight = 29;
+            instructors_dgv.Columns.AddRange(new DataGridViewColumn[] { insId, insColFullName, insColPhone, insColSalary });
+            instructors_dgv.Location = new Point(10, 10);
+            instructors_dgv.MultiSelect = false;
+            instructors_dgv.Name = "instructors_dgv";
+            instructors_dgv.ReadOnly = true;
+            instructors_dgv.RowHeadersWidth = 51;
+            instructors_dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            instructors_dgv.Size = new Size(540, 300);
+            instructors_dgv.TabIndex = 0;
+            instructors_dgv.SelectionChanged += instructors_dgv_SelectionChanged;
+            // 
+            // insId
+            // 
+            insId.DataPropertyName = "Id";
+            insId.HeaderText = "Id";
+            insId.MinimumWidth = 6;
+            insId.Name = "insId";
+            insId.ReadOnly = true;
+            // 
+            // insColFullName
+            // 
+            insColFullName.DataPropertyName = "Name";
+            insColFullName.HeaderText = "Name";
+            insColFullName.MinimumWidth = 6;
+            insColFullName.Name = "insColFullName";
+            insColFullName.ReadOnly = true;
+            // 
+            // insColPhone
+            // 
+            insColPhone.DataPropertyName = "Phone";
+            insColPhone.HeaderText = "Phone";
+            insColPhone.MinimumWidth = 6;
+            insColPhone.Name = "insColPhone";
+            insColPhone.ReadOnly = true;
+            // 
+            // insColSalary
+            // 
+            insColSalary.DataPropertyName = "Salary";
+            insColSalary.HeaderText = "Salary";
+            insColSalary.MinimumWidth = 6;
+            insColSalary.Name = "insColSalary";
+            insColSalary.ReadOnly = true;
+            // 
+            // insUpdate_btn
+            // 
+            insUpdate_btn.Enabled = false;
+            insUpdate_btn.Location = new Point(150, 350);
+            insUpdate_btn.Name = "insUpdate_btn";
+            insUpdate_btn.Size = new Size(120, 40);
+            insUpdate_btn.TabIndex = 1;
+            insUpdate_btn.Text = "Update";
+            insUpdate_btn.Click += insUpdate_btn_Click;
+            // 
+            // insDelete_btn
+            // 
+            insDelete_btn.Enabled = false;
+            insDelete_btn.Location = new Point(320, 350);
+            insDelete_btn.Name = "insDelete_btn";
+            insDelete_btn.Size = new Size(120, 40);
+            insDelete_btn.TabIndex = 2;
+            insDelete_btn.Text = "Delete";
+            insDelete_btn.Click += insDelete_btn_Click;
+            // 
+            // ins_username_lbl
+            // 
+            ins_username_lbl.AutoSize = true;
+            ins_username_lbl.Location = new Point(14, 54);
+            ins_username_lbl.Name = "ins_username_lbl";
+            ins_username_lbl.Size = new Size(82, 20);
+            ins_username_lbl.TabIndex = 0;
+            ins_username_lbl.Text = "User Name";
+            // 
+            // ins_pass_lbl
+            // 
+            ins_pass_lbl.AutoSize = true;
+            ins_pass_lbl.Location = new Point(327, 54);
+            ins_pass_lbl.Name = "ins_pass_lbl";
+            ins_pass_lbl.Size = new Size(70, 20);
+            ins_pass_lbl.TabIndex = 1;
+            ins_pass_lbl.Text = "Password";
+            // 
+            // ins_name_lbl
+            // 
+            ins_name_lbl.AutoSize = true;
+            ins_name_lbl.Location = new Point(14, 95);
+            ins_name_lbl.Name = "ins_name_lbl";
+            ins_name_lbl.Size = new Size(76, 20);
+            ins_name_lbl.TabIndex = 2;
+            ins_name_lbl.Text = "Full Name";
+            // 
+            // ins_phone_lbl
+            // 
+            ins_phone_lbl.AutoSize = true;
+            ins_phone_lbl.Location = new Point(14, 191);
+            ins_phone_lbl.Name = "ins_phone_lbl";
+            ins_phone_lbl.Size = new Size(50, 20);
+            ins_phone_lbl.TabIndex = 3;
+            ins_phone_lbl.Text = "Phone";
+            // 
+            // ins_email_lbl
+            // 
+            ins_email_lbl.AutoSize = true;
+            ins_email_lbl.Location = new Point(14, 245);
+            ins_email_lbl.Name = "ins_email_lbl";
+            ins_email_lbl.Size = new Size(46, 20);
+            ins_email_lbl.TabIndex = 3;
+            ins_email_lbl.Text = "Email";
+            // 
+            // ins_city_lbl
+            // 
+            ins_city_lbl.AutoSize = true;
+            ins_city_lbl.Location = new Point(28, 147);
+            ins_city_lbl.Name = "ins_city_lbl";
+            ins_city_lbl.Size = new Size(34, 20);
+            ins_city_lbl.TabIndex = 7;
+            ins_city_lbl.Text = "City";
+            // 
+            // ins_street_lbl
+            // 
+            ins_street_lbl.AutoSize = true;
+            ins_street_lbl.Location = new Point(327, 145);
+            ins_street_lbl.Name = "ins_street_lbl";
+            ins_street_lbl.Size = new Size(48, 20);
+            ins_street_lbl.TabIndex = 8;
+            ins_street_lbl.Text = "Street";
+            // 
+            // ins_dob_lbl
+            // 
+            ins_dob_lbl.AutoSize = true;
+            ins_dob_lbl.Location = new Point(323, 98);
+            ins_dob_lbl.Name = "ins_dob_lbl";
+            ins_dob_lbl.Size = new Size(94, 20);
+            ins_dob_lbl.TabIndex = 6;
+            ins_dob_lbl.Text = "Date of Birth";
+            // 
+            // ins_salary_lbl
+            // 
+            ins_salary_lbl.AutoSize = true;
+            ins_salary_lbl.Location = new Point(320, 249);
+            ins_salary_lbl.Name = "ins_salary_lbl";
+            ins_salary_lbl.Size = new Size(49, 20);
+            ins_salary_lbl.TabIndex = 5;
+            ins_salary_lbl.Text = "Salary";
+            // 
+            // addIns_pnl
+            // 
+            addIns_pnl.Controls.Add(ipdIns_btn);
+            addIns_pnl.Controls.Add(addInsHead_lbl);
+            addIns_pnl.Controls.Add(addInsMsg_lbl);
+            addIns_pnl.Controls.Add(ins_username_lbl);
+            addIns_pnl.Controls.Add(ins_pass_lbl);
+            addIns_pnl.Controls.Add(ins_name_lbl);
+            addIns_pnl.Controls.Add(ins_phone_lbl);
+            addIns_pnl.Controls.Add(ins_pass_txt);
+            addIns_pnl.Controls.Add(ins_email_lbl);
+            addIns_pnl.Controls.Add(ins_city_lbl);
+            addIns_pnl.Controls.Add(ins_street_lbl);
+            addIns_pnl.Controls.Add(ins_dob_lbl);
+            addIns_pnl.Controls.Add(ins_salary_lbl);
+            addIns_pnl.Controls.Add(ins_username_txt);
+            addIns_pnl.Controls.Add(ins_name_txt);
+            addIns_pnl.Controls.Add(ins_phone_txt);
+            addIns_pnl.Controls.Add(ins_email_txt);
+            addIns_pnl.Controls.Add(ins_salary_nm);
+            addIns_pnl.Controls.Add(ins_dob_picker);
+            addIns_pnl.Controls.Add(ins_city_txt);
+            addIns_pnl.Controls.Add(ins_street_txt);
+            addIns_pnl.Controls.Add(ins_gender_box);
+            addIns_pnl.Controls.Add(addIns_btn);
+            addIns_pnl.Controls.Add(resetIns_btn);
+            addIns_pnl.Location = new Point(183, 28);
+            addIns_pnl.Name = "addIns_pnl";
+            addIns_pnl.Size = new Size(389, 449);
+            addIns_pnl.TabIndex = 119;
+            addIns_pnl.Visible = false;
+            // 
+            // ipdIns_btn
+            // 
+            ipdIns_btn.Location = new Point(258, 339);
+            ipdIns_btn.Name = "ipdIns_btn";
+            ipdIns_btn.Size = new Size(167, 40);
+            ipdIns_btn.TabIndex = 138;
+            ipdIns_btn.Text = "Update Instructor";
+            ipdIns_btn.Click += ipdIns_btn_Click;
+            // 
+            // addInsHead_lbl
+            // 
+            addInsHead_lbl.AutoSize = true;
+            addInsHead_lbl.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            addInsHead_lbl.Location = new Point(195, 14);
+            addInsHead_lbl.Name = "addInsHead_lbl";
+            addInsHead_lbl.Size = new Size(149, 28);
+            addInsHead_lbl.TabIndex = 137;
+            addInsHead_lbl.Text = "Add Instructor";
+            // 
+            // addInsMsg_lbl
+            // 
+            addInsMsg_lbl.AutoSize = true;
+            addInsMsg_lbl.Location = new Point(174, 308);
+            addInsMsg_lbl.Name = "addInsMsg_lbl";
+            addInsMsg_lbl.Size = new Size(0, 20);
+            addInsMsg_lbl.TabIndex = 12;
+            // 
+            // ins_pass_txt
+            // 
+            ins_pass_txt.Location = new Point(423, 51);
+            ins_pass_txt.Name = "ins_pass_txt";
+            ins_pass_txt.Size = new Size(200, 27);
+            ins_pass_txt.TabIndex = 1;
+            ins_pass_txt.UseSystemPasswordChar = true;
+            // 
+            // ins_username_txt
+            // 
+            ins_username_txt.Location = new Point(110, 51);
+            ins_username_txt.Name = "ins_username_txt";
+            ins_username_txt.Size = new Size(200, 27);
+            ins_username_txt.TabIndex = 0;
+            // 
+            // ins_name_txt
+            // 
+            ins_name_txt.Location = new Point(110, 95);
+            ins_name_txt.Name = "ins_name_txt";
+            ins_name_txt.Size = new Size(200, 27);
+            ins_name_txt.TabIndex = 2;
+            // 
+            // ins_phone_txt
+            // 
+            ins_phone_txt.Location = new Point(110, 188);
+            ins_phone_txt.Name = "ins_phone_txt";
+            ins_phone_txt.Size = new Size(200, 27);
+            ins_phone_txt.TabIndex = 3;
+            // 
+            // ins_email_txt
+            // 
+            ins_email_txt.Location = new Point(110, 242);
+            ins_email_txt.Name = "ins_email_txt";
+            ins_email_txt.Size = new Size(200, 27);
+            ins_email_txt.TabIndex = 4;
+            // 
+            // ins_salary_nm
+            // 
+            ins_salary_nm.Location = new Point(423, 247);
+            ins_salary_nm.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
+            ins_salary_nm.Minimum = new decimal(new int[] { 5000, 0, 0, 0 });
+            ins_salary_nm.Name = "ins_salary_nm";
+            ins_salary_nm.Size = new Size(125, 27);
+            ins_salary_nm.TabIndex = 5;
+            ins_salary_nm.Value = new decimal(new int[] { 10000, 0, 0, 0 });
+            // 
+            // ins_dob_picker
+            // 
+            ins_dob_picker.Location = new Point(423, 95);
+            ins_dob_picker.Name = "ins_dob_picker";
+            ins_dob_picker.Size = new Size(200, 27);
+            ins_dob_picker.TabIndex = 6;
+            // 
+            // ins_city_txt
+            // 
+            ins_city_txt.Location = new Point(110, 145);
+            ins_city_txt.Name = "ins_city_txt";
+            ins_city_txt.Size = new Size(196, 27);
+            ins_city_txt.TabIndex = 7;
+            // 
+            // ins_street_txt
+            // 
+            ins_street_txt.Location = new Point(423, 142);
+            ins_street_txt.Name = "ins_street_txt";
+            ins_street_txt.Size = new Size(190, 27);
+            ins_street_txt.TabIndex = 8;
+            // 
+            // ins_gender_box
+            // 
+            ins_gender_box.Controls.Add(ins_male_rdo);
+            ins_gender_box.Controls.Add(ins_female_rdo);
+            ins_gender_box.Location = new Point(327, 184);
+            ins_gender_box.Name = "ins_gender_box";
+            ins_gender_box.Size = new Size(226, 55);
+            ins_gender_box.TabIndex = 9;
+            ins_gender_box.TabStop = false;
+            ins_gender_box.Text = "Gender";
+            // 
+            // ins_male_rdo
+            // 
+            ins_male_rdo.Location = new Point(10, 20);
+            ins_male_rdo.Name = "ins_male_rdo";
+            ins_male_rdo.Size = new Size(88, 24);
+            ins_male_rdo.TabIndex = 0;
+            ins_male_rdo.Text = "Male";
+            // 
+            // ins_female_rdo
+            // 
+            ins_female_rdo.Location = new Point(100, 20);
+            ins_female_rdo.Name = "ins_female_rdo";
+            ins_female_rdo.Size = new Size(104, 24);
+            ins_female_rdo.TabIndex = 1;
+            ins_female_rdo.Text = "Female";
+            // 
+            // addIns_btn
+            // 
+            addIns_btn.Location = new Point(215, 356);
+            addIns_btn.Name = "addIns_btn";
+            addIns_btn.Size = new Size(167, 40);
+            addIns_btn.TabIndex = 10;
+            addIns_btn.Text = "Add Instructor";
+            addIns_btn.Click += addIns_btn_Click;
+            // 
+            // resetIns_btn
+            // 
+            resetIns_btn.Location = new Point(392, 356);
+            resetIns_btn.Name = "resetIns_btn";
+            resetIns_btn.Size = new Size(80, 40);
+            resetIns_btn.TabIndex = 11;
+            resetIns_btn.Text = "Reset";
+            resetIns_btn.Click += resetIns_btn_Click;
             // 
             // deleteStud_pnl
             // 
@@ -413,38 +810,6 @@ namespace ITIExaminationSystem.Forms
             noStud_lbl.TabIndex = 1;
             noStud_lbl.Text = "100";
             noStud_lbl.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // instructorsCard
-            // 
-            instructorsCard.BackColor = Color.FromArgb(46, 204, 113);
-            instructorsCard.Controls.Add(instructor_lbl);
-            instructorsCard.Controls.Add(noIns_lbl);
-            instructorsCard.Location = new Point(190, 90);
-            instructorsCard.Name = "instructorsCard";
-            instructorsCard.Padding = new Padding(10);
-            instructorsCard.Size = new Size(150, 90);
-            instructorsCard.TabIndex = 21;
-            // 
-            // instructor_lbl
-            // 
-            instructor_lbl.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            instructor_lbl.ForeColor = Color.White;
-            instructor_lbl.Location = new Point(10, 10);
-            instructor_lbl.Name = "instructor_lbl";
-            instructor_lbl.Size = new Size(130, 24);
-            instructor_lbl.TabIndex = 0;
-            instructor_lbl.Text = "Instructors";
-            // 
-            // noIns_lbl
-            // 
-            noIns_lbl.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            noIns_lbl.ForeColor = Color.White;
-            noIns_lbl.Location = new Point(10, 40);
-            noIns_lbl.Name = "noIns_lbl";
-            noIns_lbl.Size = new Size(130, 36);
-            noIns_lbl.TabIndex = 1;
-            noIns_lbl.Text = "100";
-            noIns_lbl.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // coursesCard
             // 
@@ -1085,7 +1450,6 @@ namespace ITIExaminationSystem.Forms
             showStud_pnl.Controls.Add(dgvUpdate_btn);
             showStud_pnl.Controls.Add(students_dgv);
             showStud_pnl.Controls.Add(dgvDelete_btn);
-            // showStud_pnl should occupy main content area like other panels
             showStud_pnl.Location = new Point(120, 60);
             showStud_pnl.Name = "showStud_pnl";
             showStud_pnl.Size = new Size(560, 420);
@@ -1116,6 +1480,7 @@ namespace ITIExaminationSystem.Forms
             students_dgv.AllowUserToDeleteRows = false;
             students_dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             students_dgv.ColumnHeadersHeight = 29;
+            students_dgv.Columns.AddRange(new DataGridViewColumn[] { stdId, colFullName, colPhone, colTrackId });
             students_dgv.Location = new Point(10, 10);
             students_dgv.MultiSelect = false;
             students_dgv.Name = "students_dgv";
@@ -1124,26 +1489,39 @@ namespace ITIExaminationSystem.Forms
             students_dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             students_dgv.Size = new Size(540, 300);
             students_dgv.TabIndex = 0;
-            // add explicit columns for predictable layout
-            colId = new DataGridViewTextBoxColumn();
-            colFullName = new DataGridViewTextBoxColumn();
-            colPhone = new DataGridViewTextBoxColumn();
-            colTrackId = new DataGridViewTextBoxColumn();
-            colId.Name = "Id";
-            colId.HeaderText = "Id";
-            colId.DataPropertyName = "Id";
-            colId.Width = 60;
-            colFullName.Name = "FullName";
-            colFullName.HeaderText = "Full Name";
-            colFullName.DataPropertyName = "FullName";
-            colPhone.Name = "Phone";
-            colPhone.HeaderText = "Phone";
-            colPhone.DataPropertyName = "Phone";
-            colTrackId.Name = "TrackId";
-            colTrackId.HeaderText = "Track";
-            colTrackId.DataPropertyName = "TrackId";
-            students_dgv.Columns.AddRange(new DataGridViewColumn[] { colId, colFullName, colPhone, colTrackId });
             students_dgv.SelectionChanged += students_dgv_SelectionChanged;
+            // 
+            // stdId
+            // 
+            stdId.DataPropertyName = "Id";
+            stdId.HeaderText = "Id";
+            stdId.MinimumWidth = 6;
+            stdId.Name = "stdId";
+            stdId.ReadOnly = true;
+            // 
+            // colFullName
+            // 
+            colFullName.DataPropertyName = "FullName";
+            colFullName.HeaderText = "Full Name";
+            colFullName.MinimumWidth = 6;
+            colFullName.Name = "colFullName";
+            colFullName.ReadOnly = true;
+            // 
+            // colPhone
+            // 
+            colPhone.DataPropertyName = "Phone";
+            colPhone.HeaderText = "Phone";
+            colPhone.MinimumWidth = 6;
+            colPhone.Name = "colPhone";
+            colPhone.ReadOnly = true;
+            // 
+            // colTrackId
+            // 
+            colTrackId.DataPropertyName = "TrackId";
+            colTrackId.HeaderText = "Track";
+            colTrackId.MinimumWidth = 6;
+            colTrackId.Name = "colTrackId";
+            colTrackId.ReadOnly = true;
             // 
             // dgvDelete_btn
             // 
@@ -1156,11 +1534,21 @@ namespace ITIExaminationSystem.Forms
             dgvDelete_btn.UseVisualStyleBackColor = true;
             dgvDelete_btn.Click += dgvDelete_btn_Click;
             // 
+            // insMsg_lbl
+            // 
+            insMsg_lbl.AutoSize = true;
+            insMsg_lbl.Location = new Point(465, 355);
+            insMsg_lbl.Name = "insMsg_lbl";
+            insMsg_lbl.Size = new Size(0, 20);
+            insMsg_lbl.TabIndex = 3;
+            // 
             // AdminForm
             // 
             AcceptButton = addStud_btn;
-            ClientSize = new Size(834, 431);
+            ClientSize = new Size(833, 453);
+            Controls.Add(addIns_pnl);
             Controls.Add(updateStud_pnl);
+            Controls.Add(showIns_pnl);
             Controls.Add(showStud_pnl);
             Controls.Add(addStud_pnl);
             Controls.Add(menu);
@@ -1171,12 +1559,19 @@ namespace ITIExaminationSystem.Forms
             ((ISupportInitialize)studid_del_nm).EndInit();
             menu.ResumeLayout(false);
             menu.PerformLayout();
+            instructorsCard.ResumeLayout(false);
+            showIns_pnl.ResumeLayout(false);
+            showIns_pnl.PerformLayout();
+            ((ISupportInitialize)instructors_dgv).EndInit();
+            addIns_pnl.ResumeLayout(false);
+            addIns_pnl.PerformLayout();
+            ((ISupportInitialize)ins_salary_nm).EndInit();
+            ins_gender_box.ResumeLayout(false);
             deleteStud_pnl.ResumeLayout(false);
             deleteStud_pnl.PerformLayout();
             stat_pnl.ResumeLayout(false);
             stat_pnl.PerformLayout();
             studentsCard.ResumeLayout(false);
-            instructorsCard.ResumeLayout(false);
             coursesCard.ResumeLayout(false);
             tracksCard.ResumeLayout(false);
             updateStud_pnl.ResumeLayout(false);
@@ -1215,10 +1610,8 @@ namespace ITIExaminationSystem.Forms
         private Label studid_del_lbl;
         private MenuStrip menu;
         private ToolStripMenuItem coursesToolStripMenuItem;
-        private ToolStripMenuItem addToolStripMenuItem;
-        private ToolStripMenuItem updateToolStripMenuItem;
-        private ToolStripMenuItem deleteToolStripMenuItem;
-        private ToolStripMenuItem deleteToolStripMenuItem4;
+        private ToolStripMenuItem showInsToolStripMenuItem;
+        private ToolStripMenuItem addInsToolStripMenuItem;
         private ToolStripMenuItem traToolStripMenuItem;
         private ToolStripMenuItem addToolStripMenuItem1;
         private ToolStripMenuItem updateToolStripMenuItem2;
@@ -1232,10 +1625,37 @@ namespace ITIExaminationSystem.Forms
         private DataGridView students_dgv;
         private Button dgvUpdate_btn;
         private Button dgvDelete_btn;
-        private DataGridViewTextBoxColumn colId;
-        private DataGridViewTextBoxColumn colFullName;
-        private DataGridViewTextBoxColumn colPhone;
-        private DataGridViewTextBoxColumn colTrackId;
+        // instructors
+        private Panel showIns_pnl;
+        private DataGridView instructors_dgv;
+        private Button insUpdate_btn;
+        private Button insDelete_btn;
+        private Panel addIns_pnl;
+        private Button addIns_btn;
+        private Button resetIns_btn;
+        private TextBox ins_username_txt;
+        private TextBox ins_pass_txt;
+        private TextBox ins_name_txt;
+        private TextBox ins_phone_txt;
+        private TextBox ins_email_txt;
+        private NumericUpDown ins_salary_nm;
+        private DateTimePicker ins_dob_picker;
+        private TextBox ins_city_txt;
+        private TextBox ins_street_txt;
+        private GroupBox ins_gender_box;
+        private RadioButton ins_male_rdo;
+        private RadioButton ins_female_rdo;
+        private Label addInsMsg_lbl;
+        // Labels for Add Instructor panel
+        private Label ins_username_lbl;
+        private Label ins_pass_lbl;
+        private Label ins_name_lbl;
+        private Label ins_phone_lbl;
+        private Label ins_email_lbl;
+        private Label ins_city_lbl;
+        private Label ins_street_lbl;
+        private Label ins_dob_lbl;
+        private Label ins_salary_lbl;
         private Panel deleteStud_pnl;
         private Panel addStud_pnl;
         private Button addStud_btn;
@@ -1317,5 +1737,16 @@ namespace ITIExaminationSystem.Forms
         private ToolTip addToolTip;
         private Label updStudMsg_lbl;
         private Label opMsg_lbl;
+        private Label insMsg_lbl;
+        private Label addInsHead_lbl;
+        private DataGridViewTextBoxColumn insId;
+        private DataGridViewTextBoxColumn insColFullName;
+        private DataGridViewTextBoxColumn insColPhone;
+        private DataGridViewTextBoxColumn insColSalary;
+        private DataGridViewTextBoxColumn stdId;
+        private DataGridViewTextBoxColumn colFullName;
+        private DataGridViewTextBoxColumn colPhone;
+        private DataGridViewTextBoxColumn colTrackId;
+        private Button ipdIns_btn;
     }
 }

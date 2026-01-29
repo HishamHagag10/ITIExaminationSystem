@@ -13,6 +13,7 @@ namespace ITIExaminationSystem
         private string _password = string.Empty;
         private DB_Manager _dbManager;
         private LogedUser? _logedUser;
+        private int _examnum = 0;
 
         public AppForm()
         {
@@ -50,11 +51,11 @@ namespace ITIExaminationSystem
                 switch (ret.Data.Role)
                 {
                     case nameof(Role.student):
-                        new StudentForm(_dbManager).Show();
+                        new StudentForm(_dbManager,_logedUser.Id,_examnum).Show();
                         this.Hide();
                         break;
                     case nameof(Role.instructor):
-                        new InstructorForm(_dbManager).Show();
+                        new InstructorForm(_dbManager, _logedUser.Id).Show();
                         this.Hide();
                         break;
                     default:

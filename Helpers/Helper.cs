@@ -6,7 +6,7 @@ namespace DB_Project.Helpers
 {
     static class Helper
     {
-        public const string conStr = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=itiexaminationsystem;Integrated Security=True;Trust Server Certificate=True";
+        public const string conStr = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=ITIExaminationSystem;Integrated Security=True;Trust Server Certificate=True";
 
     }
 }

@@ -19,7 +19,7 @@ namespace ITIExaminationSystem.Helpers
         public const string InstructorCourses = "selectinstructorwithcourses";
         //
 
-         
+        public const string ExamGeneration = "sp_examGeneration";
 
 
     }

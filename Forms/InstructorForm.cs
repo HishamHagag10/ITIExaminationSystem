@@ -24,13 +24,13 @@ namespace ITIExaminationSystem.Forms
         private int _userId;
 
 
-        private void HideAllControls()
-        {
-            foreach (Control ctrl in this.Controls)
-            {
-                ctrl.Visible = false;
-            }
-            menu.Visible = true;
+        private void HideAllPanels()
+        { 
+            dashboardpanel.Visible = false;
+            showExam_pnl.Visible = false;
+            //panel2.Visible = false;
+            panelDetails.Visible = false;
+            genExam_pnl.Visible = false;
         }
         public InstructorForm(DB_Manager dB_Manager, int userId)
         {
@@ -69,7 +69,7 @@ namespace ITIExaminationSystem.Forms
                                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
             }
-           
+
 
         }
         private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -90,14 +90,14 @@ namespace ITIExaminationSystem.Forms
 
         private void coursesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            HideAllPanels();
             panel2.Visible = true;
             panel2.BringToFront();
             panelDetails.Visible = false;
 
             var result = _dbManager.SelectMany<ins_CourseDto>(
                 SP.InstructorCourses,
-                new { @id = _userId}   
+                new { @id = _userId }
             );
 
             if (result?.Data != null && result.Data.Count > 0)
@@ -107,9 +107,10 @@ namespace ITIExaminationSystem.Forms
                 dataGridView1.DataSource = result.Data;
 
                 AddDetailsButton();
-
-                if (dataGridView1.Columns.Contains("Id"))
-                    dataGridView1.Columns["Id"].Visible = false;
+                AddGenerateExamButton();
+                AddShowExamButton();
+                if (dataGridView1.Columns.Contains("crs_id"))
+                    dataGridView1.Columns["crs_id"].Visible = false;
             }
             else
             {
@@ -117,6 +118,31 @@ namespace ITIExaminationSystem.Forms
             }
         }
 
+        private void AddShowExamButton()
+        {
+            if (!dataGridView1.Columns.Contains("btnShowExam"))
+            {
+                DataGridViewButtonColumn btn = new DataGridViewButtonColumn();
+                btn.Name = "btnShowExam";
+                btn.HeaderText = "Show Exams";
+                btn.Text = "Show Exams";
+                btn.UseColumnTextForButtonValue = true;
+                dataGridView1.Columns.Add(btn);
+            }
+        }
+
+        private void AddGenerateExamButton()
+        {
+            if (!dataGridView1.Columns.Contains("btnGenerateExam"))
+            {
+                DataGridViewButtonColumn btn = new DataGridViewButtonColumn();
+                btn.Name = "btnGenerateExam";
+                btn.HeaderText = "Generate Exam";
+                btn.Text = "Generate Exam";
+                btn.UseColumnTextForButtonValue = true;
+                dataGridView1.Columns.Add(btn);
+            }
+        }
         private void AddDetailsButton()
         {
             if (!dataGridView1.Columns.Contains("btnDetails"))
@@ -126,28 +152,76 @@ namespace ITIExaminationSystem.Forms
                 btn.HeaderText = "Details";
                 btn.Text = "Details";
                 btn.UseColumnTextForButtonValue = true;
-
                 dataGridView1.Columns.Add(btn);
             }
         }
-
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            HideAllPanels();
             if (e.RowIndex < 0) return;
-            if (dataGridView1.Columns[e.ColumnIndex].Name != "btnDetails")
-                return;
             int courseId = Convert.ToInt32(
-                    dataGridView1.Rows[e.RowIndex].Cells["Id"].Value
+                    dataGridView1.Rows[e.RowIndex].Cells["crs_id"].Value
                 );
+            gcrsid_txt.Text =courseId.ToString();
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "btnGenerateExam")
+            {
+                HideCourseDetails();
+                genExam_pnl.Visible = true;
+                genExam_pnl.BringToFront();
+                return;
+            }
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "btnShowExam")
+            {
+                showExam_pnl.Visible = true;
+                showExam_pnl.AutoSize = true;
+                showExam_pnl.BringToFront();
+                var result = _dbManager.SelectMany<Question>(
+                    SP.takeExam,
+                    new { @crsid = courseId }
+                );
+                if (result.Data!=null)
+                {
+                    for (int i = 0; i < result.Data.Count; i++)
+                    {
+                        var question = result.Data[i];
+                        var lbl = new Label
+                        {
+                            Text = question.qus_text,
+                            AutoSize = true,
+                            Location = new Point(10, 30 + (i * 80))
+                        };
+                        var lbl2 = new Label
+                        {
+                            Text ="Choices : " + question.choices,
+                            AutoSize = true,
+                            Location = new Point(10, 50 + (i * 80))
+                        };
+                        var lbl3 = new Label
+                        {
+                            Text = "Correct Answer : " + question.correct_answer,
+                            AutoSize = true,
+                            Location = new Point(10, 70 + (i * 80))
+                        };
 
-            string courseName =
-                dataGridView1.Rows[e.RowIndex].Cells["crs_name"].Value.ToString();
+                        showExam_pnl.Controls.Add(lbl);
+                        showExam_pnl.Controls.Add(lbl2);
+                        showExam_pnl.Controls.Add(lbl3);
+                    }
+                }
+                return;
+            }
 
-            label2.Text = $"Course ID: {courseId}";
-            label7.Text = $"Course Name: {courseName}";
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "btnDetails")
+            {
+                string courseName =
+                    dataGridView1.Rows[e.RowIndex].Cells["crs_name"].Value.ToString();
 
-            panelDetails.Visible = true;
-            panelDetails.BringToFront();
+                label2.Text = $"Course ID: {courseId}";
+                label7.Text = $"Course Name: {courseName}";
+
+                panelDetails.Visible = true;
+                panelDetails.BringToFront();
+            }
         }
 
 
@@ -211,6 +285,36 @@ namespace ITIExaminationSystem.Forms
 
 
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            // Generate Exam button
+            var noOfTF = noTF_nm.Value;
+            var noOfMcq = noMCQ_nm.Value;
+            var duration = dur_nm.Value;
+            var courseId = int.Parse(gcrsid_txt.Text);
+            var result = _dbManager.ExecuteSPWithReturn(
+                SP.ExamGeneration, new
+                {
+                    @course_id = courseId,
+                    @no_of_qus = noOfTF + noOfMcq,
+                    @mcq_qus = noOfMcq,
+                    @ex_duartion = duration
+                });
+            switch (result)
+            {
+                case -2:
+                    MessageBox.Show("Duration Is no valid");
+                    break;
+                case -6:
+                    MessageBox.Show("There is already exam in the same day");
+                    break;
+                default:
+                    MessageBox.Show("Problem inserting in db");
+                    break;
+                
+            }
         }
     }
 }

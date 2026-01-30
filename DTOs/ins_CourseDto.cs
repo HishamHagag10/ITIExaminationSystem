@@ -8,7 +8,7 @@ namespace ITIExaminationSystem.DTOs
     internal class ins_CourseDto:DTO
     {
       
-            public int Id { get; set; }
+            public int crs_id { get; set; }
             public string  crs_name{ get; set; }
          
         

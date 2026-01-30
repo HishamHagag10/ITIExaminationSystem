@@ -10,8 +10,8 @@ namespace ITIExaminationSystem.DTOs
         {
   
             public int qus_no { get; set; }
-        public int ex_no { get; set; }
-        public string qus_text { get; set; }
+            public int ex_no { get; set; }
+            public string qus_text { get; set; }
 
             public string qus_type { get; set; } 
             public string correct_answer { get; set; }

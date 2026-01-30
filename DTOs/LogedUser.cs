@@ -9,7 +9,7 @@ namespace DB_Project.DTOs
     }
     public class LogedUser : DTO
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string Role { get; set; }
         public override string ToString()
         {

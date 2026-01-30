@@ -203,7 +203,7 @@ namespace ITIExaminationSystem.Forms
                 return;
             }
 
-            StudentDto studentDto = new StudentDto()
+            AddStudentDto studentDto = new AddStudentDto()
             {
                 // rename the properties to match the DTO
                 user_name = usernameStud_txt.Text.Trim(),
@@ -299,7 +299,7 @@ namespace ITIExaminationSystem.Forms
             passStud_txt.Enabled = false;
 
             // Load student details from database
-            var detailRes = _dbManager.SelectOne<StudentDto>(SP.SelectStudent, new { id = id });
+            var detailRes = _dbManager.SelectOne<AddStudentDto>(SP.SelectStudent, new { id = id });
             if (detailRes != null && detailRes.Data != null)
             {
                 var d = detailRes.Data;
@@ -554,7 +554,7 @@ namespace ITIExaminationSystem.Forms
             ins_pass_txt.Enabled = false;
             addIns_pnl.Dock = DockStyle.Fill;
             // load instructor details if proc available
-            var res = _dbManager.SelectOne<InstructorDto>(SP.SelectInstructor, new { id = id });
+            var res = _dbManager.SelectOne<AddInstructorDto>(SP.SelectInstructor, new { id = id });
             if (res != null && res.Data != null)
             {
                 var d = res.Data;
@@ -601,7 +601,7 @@ namespace ITIExaminationSystem.Forms
                 return;
             }
 
-            var dto = new InstructorDto()
+            var dto = new AddInstructorDto()
             {
                 user_name = ins_username_txt.Text.Trim(),
                 pass = ins_pass_txt.Text,

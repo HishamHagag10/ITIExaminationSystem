@@ -5,17 +5,21 @@ using System.Text;
 
 namespace ITIExaminationSystem.DTOs
 {
-    public class InstructorDto:DTO
+    public  class InstructorDTO:DTO
     {
-        public string user_name { get; set; }
-        public string pass { get; set; }
-        public string ins_name { get; set; }
-        public char? ins_gender { get; set; }
-        public string ins_phoneNo { get; set; }
-        public string ins_email { get; set; }
-        public decimal ins_salary { get; set; } 
-        public DateTime ins_dob { get; set; }   
-        public string ins_city { get; set; }
-        public string ins_street { get; set; }
+      
+            public int Ins_Id { get; set; }
+            public string Ins_Name { get; set; }
+            public string Ins_Gender { get; set; }
+            public string Ins_Email { get; set; }
+            public string Ins_PhoneNo { get; set; }
+            public decimal Ins_Salary { get; set; }
+            public DateTime Ins_Dob { get; set; }
+            public string Ins_City { get; set; }
+            public string Ins_Street { get; set; }
+            public string User_Name { get; set; }
+            public string Pass { get; set; }
+        }
+
+
     }
-}

@@ -1,23 +1,23 @@
-﻿using DB_Project.DTOs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
-namespace ITIExaminationSystem.DTOs
+using DB_Project.DTOs;
+namespace DB_Project.DTOs
 {
-    public class StudentDto:DTO
+    internal class StudentDTO : DTO
     {
-        public string user_name { get; set; } = string.Empty;
-        public string pass { get; set; } = string.Empty;
-        public string std_first_name { get; set; } = string.Empty;
-        public string std_last_name { get; set; } = string.Empty;
-        public string std_phoneno { get; set; } = string.Empty;
-        public string std_email { get; set; } = string.Empty;
-        public string std_city { get; set; } = string.Empty;
-        public string std_street { get; set; } = string.Empty;
-        public char std_gender { get; set; } 
-        public int std_age { get; set; }
-        public string std_zipcode { get; set; } = string.Empty;
-        public int track_id { get; set; }
+      
+            public string std_first_name { get; set; }
+            public string std_last_name { get; set; }
+            public string std_phoneno { get; set; }
+            public string std_email { get; set; }
+
+           
+            public string FirstName => std_first_name;
+            public string LastName => std_last_name;
+            public string Phone => std_phoneno;
+            public string Email => std_email;
+        }
+
     }
-}
+

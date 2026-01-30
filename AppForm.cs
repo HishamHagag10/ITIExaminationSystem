@@ -8,12 +8,8 @@ namespace ITIExaminationSystem
 {
     public partial class AppForm : Form
     {
-        
-        private string _username = string.Empty;
-        private string _password = string.Empty;
         private DB_Manager _dbManager;
         private LogedUser? _logedUser;
-        private int _examnum = 0;
 
         public AppForm()
         {
@@ -28,8 +24,8 @@ namespace ITIExaminationSystem
 
         private void login_btn_Click(object sender, EventArgs e)
         {
-            _username = username_txt.Text;
-            _password = password_txt.Text;
+            var _username = username_txt.Text;
+            var _password = password_txt.Text;
             if (string.IsNullOrEmpty(_username) || string.IsNullOrEmpty(_password))
             {
                 message_lbl.Text = "Please enter username and password";
@@ -51,11 +47,15 @@ namespace ITIExaminationSystem
                 switch (ret.Data.Role)
                 {
                     case nameof(Role.student):
-                        new StudentForm(_dbManager,_logedUser.Id,_examnum).Show();
+                        var stud = new StudentForm(_dbManager, _logedUser.Id);
+                        stud.LoggedOut += () => this.Show();
+                        stud.Show();
                         this.Hide();
                         break;
                     case nameof(Role.instructor):
-                        new InstructorForm(_dbManager, _logedUser.Id).Show();
+                        var inst = new InstructorForm(_dbManager, _logedUser.Id);
+                        inst.LoggedOut += () => this.Show();
+                        inst.Show();
                         this.Hide();
                         break;
                     default:

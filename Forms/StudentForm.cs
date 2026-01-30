@@ -26,12 +26,11 @@ namespace ITIExaminationSystem.Forms
         int currentIndex = 0;
 
 
-        public StudentForm(DB_Manager dB_Manager, int studentId, int examnum)
+        public StudentForm(DB_Manager dB_Manager, int studentId)
         {
             _dbManager = dB_Manager;
             _studentId = studentId;
             InitializeComponent();
-            _examnum = examnum;
         }
         private void HideAllControls()
         {
@@ -67,13 +66,13 @@ namespace ITIExaminationSystem.Forms
             HideAllControls();
             panel01.Visible = true;
             panel01.Dock = DockStyle.Fill;
-            StudentDTO studentDto = new StudentDTO()
-            {
-                std_first_name = fname_lbl.Text,
-                std_last_name = lname_lbl.Text,
-                std_phoneno = phone_lbl.Text,
-                std_email = email_lbl.Text,
-            };
+            //StudentDTO studentDto = new StudentDTO()
+            //{
+            //    std_first_name = fname_lbl.Text,
+            //    std_last_name = lname_lbl.Text,
+            //    std_phoneno = phone_lbl.Text,
+            //    std_email = email_lbl.Text,
+            //};
             //int :status   .... data
             var result = _dbManager.SelectOne<StudentDTO>(SP.getstudentbyid, new { @id = _studentId });
             if (result.Data != null)
@@ -112,7 +111,7 @@ namespace ITIExaminationSystem.Forms
             panel2.Dock = DockStyle.Fill;
 
             var result = _dbManager.SelectMany<courseDto>(SP.getstudentCourse, new { @id = _studentId });
-            if (result.Data != null && result.Data.Count > 0)
+            if (result.Status == 1 && result.Data != null && result.Data.Count>0)
             {
                 dataGridView1.DataSource = null;
                 dataGridView1.DataSource = result.Data;

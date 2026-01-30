@@ -29,7 +29,6 @@ namespace ITIExaminationSystem.Forms
             dashboardpanel.Visible = false;
             showExam_pnl.Visible = false;
             //panel2.Visible = false;
-            panelDetails.Visible = false;
             genExam_pnl.Visible = false;
         }
         public InstructorForm(DB_Manager dB_Manager, int userId)
@@ -93,7 +92,6 @@ namespace ITIExaminationSystem.Forms
             HideAllPanels();
             panel2.Visible = true;
             panel2.BringToFront();
-            panelDetails.Visible = false;
 
             var result = _dbManager.SelectMany<ins_CourseDto>(
                 SP.InstructorCourses,
@@ -106,11 +104,10 @@ namespace ITIExaminationSystem.Forms
                 dataGridView1.AutoGenerateColumns = true;
                 dataGridView1.DataSource = result.Data;
 
-                AddDetailsButton();
                 AddGenerateExamButton();
                 AddShowExamButton();
-                if (dataGridView1.Columns.Contains("crs_id"))
-                    dataGridView1.Columns["crs_id"].Visible = false;
+                //if (dataGridView1.Columns.Contains("crs_id"))
+                    //dataGridView1.Columns["crs_id"].Visible = false;
             }
             else
             {
@@ -143,18 +140,7 @@ namespace ITIExaminationSystem.Forms
                 dataGridView1.Columns.Add(btn);
             }
         }
-        private void AddDetailsButton()
-        {
-            if (!dataGridView1.Columns.Contains("btnDetails"))
-            {
-                DataGridViewButtonColumn btn = new DataGridViewButtonColumn();
-                btn.Name = "btnDetails";
-                btn.HeaderText = "Details";
-                btn.Text = "Details";
-                btn.UseColumnTextForButtonValue = true;
-                dataGridView1.Columns.Add(btn);
-            }
-        }
+        
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             HideAllPanels();
@@ -165,7 +151,6 @@ namespace ITIExaminationSystem.Forms
             gcrsid_txt.Text =courseId.ToString();
             if (dataGridView1.Columns[e.ColumnIndex].Name == "btnGenerateExam")
             {
-                HideCourseDetails();
                 genExam_pnl.Visible = true;
                 genExam_pnl.BringToFront();
                 return;
@@ -204,17 +189,7 @@ namespace ITIExaminationSystem.Forms
                 return;
             }
 
-            if (dataGridView1.Columns[e.ColumnIndex].Name == "btnDetails")
-            {
-                string courseName =
-                    dataGridView1.Rows[e.RowIndex].Cells["crs_name"].Value.ToString();
-
-                label2.Text = $"Course ID: {courseId}";
-                label7.Text = $"Course Name: {courseName}";
-
-                panelDetails.Visible = true;
-                panelDetails.BringToFront();
-            }
+            
         }
 
 
@@ -231,26 +206,12 @@ namespace ITIExaminationSystem.Forms
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            HideCourseDetails();
-        }
-        private void HideCourseDetails()
-        {
-            label2.Text = string.Empty;
-            label7.Text = string.Empty;
-            panelDetails.Visible = false;
-        }
 
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
 
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-            HideCourseDetails();
-        }
 
         private void dashBoardToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -297,6 +258,9 @@ namespace ITIExaminationSystem.Forms
                 });
             switch (result)
             {
+                case 1:
+                    MessageBox.Show("Exam Generated Successfully");
+                    break;
                 case -2:
                     MessageBox.Show("Duration Is no valid");
                     break;

@@ -61,11 +61,6 @@
             label10 = new Label();
             label11 = new Label();
             label12 = new Label();
-            panelDetails = new Panel();
-            button1 = new Button();
-            label8 = new Label();
-            label7 = new Label();
-            label2 = new Label();
             label3 = new Label();
             menu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -76,7 +71,6 @@
             ((System.ComponentModel.ISupportInitialize)noTF_nm).BeginInit();
             ((System.ComponentModel.ISupportInitialize)noMCQ_nm).BeginInit();
             dashboardpanel.SuspendLayout();
-            panelDetails.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
@@ -200,7 +194,6 @@
             panel2.Controls.Add(showExam_pnl);
             panel2.Controls.Add(genExam_pnl);
             panel2.Controls.Add(dashboardpanel);
-            panel2.Controls.Add(panelDetails);
             panel2.Controls.Add(label3);
             panel2.Controls.Add(dataGridView1);
             panel2.Dock = DockStyle.Fill;
@@ -407,65 +400,6 @@
             label12.TabIndex = 10;
             label12.Text = "Name:";
             // 
-            // panelDetails
-            // 
-            panelDetails.Controls.Add(button1);
-            panelDetails.Controls.Add(label8);
-            panelDetails.Controls.Add(label7);
-            panelDetails.Controls.Add(label2);
-            panelDetails.Location = new Point(637, 29);
-            panelDetails.Margin = new Padding(2);
-            panelDetails.Name = "panelDetails";
-            panelDetails.Size = new Size(273, 265);
-            panelDetails.TabIndex = 5;
-            panelDetails.Paint += panelDetails_Paint;
-            // 
-            // button1
-            // 
-            button1.BackColor = Color.FromArgb(224, 224, 224);
-            button1.Location = new Point(104, 201);
-            button1.Margin = new Padding(2);
-            button1.Name = "button1";
-            button1.Size = new Size(90, 27);
-            button1.TabIndex = 6;
-            button1.Text = "Hide";
-            button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click_1;
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label8.Location = new Point(78, 18);
-            label8.Margin = new Padding(2, 0, 2, 0);
-            label8.Name = "label8";
-            label8.Size = new Size(105, 20);
-            label8.TabIndex = 4;
-            label8.Text = "CourseDetails";
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label7.Location = new Point(12, 126);
-            label7.Margin = new Padding(2, 0, 2, 0);
-            label7.Name = "label7";
-            label7.Size = new Size(103, 20);
-            label7.TabIndex = 3;
-            label7.Text = "CourseName:";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(12, 70);
-            label2.Margin = new Padding(2, 0, 2, 0);
-            label2.Name = "label2";
-            label2.Size = new Size(77, 20);
-            label2.TabIndex = 2;
-            label2.Text = "CourseID:";
-            label2.Click += label2_Click_1;
-            // 
             // label3
             // 
             label3.AutoSize = true;
@@ -510,8 +444,6 @@
             ((System.ComponentModel.ISupportInitialize)noMCQ_nm).EndInit();
             dashboardpanel.ResumeLayout(false);
             dashboardpanel.PerformLayout();
-            panelDetails.ResumeLayout(false);
-            panelDetails.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -532,11 +464,6 @@
         private Label lblPhone;
         private DataGridView dataGridView1;
         private Panel panel2;
-        private Panel panelDetails;
-        private Button button1;
-        private Label label8;
-        private Label label7;
-        private Label label2;
         private Label label3;
         private ToolStripMenuItem dashBoardToolStripMenuItem;
         private Panel dashboardpanel;

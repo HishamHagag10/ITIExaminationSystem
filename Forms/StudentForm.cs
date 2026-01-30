@@ -178,84 +178,26 @@ namespace ITIExaminationSystem.Forms
 
         void DisplayQuestion(Question q)
         {
-            panelexam.Controls.Clear();
-
-            Label lbl = new Label();
-            lbl.Text = q.qus_text;
-            lbl.AutoSize = true;
-            lbl.Font = new Font("Arial", 12, FontStyle.Bold);
-            lbl.Location = new Point(10, 10);
-            panelexam.Controls.Add(lbl);
-
-            FlowLayoutPanel flp = new FlowLayoutPanel();
-            flp.Location = new Point(10, 50);
-            flp.Size = new Size(400, 150);
-            panelexam.Controls.Add(flp);
-
-            foreach (var choice in q.Choices)
+            HideAllControls();
+            exam_pnl.Visible= true;
+            ques_lbl.Text = q.qus_text;
+            radioButton1.Text = q.Choices[0].ChoiceText;
+            radioButton2.Text = q.Choices[1].ChoiceText;
+            if (!q.qus_type)
             {
-                CheckBox cb = new CheckBox();
-                cb.Text = choice;
-                cb.AutoSize = true;
-
-                cb.Checked = (q.SelectedAnswer == choice);
-
-                cb.CheckedChanged += (s, e) =>
-                {
-                    if (cb.Checked)
-                    {
-                        q.SelectedAnswer = cb.Text;
-
-                        foreach (var other in flp.Controls.OfType<CheckBox>())
-                        {
-                            if (other != cb)
-                                other.Checked = false;
-                        }
-                    }
-                };
-
-                flp.Controls.Add(cb);
-            }
-
-            System.Windows.Forms.Button btnNext = new System.Windows.Forms.Button();
-            btnNext.Text = currentIndex == examQuestions.Count - 1 ? "Finish" : "Next";
-            btnNext.Location = new Point(10, flp.Bottom + 10);
-            btnNext.Width = 100;
-            btnNext.Height = 40;
-            btnNext.Click += BtnNext_Click;
-
-            panelexam.Controls.Add(btnNext);
-        }
-
-
-
-        private void BtnNext_Click(object sender, EventArgs e)
-        {
-            if (currentIndex < examQuestions.Count - 1)
-            {
-                currentIndex++;
-                DisplayQuestion(examQuestions[currentIndex]);
+                radioButton3.Visible = false;
+                radioButton4.Visible = false;
             }
             else
             {
-                MessageBox.Show("Exam Finished, Good Luck!");
-
-
-
-                //  panel1_Paint_1(sender, e)
-                panelexam.Controls.Clear();
-                //  panelexam.Visible = false;
-                //panelshow.Visible = true;
-                examcorrectgrade.Parent = panelexam;
-                examcorrectgrade.Visible = true;
-                examcorrectgrade.Enabled = true;
-
-
-                //menu.Visible = true;
-
-
+                radioButton3.Text = q.Choices[2].ChoiceText;
+                radioButton4.Text = q.Choices[3].ChoiceText;
             }
         }
+
+
+
+        
         //grade 
         private void examcorrectgrade_Click(object sender, EventArgs e)
         {
@@ -267,7 +209,7 @@ namespace ITIExaminationSystem.Forms
                     SP.correctExam,
                     new
                     {
-                        @ex_no = _examnum,                  
+                        @ex_no = _examnum,
                         @user_id = _studentId
                     });
 
@@ -275,8 +217,8 @@ namespace ITIExaminationSystem.Forms
                 if (result.Data != null && result.Data.Count > 0)
                 {
                     decimal grade = result.Data.First().Grade;
-                      MessageBox.Show($"Your grade is: {grade}%", "Exam Grade",
-                     MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show($"Your grade is: {grade}%", "Exam Grade",
+                   MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
@@ -421,7 +363,7 @@ namespace ITIExaminationSystem.Forms
             panelDetails.Visible = false;
         }
 
-    
+
         //private void btnTakeExam_Click(object sender, EventArgs e)
         //{
         //}
@@ -461,9 +403,18 @@ namespace ITIExaminationSystem.Forms
             examQuestions = result.Data;
             _examnum = examQuestions.First().ex_no;
 
-            examQuestions.ForEach(q =>
-                q.Choices = q.choices.Split(',').Select(x => x.Trim()).ToList()
-            );
+            examQuestions.ForEach(q => {
+                var ids = q.choicesId.Split(',').Select(x => int.Parse(x.Trim())).ToList();
+                var ch = q.choices.Split(',').Select(x => x.Trim()).ToList();
+                for(int i = 0; i < ids.Count; i++)
+                {
+                    q.Choices.Add(new Choice
+                    {
+                        ChoiceId = ids[i],
+                        ChoiceText = ch[i]
+                    });
+                }
+            });
 
             currentIndex = 0;
             DisplayQuestion(examQuestions[currentIndex]);
@@ -480,6 +431,58 @@ namespace ITIExaminationSystem.Forms
         }
         private void panelexam_Paint(object sender, PaintEventArgs e)
         {
+        }
+
+        private void nxt_Click(object sender, EventArgs e)
+        {
+
+            if (currentIndex < examQuestions.Count - 1)
+            {
+                // take (choice)
+                // add studetAnswer(exam_no,que_no,st_ans) 
+                var result = _dbManager.ExecuteSPWithReturn(
+                    SP.AddStudentAnswer,
+                    new
+                    {
+                        ex_no = _examnum,
+                        std_id = _studentId,
+                        qus_no = examQuestions[currentIndex].qus_no,
+                        choice_text =  radioButton1.Checked ? radioButton1.Text :
+                                    radioButton2.Checked ? radioButton2.Text :
+                                    radioButton3.Checked ? radioButton3.Text :
+                                    radioButton4.Checked ? radioButton4.Text : "",
+                        @choice_id = radioButton1.Checked ? examQuestions[currentIndex].Choices[0].ChoiceId :
+                                     radioButton2.Checked ? examQuestions[currentIndex].Choices[1].ChoiceId :
+                                     radioButton3.Checked ? examQuestions[currentIndex].Choices[2].ChoiceId :
+                                     radioButton4.Checked ? examQuestions[currentIndex].Choices[3].ChoiceId : 0
+                    }
+                );
+                if (result != 1)
+                {
+                    MessageBox.Show("Error saving answer."+_examnum.ToString()+" "+_studentId.ToString());
+                }
+                currentIndex++;
+                DisplayQuestion(examQuestions[currentIndex]);
+            }
+            else
+            {
+                MessageBox.Show("Exam Finished, Good Luck!");
+
+
+
+                //  panel1_Paint_1(sender, e)
+                HideAllControls();
+                panelexam.Controls.Clear();
+                panelexam.Visible = true;
+                panelexam.BringToFront();
+                examcorrectgrade.Parent = panelexam;
+                examcorrectgrade.Visible = true;
+                examcorrectgrade.Enabled = true;
+
+                //menu.Visible = true;
+
+
+            }
         }
     }
 }

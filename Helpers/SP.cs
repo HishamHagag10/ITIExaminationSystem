@@ -18,10 +18,9 @@ namespace ITIExaminationSystem.Helpers
         //VIEWCOURSES
         public const string InstructorCourses = "selectinstructorwithcourses";
         //
-
         public const string ExamGeneration = "sp_examGeneration";
 
-
+        public const string AddStudentAnswer = "so_createStudentExamAnswer";
     }
 
 }

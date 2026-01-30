@@ -186,26 +186,19 @@ namespace ITIExaminationSystem.Forms
                         var question = result.Data[i];
                         var lbl = new Label
                         {
-                            Text = question.qus_text,
+                            Text = "Question : "+question.qus_text,
                             AutoSize = true,
-                            Location = new Point(10, 30 + (i * 80))
+                            Location = new Point(10, 30 + (i * 60))
                         };
                         var lbl2 = new Label
                         {
                             Text ="Choices : " + question.choices,
                             AutoSize = true,
-                            Location = new Point(10, 50 + (i * 80))
+                            Location = new Point(10, 50 + (i * 60))
                         };
-                        var lbl3 = new Label
-                        {
-                            Text = "Correct Answer : " + question.correct_answer,
-                            AutoSize = true,
-                            Location = new Point(10, 70 + (i * 80))
-                        };
-
+                        
                         showExam_pnl.Controls.Add(lbl);
                         showExam_pnl.Controls.Add(lbl2);
-                        showExam_pnl.Controls.Add(lbl3);
                     }
                 }
                 return;

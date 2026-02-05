@@ -6,8 +6,8 @@ namespace DB_Project.Helpers
 {
     public enum Role
     {
-        admin,
         student,
-        instructor
+        instructor,
+        admin
     }
 }

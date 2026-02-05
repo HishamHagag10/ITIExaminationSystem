@@ -304,7 +304,7 @@ namespace ITIExaminationSystem.Forms
                     var grade = grades.Data[i];
                     var lbl = new Label
                     {
-                        Text = "Student ID: " + grade.std_id + " - Grade: " + grade.grade,
+                        Text = "Student ID: " + grade.user_id + " - Grade: " + grade.grade,
                         AutoSize = true,
                         Location = new Point(20, 200 + (i * 30)),
                         Font = new Font("Arial", 10, FontStyle.Bold)
@@ -349,6 +349,7 @@ namespace ITIExaminationSystem.Forms
             var noOfTF = noTF_nm.Value;
             var noOfMcq = noMCQ_nm.Value;
             var duration = dur_nm.Value;
+
             var courseId = int.Parse(gcrsid_txt.Text);
             var result = _dbManager.ExecuteSPWithReturn(
                 SP.ExamGeneration, new

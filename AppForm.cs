@@ -46,13 +46,13 @@ namespace ITIExaminationSystem
                 username_txt.Select();
                 switch (ret.Data.Role)
                 {
-                    case nameof(Role.student):
+                    case Role.student:
                         var stud = new StudentForm(_dbManager, _logedUser.Id);
                         stud.LoggedOut += () => this.Show();
                         stud.Show();
                         this.Hide();
                         break;
-                    case nameof(Role.instructor):
+                    case Role.instructor:
                         var inst = new InstructorForm(_dbManager, _logedUser.Id);
                         inst.LoggedOut += () => this.Show();
                         inst.Show();

@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using System.Text.RegularExpressions;
 using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace ITIExaminationSystem.Forms
 {
@@ -252,8 +253,31 @@ namespace ITIExaminationSystem.Forms
             var res = _dbManager.SelectMany<SelectStudentDto>(SP.SelectStudents);
             if (res != null && res.Data != null)
             {
-                var list = res.Data.Select(s => new { s.Id, s.FullName, s.Phone, s.TrackId }).ToList();
+
+           var list = res.Data
+        .Select(s => new
+        {
+            s.Id,
+            s.FullName,
+            s.Phone,
+            s.TrackId,
+            s.is_active   
+        })
+        .ToList();
                 students_dgv.DataSource = list;
+
+           
+                    students_dgv.DataSource = res.Data;
+                if (!students_dgv.Columns.Contains("is_active"))
+                {
+                    var col = new DataGridViewCheckBoxColumn();
+                    col.Name = "Active";
+                    col.HeaderText = "Active";
+                    col.DataPropertyName = "is_active";
+                    col.Visible = true;
+                    col.ReadOnly = true;
+                    students_dgv.Columns.Add(col);
+                }
             }
             students_dgv.ClearSelection();
             dgvUpdate_btn.Enabled = false;
@@ -441,6 +465,16 @@ namespace ITIExaminationSystem.Forms
                 track_id = (int)trackidStud_nm.Value
             };
 
+            var cellValue = students_dgv.SelectedRows[0].Cells["is_active"].Value;
+            bool isActive = cellValue != null && Convert.ToBoolean(cellValue);
+            if (!isActive)
+            {
+                addStudMsg_lbl.ForeColor = Color.Red;
+                addStudMsg_lbl.Text = "This Account has been deleted before,NO Operation will be performed ";
+                return;
+            }
+
+
             // Execute update
             var result = _dbManager.ExecuteSPWithReturn(SP.UpdateStudent, dto);
             if (result == 1)
@@ -459,8 +493,34 @@ namespace ITIExaminationSystem.Forms
 
         private void dgvDelete_btn_Click(object? sender, EventArgs e)
         {
+         
             if (students_dgv.SelectedRows.Count != 1) return;
+
+            if (!students_dgv.Columns.Contains("is_active"))
+            {
+                opMsg_lbl.ForeColor = Color.Red;
+                opMsg_lbl.Text = "Cannot validate student status. Column missing.";
+                return;
+            }
+
+            var cellValue = students_dgv.SelectedRows[0].Cells["is_active"].Value;
+            bool isActive = cellValue != null && Convert.ToBoolean(cellValue);
+
+            if (!isActive)
+            {
+                opMsg_lbl.ForeColor = Color.Red;
+                opMsg_lbl.Text = "This Account has been deleted before,NO Operation will be performed";
+                return;
+            }
+
+
+
+
+
+
             var id = (int)students_dgv.SelectedRows[0].Cells["stdId"].Value;
+
+          
             var result = _dbManager.
                 ExecuteSPWithReturn(SP.DeleteStudent, new
                 {

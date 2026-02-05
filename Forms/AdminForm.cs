@@ -572,18 +572,75 @@ namespace ITIExaminationSystem.Forms
         {
             HideAllControls();
             menu.Visible = true;
+
             var res = _dbManager.SelectMany<SelectInstructorDto>(SP.SelectInstructors);
             if (res != null && res.Data != null)
             {
-                var list = res.Data.Select(i => new { i.Id, i.Name, i.Phone, i.Salary }).ToList();
-                instructors_dgv.DataSource = list;
+                instructors_dgv.AutoGenerateColumns = false;
+                instructors_dgv.Columns.Clear(); 
+
+                // Text Columns
+                instructors_dgv.Columns.Add(new DataGridViewTextBoxColumn
+                {
+                    Name = "Id",
+                    HeaderText = "ID",
+                    DataPropertyName = "Id"
+                });
+                instructors_dgv.Columns.Add(new DataGridViewTextBoxColumn
+                {
+                    Name = "Name",
+                    HeaderText = "Name",
+                    DataPropertyName = "Name"
+                });
+                instructors_dgv.Columns.Add(new DataGridViewTextBoxColumn
+                {
+                    Name = "Phone",
+                    HeaderText = "Phone",
+                    DataPropertyName = "Phone"
+                });
+                instructors_dgv.Columns.Add(new DataGridViewTextBoxColumn
+                {
+                    Name = "Salary",
+                    HeaderText = "Salary",
+                    DataPropertyName = "Salary"
+                });
+
+                // Checkbox Column for IsActive
+                instructors_dgv.Columns.Add(new DataGridViewCheckBoxColumn
+                {
+                    Name = "is_active",
+                    HeaderText = "Active",
+                    DataPropertyName = "is_active", 
+                    ReadOnly = true
+                });
+
+               //DataSource
+                instructors_dgv.DataSource = res.Data;
+                instructors_dgv.Refresh();
             }
+
             instructors_dgv.ClearSelection();
             insUpdate_btn.Enabled = false;
             insDelete_btn.Enabled = false;
             showIns_pnl.Visible = true;
             showIns_pnl.Dock = DockStyle.Fill;
         }
+            //HideAllControls();
+            //menu.Visible = true;
+
+            //var res = _dbManager.SelectMany<SelectInstructorDto>(SP.SelectInstructors);
+            //if (res != null && res.Data != null)
+            //{
+            //    var list = res.Data.Select(i => new { i.Id, i.Name, i.Phone, i.Salary }).ToList();
+            //    instructors_dgv.DataSource = list;
+            //}
+            //instructors_dgv.ClearSelection();
+            //insUpdate_btn.Enabled = false;
+            //insDelete_btn.Enabled = false;
+            //showIns_pnl.Visible = true;
+            //showIns_pnl.Dock = DockStyle.Fill;
+            //}
+        
 
         private void instructors_dgv_SelectionChanged(object? sender, EventArgs e)
         {
@@ -602,6 +659,16 @@ namespace ITIExaminationSystem.Forms
         private void insUpdate_btn_Click(object? sender, EventArgs e)
         {
             if (instructors_dgv.SelectedRows.Count != 1) return;
+         
+
+            bool isActive = (bool)instructors_dgv.SelectedRows[0].Cells["is_active"].Value;
+            if (!isActive)
+            {
+                insMsg_lbl.ForeColor = Color.Red;
+                insMsg_lbl.Text = "This account has been deactivated. You cannot update it.";
+                return;
+            }
+
             var id = (int)instructors_dgv.SelectedRows[0].Cells["insId"].Value;
             // show add/update instructor panel with id prefilled
             HideAllControls();
@@ -635,6 +702,13 @@ namespace ITIExaminationSystem.Forms
         private void insDelete_btn_Click(object? sender, EventArgs e)
         {
             if (instructors_dgv.SelectedRows.Count != 1) return;
+            bool isActive = (bool)instructors_dgv.SelectedRows[0].Cells["is_active"].Value;
+            if (!isActive)
+            {
+                insMsg_lbl.ForeColor = Color.Red;
+                insMsg_lbl.Text = "This account has been deactivated. You cannot delete it.";
+                return;
+            }
             var id = (int)instructors_dgv.SelectedRows[0].Cells["insId"].Value;
             var result = _dbManager.ExecuteSPWithReturn(SP.DeleteInstructor, new { id = id });
             if (result == 1)

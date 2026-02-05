@@ -8,10 +8,10 @@ namespace ITIExaminationSystem.DTOs
  
         public class ExamDto : DTO
         {
-            public int ExamId { get; set; }
-            public string ExamName { get; set; }
-            public DateTime ExamDate { get; set; }
-            public int TotalMarks { get; set; }
+            public int ex_no { get; set; }
+            public int crs_id { get; set; }
+            public DateTime ex_date { get; set; }
+            public int ex_duration { get; set; }
         
 
     }

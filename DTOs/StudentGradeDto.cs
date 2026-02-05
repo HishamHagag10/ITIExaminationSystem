@@ -7,6 +7,7 @@ namespace ITIExaminationSystem.DTOs
 {
     internal class StudentGradeDto:DTO
     {
+        public int std_id { get; set; }
         public decimal Grade { get; set; }  // percentage 0-100
     }
 }

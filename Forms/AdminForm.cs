@@ -669,7 +669,7 @@ namespace ITIExaminationSystem.Forms
                 return;
             }
 
-            var id = (int)instructors_dgv.SelectedRows[0].Cells["insId"].Value;
+            var id = (int)instructors_dgv.SelectedRows[0].Cells["Id"].Value;
             // show add/update instructor panel with id prefilled
             HideAllControls();
             addIns_pnl.Visible = true;
@@ -709,7 +709,7 @@ namespace ITIExaminationSystem.Forms
                 insMsg_lbl.Text = "This account has been deactivated. You cannot delete it.";
                 return;
             }
-            var id = (int)instructors_dgv.SelectedRows[0].Cells["insId"].Value;
+            var id = (int)instructors_dgv.SelectedRows[0].Cells["Id"].Value;
             var result = _dbManager.ExecuteSPWithReturn(SP.DeleteInstructor, new { id = id });
             if (result == 1)
             {

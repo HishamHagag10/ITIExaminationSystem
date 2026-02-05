@@ -11,6 +11,6 @@ namespace ITIExaminationSystem.DTOs
         public string Name { get; set; } = string.Empty;
         public string Phone { get; set; } = string.Empty;
         public string Salary { get; set; } = string.Empty;
-        public int is_active { get; set; }
+        public bool is_active { get; set; }
     }
 }

@@ -31,7 +31,7 @@ namespace ITIExaminationSystem.Helpers
         //INSTRUCTOR
         public const string GetInstructorById = "sp_selectInstructor";
         //VIEWCOURSES
-        public const string InstructorCourses = "selectinstructorwithcourses";
+        public const string InstructorCourses = "sp_Selectinstructorwithcourses";
         //
         public const string ExamGeneration = "sp_examGeneration";
 
@@ -41,9 +41,11 @@ namespace ITIExaminationSystem.Helpers
         public const string SelectTracks = "sp_SelectTracks";
         public const string SelectTrack = "sp_SelectTrack";
         public const string AddStudentAnswer = "sp_createStudentExamAnswer";
+        public const string studentExamAns = "sp_SelectStudentExamAnswers";
 
         public const string GetCourseExams = "sp_getCourseExams";
         public const string GetExamGrades = "sp_SelectExamGrades";
+        public const string SelectStudentExamGrade = "sp_SelectStudentExamGrade";
     }
 
 }

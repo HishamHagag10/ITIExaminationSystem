@@ -174,7 +174,7 @@ namespace ITIExaminationSystem.Forms
 
 
                 textBox1cid.Text = courseId.ToString();
-
+                
                 var result = _dbManager.SelectMany<Question>(SP.takeExam, new { @crsid = courseId });
 
                 if (result.Data == null || result.Data.Count == 0)
@@ -182,7 +182,17 @@ namespace ITIExaminationSystem.Forms
                     MessageBox.Show("No exam questions found for this course.");
                     return;
                 }
-
+                var std_grade = _dbManager.SelectOne<ExamGradeDto>(
+                    SP.SelectStudentExamGrade,
+                    new{
+                        @ex_no = result.Data[0].ex_no,
+                        @std_id = _studentId
+                    });
+                if (std_grade.Status==1 && std_grade.Data!=null)
+                {
+                    MessageBox.Show("You have already taken this exam. Your grade is: " + std_grade.Data.grade);
+                    return;
+                }
                 examQuestions = result.Data;
                 _examnum = examQuestions.First().ex_no;
 
@@ -258,7 +268,7 @@ namespace ITIExaminationSystem.Forms
                     new
                     {
                         @ex_no = _examnum,
-                        @user_id = _studentId
+                        @std_id = _studentId
                     });
 
                 // Check if Data is not null and has items
@@ -522,9 +532,8 @@ namespace ITIExaminationSystem.Forms
                 new
                 {
                     ex_no = _examnum,
-                    std_id = 77,
+                    std_id = _studentId,
                     qus_no = question.qus_no,
-                    choice_text = choiceText,
                     choice_id = choiceId
                 }
             );
@@ -583,7 +592,7 @@ namespace ITIExaminationSystem.Forms
 
             var result = _dbManager.SelectMany<ExamReview>(
                 SP.studentExamAns,
-                new { std_id = 77}
+                new { std_id = _studentId}
             );
 
             if (result.Data == null || result.Data.Count == 0)

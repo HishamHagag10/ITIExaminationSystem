@@ -58,7 +58,6 @@ namespace ITIExaminationSystem.Forms
             welcome_lbl.Text = "Welcome Here TO YOur Info";
 
         }
-        //student information
 
         private void iNFOToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -66,14 +65,6 @@ namespace ITIExaminationSystem.Forms
             HideAllControls();
             panel01.Visible = true;
             panel01.Dock = DockStyle.Fill;
-            //StudentDTO studentDto = new StudentDTO()
-            //{
-            //    std_first_name = fname_lbl.Text,
-            //    std_last_name = lname_lbl.Text,
-            //    std_phoneno = phone_lbl.Text,
-            //    std_email = email_lbl.Text,
-            //};
-            //int :status   .... data
             var result = _dbManager.SelectOne<StudentDTO>(SP.getstudentbyid, new { @id = _studentId });
             if (result.Data != null)
             {
@@ -91,10 +82,6 @@ namespace ITIExaminationSystem.Forms
         }
 
 
-        //allcourses
-
-
-
 
         private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -102,7 +89,6 @@ namespace ITIExaminationSystem.Forms
             this.Close();
         }
 
-        //offictal appearing course
         private void coursesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             panelDetails.Visible = false;
@@ -111,15 +97,29 @@ namespace ITIExaminationSystem.Forms
             panel2.Dock = DockStyle.Fill;
 
             var result = _dbManager.SelectMany<courseDto>(SP.getstudentCourse, new { @id = _studentId });
-            if (result.Status == 1 && result.Data != null && result.Data.Count>0)
+            if (result.Status == 1 && result.Data != null && result.Data.Count > 0)
             {
                 dataGridView1.DataSource = null;
+                dataGridView1.AutoGenerateColumns = false;
+
+                dataGridView1.Columns.Clear();
                 dataGridView1.DataSource = result.Data;
 
                 dataGridView1.Visible = true;
                 dataGridView1.BringToFront();
 
+                DataGridViewTextBoxColumn idCol = new DataGridViewTextBoxColumn();
+                idCol.Name = "Id";
+                idCol.DataPropertyName = "Id";
+                idCol.Visible = false;
+                dataGridView1.Columns.Add(idCol);
 
+
+                DataGridViewTextBoxColumn nameCol = new DataGridViewTextBoxColumn();
+                nameCol.Name = "Name";
+                nameCol.DataPropertyName = "Name";
+                nameCol.HeaderText = "Course Name";
+                dataGridView1.Columns.Add(nameCol);
                 if (!dataGridView1.Columns.Contains("btnDetails"))
                 {
                     DataGridViewButtonColumn btn = new DataGridViewButtonColumn();
@@ -129,6 +129,15 @@ namespace ITIExaminationSystem.Forms
                     btn.UseColumnTextForButtonValue = true;
 
                     dataGridView1.Columns.Add(btn);
+                }
+                if (!dataGridView1.Columns.Contains("btnTakeExam"))
+                {
+                    DataGridViewButtonColumn btnTakeExam = new DataGridViewButtonColumn();
+                    btnTakeExam.HeaderText = "Take Exam";
+                    btnTakeExam.Name = "btnTakeExam";
+                    btnTakeExam.Text = "Take Exam";
+                    btnTakeExam.UseColumnTextForButtonValue = true;
+                    dataGridView1.Columns.Add(btnTakeExam);
                 }
 
 
@@ -158,6 +167,50 @@ namespace ITIExaminationSystem.Forms
                 panelDetails.Visible = true;
                 panelDetails.BringToFront();
             }
+            else if (dataGridView1.Columns[e.ColumnIndex].Name == "btnTakeExam")
+            {
+                int courseId = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["Id"].Value);
+                string courseName = dataGridView1.Rows[e.RowIndex].Cells["Name"].Value.ToString();
+
+
+                textBox1cid.Text = courseId.ToString();
+
+                var result = _dbManager.SelectMany<Question>(SP.takeExam, new { @crsid = courseId });
+
+                if (result.Data == null || result.Data.Count == 0)
+                {
+                    MessageBox.Show("No exam questions found for this course.");
+                    return;
+                }
+
+                examQuestions = result.Data;
+                _examnum = examQuestions.First().ex_no;
+
+
+                examQuestions.ForEach(q =>
+                {
+                    var ids = q.choicesId.Split(',').Select(x => int.Parse(x.Trim())).ToList();
+                    var ch = q.choices.Split(',').Select(x => x.Trim()).ToList();
+                    for (int i = 0; i < ids.Count; i++)
+                    {
+                        q.Choices.Add(new Choice
+                        {
+                            ChoiceId = ids[i],
+                            ChoiceText = ch[i]
+                        });
+                    }
+                });
+
+                currentIndex = 0;
+
+
+                DisplayQuestion(examQuestions[currentIndex]);
+
+                HideAllControls();
+                panelexam.Visible = true;
+                panelexam.Dock = DockStyle.Fill;
+            }
+
         }
         private void btnCloseDetails_Click(object sender, EventArgs e)
         {
@@ -173,31 +226,27 @@ namespace ITIExaminationSystem.Forms
 
 
         }
-
-
         void DisplayQuestion(Question q)
         {
             HideAllControls();
-            exam_pnl.Visible= true;
+            exam_pnl.Visible = true;
             ques_lbl.Text = q.qus_text;
-            radioButton1.Text = q.Choices[0].ChoiceText;
-            radioButton2.Text = q.Choices[1].ChoiceText;
-            if (!q.qus_type)
-            {
-                radioButton3.Visible = false;
-                radioButton4.Visible = false;
-            }
-            else
-            {
-                radioButton3.Text = q.Choices[2].ChoiceText;
-                radioButton4.Text = q.Choices[3].ChoiceText;
-            }
+            radioButton1.Visible = q.Choices.Count > 0;
+            radioButton2.Visible = q.Choices.Count > 1;
+            radioButton3.Visible = q.Choices.Count > 2;
+            radioButton4.Visible = q.Choices.Count > 3;
+
+            if (radioButton1.Visible) radioButton1.Text = q.Choices[0].ChoiceText;
+            if (radioButton2.Visible) radioButton2.Text = q.Choices[1].ChoiceText;
+            if (radioButton3.Visible) radioButton3.Text = q.Choices[2].ChoiceText;
+            if (radioButton4.Visible) radioButton4.Text = q.Choices[3].ChoiceText;
+            bool hasChoices = q.Choices.Count > 0 && q.Choices[0].ChoiceId != 0;
+            radioButton1.Enabled = hasChoices;
+            radioButton2.Enabled = hasChoices;
+            radioButton3.Enabled = hasChoices;
+            radioButton4.Enabled = hasChoices;
         }
 
-
-
-        
-        //grade 
         private void examcorrectgrade_Click(object sender, EventArgs e)
         {
 
@@ -233,55 +282,34 @@ namespace ITIExaminationSystem.Forms
         }
 
 
-
+        //:::::::::::::::::::ForshowexamAnswer::::::::::::::::::::
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
         {
 
+           
 
-            HideAllControls();
-            panelexam.Visible = true;
-            panelexam.Dock = DockStyle.Fill;
+            panel2.Visible = false;
+            panelexam.Visible = false;
+            panel01.Visible = false;
+            exam_pnl.Visible=false;
 
-            if (examQuestions == null || examQuestions.Count == 0)
-            {
-                MessageBox.Show("No exam questions available.");
-                return;
-            }
+            this.Controls.Add(paneltruely);
+      
 
-            currentIndex = 0;
-            //DisplayQuestion(examQuestions[currentIndex], showAnswer: true);
 
+            paneltruely.BringToFront();
+            paneltruely.Visible = true;
+
+
+            if (!paneltruely.Controls.Contains(dataGridViewexamans))
+                paneltruely.Controls.Add(dataGridViewexamans);
+
+            dataGridViewexamans.Dock = DockStyle.Fill;
+            dataGridViewexamans.BringToFront();
+
+            LoadExamAnswers();
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         private void studentToolStripMenuItem_Click(object sender, EventArgs e)
@@ -305,9 +333,7 @@ namespace ITIExaminationSystem.Forms
         }
         private void studentInfo_pnl_Paint(object sender, PaintEventArgs e)
         {
-            //HideAllControls();
-            //panel01.Visible = true;
-            //panel01.Dock = DockStyle.Fill;
+          ;
 
         }
 
@@ -362,28 +388,17 @@ namespace ITIExaminationSystem.Forms
             panelDetails.Visible = false;
         }
 
-
-        //private void btnTakeExam_Click(object sender, EventArgs e)
-        //{
-        //}
-
         private void TakeExam_Click(object sender, EventArgs e)
         {
-
-
-
-
-
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
 
 
-            //if (textBox1cid.Text == SP.takeExam{ @crsid_})
-            //{
+
             TakeExam_Click(sender, e); return;
-            //}
+
         }
 
         private void yes_btn_Click(object sender, EventArgs e)
@@ -401,16 +416,39 @@ namespace ITIExaminationSystem.Forms
 
             examQuestions = result.Data;
             _examnum = examQuestions.First().ex_no;
+            examQuestions.ForEach(q =>
+            {
+                q.Choices = new List<Choice>();
 
-            examQuestions.ForEach(q => {
-                var ids = q.choicesId.Split(',').Select(x => int.Parse(x.Trim())).ToList();
-                var ch = q.choices.Split(',').Select(x => x.Trim()).ToList();
-                for(int i = 0; i < ids.Count; i++)
+                if (!string.IsNullOrWhiteSpace(q.choices) && !string.IsNullOrWhiteSpace(q.choicesId))
+                {
+                    var ids = q.choicesId.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                                          .Select(x => int.TryParse(x.Trim(), out int n) ? n : 0)
+                                          .Where(x => x != 0)
+                                          .ToList();
+
+                    var ch = q.choices.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                                      .Select(x => x.Trim())
+                                      .ToList();
+
+                    int count = Math.Min(ids.Count, ch.Count);
+
+                    for (int i = 0; i < count; i++)
+                    {
+                        q.Choices.Add(new Choice
+                        {
+                            ChoiceId = ids[i],
+                            ChoiceText = ch[i]
+                        });
+                    }
+                }
+
+                if (q.Choices.Count == 0)
                 {
                     q.Choices.Add(new Choice
                     {
-                        ChoiceId = ids[i],
-                        ChoiceText = ch[i]
+                        ChoiceId = 0,
+                        ChoiceText = "No choices available"
                     });
                 }
             });
@@ -431,60 +469,200 @@ namespace ITIExaminationSystem.Forms
         private void panelexam_Paint(object sender, PaintEventArgs e)
         {
         }
-
         private void nxt_Click(object sender, EventArgs e)
         {
-
-            if (currentIndex < examQuestions.Count - 1)
+            if (examQuestions == null || examQuestions.Count == 0)
             {
-                // take (choice)
-                // add studetAnswer(exam_no,que_no,st_ans) 
-                var result = _dbManager.ExecuteSPWithReturn(
-                    SP.AddStudentAnswer,
-                    new
-                    {
-                        ex_no = _examnum,
-                        std_id = _studentId,
-                        qus_no = examQuestions[currentIndex].qus_no,
-                        choice_text =  radioButton1.Checked ? radioButton1.Text :
-                                    radioButton2.Checked ? radioButton2.Text :
-                                    radioButton3.Checked ? radioButton3.Text :
-                                    radioButton4.Checked ? radioButton4.Text : "",
-                        @choice_id = radioButton1.Checked ? examQuestions[currentIndex].Choices[0].ChoiceId :
-                                     radioButton2.Checked ? examQuestions[currentIndex].Choices[1].ChoiceId :
-                                     radioButton3.Checked ? examQuestions[currentIndex].Choices[2].ChoiceId :
-                                     radioButton4.Checked ? examQuestions[currentIndex].Choices[3].ChoiceId : 0
-                    }
-                );
-                if (result != 1)
+                MessageBox.Show("No exam loaded.");
+                return;
+            }
+
+            // 1️⃣ Get current question
+            var question = examQuestions[currentIndex];
+
+            if (question.Choices == null || question.Choices.Count == 0)
+            {
+                MessageBox.Show("This question has no choices.");
+                return;
+            }
+
+            // 2️⃣ Check which radio button is selected
+            string choiceText = null;
+            int choiceId = 0;
+
+            if (radioButton1.Checked && question.Choices.Count > 0)
+            {
+                choiceText = question.Choices[0].ChoiceText;
+                choiceId = question.Choices[0].ChoiceId;
+            }
+            else if (radioButton2.Checked && question.Choices.Count > 1)
+            {
+                choiceText = question.Choices[1].ChoiceText;
+                choiceId = question.Choices[1].ChoiceId;
+            }
+            else if (radioButton3.Checked && question.Choices.Count > 2)
+            {
+                choiceText = question.Choices[2].ChoiceText;
+                choiceId = question.Choices[2].ChoiceId;
+            }
+            else if (radioButton4.Checked && question.Choices.Count > 3)
+            {
+                choiceText = question.Choices[3].ChoiceText;
+                choiceId = question.Choices[3].ChoiceId;
+            }
+            else
+            {
+                MessageBox.Show("Please select a valid answer.");
+                return;
+            }
+
+            // 3️⃣ Save answer using the correct student ID
+            int result = _dbManager.ExecuteSPWithReturn(
+                SP.AddStudentAnswer,
+                new
                 {
-                    MessageBox.Show("Error saving answer."+_examnum.ToString()+" "+_studentId.ToString());
+                    ex_no = _examnum,
+                    std_id = 77,
+                    qus_no = question.qus_no,
+                    choice_text = choiceText,
+                    choice_id = choiceId
                 }
-                currentIndex++;
+            );
+
+            switch (result)
+            {
+                case 1:
+                    break; // success
+                case -1:
+                    MessageBox.Show("Student not found.");
+                    return;
+                case -3:
+                    MessageBox.Show("Question not found.");
+                    return;
+                default:
+                    MessageBox.Show("Error saving answer.");
+                    return;
+            }
+
+            // 4️⃣ Move to next question
+            currentIndex++;
+
+            if (currentIndex < examQuestions.Count)
+            {
                 DisplayQuestion(examQuestions[currentIndex]);
             }
             else
             {
                 MessageBox.Show("Exam Finished, Good Luck!");
 
-
-
-                //  panel1_Paint_1(sender, e)
                 HideAllControls();
                 panelexam.Controls.Clear();
                 panelexam.Visible = true;
-                panelexam.BringToFront();
+
                 examcorrectgrade.Parent = panelexam;
                 examcorrectgrade.Visible = true;
                 examcorrectgrade.Enabled = true;
+            }
 
-                //menu.Visible = true;
+            // 5️⃣ Reset radio buttons
+            radioButton1.Checked = false;
+            radioButton2.Checked = false;
+            radioButton3.Checked = false;
+            radioButton4.Checked = false;
+        }
 
 
+        private void exam_pnl_Paint(object sender, PaintEventArgs e)
+        {
+
+            paneltruely.Visible = false;
+        }
+
+        private void LoadExamAnswers()
+        {
+
+            var result = _dbManager.SelectMany<ExamReview>(
+                SP.studentExamAns,
+                new { std_id = 77}
+            );
+
+            if (result.Data == null || result.Data.Count == 0)
+            {
+                MessageBox.Show("No exam answers found for this student.");
+                dataGridViewexamans.DataSource = null;
+                return;
+            }
+
+            result.Data.ForEach(x =>
+            {
+                if (x.student_answer != null)
+                    x.student_answer = x.student_answer.ToString();
+                if (x.correct_answer != null)
+                    x.correct_answer = x.correct_answer.ToString();
+                if (x.result != null)
+                    x.result = x.result.ToString();
+            });
+
+            dataGridViewexamans.AutoGenerateColumns = true;
+            dataGridViewexamans.DataSource = result.Data;
+
+
+            if (dataGridViewexamans.Columns.Contains("qus_no"))
+                dataGridViewexamans.Columns["qus_no"].HeaderText = "Question No";
+            if (dataGridViewexamans.Columns.Contains("qus_text"))
+                dataGridViewexamans.Columns["qus_text"].HeaderText = "Question Text";
+            if (dataGridViewexamans.Columns.Contains("student_answer"))
+                dataGridViewexamans.Columns["student_answer"].HeaderText = "Your Answer";
+            if (dataGridViewexamans.Columns.Contains("correct_answer"))
+                dataGridViewexamans.Columns["correct_answer"].HeaderText = "Correct Answer";
+            if (dataGridViewexamans.Columns.Contains("result"))
+                dataGridViewexamans.Columns["result"].HeaderText = "Result";
+
+
+            dataGridViewexamans.CellFormatting -= dataGridViewexamans_CellFormatting;
+            dataGridViewexamans.CellFormatting += dataGridViewexamans_CellFormatting;
+        }
+
+
+
+        private void dataGridViewexamans_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dataGridViewexamans.Columns[e.ColumnIndex].Name == "result")
+            {
+                var value = e.Value?.ToString();
+                if (value == "Correct")
+                {
+                    dataGridViewexamans.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightGreen;
+                    dataGridViewexamans.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.Black;
+                }
+                else if (value == "Wrong")
+                {
+                    dataGridViewexamans.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.LightCoral;
+                    dataGridViewexamans.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.White;
+                }
             }
         }
+
+        private void dataGridViewexamans_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void paneltruely_Paint(object sender, PaintEventArgs e)
+        {
+            this.Controls.Add(paneltruely);
+
+            paneltruely.Controls.Add(dataGridViewexamans);
+            dataGridViewexamans.Dock = DockStyle.Fill;
+
+
+        }
     }
+
+
+
 }
+
 
 
 

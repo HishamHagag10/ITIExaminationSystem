@@ -41,6 +41,7 @@ namespace ITIExaminationSystem.Helpers
         public const string SelectTracks = "sp_SelectTracks";
         public const string SelectTrack = "sp_SelectTrack";
         public const string AddStudentAnswer = "so_createStudentExamAnswer";
+        public const string studentExamAns= "sp_SelectStudentExamAnswers";
     }
 
 }

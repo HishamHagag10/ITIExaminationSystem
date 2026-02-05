@@ -269,7 +269,7 @@ namespace ITIExaminationSystem.Forms
                 showExam_pnl.Controls.Add(lbl);
                 var list = new System.Windows.Forms.ComboBox
                 {
-                    Location = new Point(300, 80),
+                    Location = new Point(350, 80),
                     Size = new Size(200, 30),
                     DropDownStyle = ComboBoxStyle.DropDownList
                 };

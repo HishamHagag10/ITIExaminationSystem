@@ -11,7 +11,7 @@ namespace ITIExaminationSystem.DTOs
         public string FullName { get; set; }
         public string Phone { get; set; }
         public string TrackId { get; set; }
-        public bool is_active { get; set; }
+        public int is_active { get; set; }
 
     }
 }

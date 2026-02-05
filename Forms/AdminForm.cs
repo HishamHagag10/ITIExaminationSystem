@@ -271,7 +271,7 @@ namespace ITIExaminationSystem.Forms
                 if (!students_dgv.Columns.Contains("is_active"))
                 {
                     var col = new DataGridViewCheckBoxColumn();
-                    col.Name = "Active";
+                    col.Name = "is_active";
                     col.HeaderText = "Active";
                     col.DataPropertyName = "is_active";
                     col.Visible = true;
